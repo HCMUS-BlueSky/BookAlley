@@ -1,69 +1,181 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.main {
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  flex-direction: column;
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+p {
+  padding: 0;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* Header section */
+header {
+  height: 125px;
+  background: var(--Floral-white, #F7F5EB);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+header .wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 100px 0 100px;
+}
+
+.header-info {
+  display: flex;
+  gap: 23px;
+  align-items: center;
+}
+
+.header-info img {
+  width: 111px;
+  height: 111px;
+}
+
+.header-info h1 {
+  color: #000;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.header-btn {
+  display: flex;
+  gap: 60px;
+}
+
+.header-btn button {
+  background-color: #A0C3D2;
+  border: none;
+  border-radius: 0 0 30px 30px;
+  padding: 10px 20px;
+}
+
+.header-btn p {
+  color: #ffffff;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Footer section */
+footer {
+  background: var(--Floral-white, #F7F5EB);
+}
+
+footer .wrapper {
+  padding: 10px 100px 10px 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+footer .wrapper .infos {
+  display: flex;
+  align-items: center;
+}
+
+.vl {
+  border-left: 3px solid #000;
+  height: 58.5px;
+  margin: 0 20px 0 20px;
+}
+
+footer .wrapper h2 {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+footer .wrapper button {
+  padding: 10px 25px 10px 25px;
+  border-radius: 50px;
+  background-color: #9E7777;
+  border: none;
+}
+
+footer .wrapper button p {
+  color: #ffffff;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Login Screen section */
+section {
+  flex: 1;
+  background: linear-gradient(180deg, #9E7777 0%, #EAC7C7 27.6%, #F7F5EB 53.12%, #A0C3D2 76.56%, #587785 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section .login-card {
+  background-color: rgba(255, 255, 255, 0.20);
+  margin: 20px 0 20px 0;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px 20px 40px;
+}
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.login-card form button {
+  background-color: #587785!important;
+  margin-bottom: 20px;
+}
+
+.login-card h2 {
+  color: #9E7777;
+  text-align: center;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+}
+
+.login-card input {
+  border-radius: 45px;
+  border: none;
+  width: 568px;
+  padding-top: 23px;
+  padding-left: 40px;
+  padding-bottom: 23px;
+}
+
+.login-card input::placeholder {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  color: #A0C3D2;
+}
+
+.login-card button {
+  background-color: #9E7777;
+  width: 200px;
+  border-radius: 35px;
+  border: none;
+}
+
+.login-card button p {
+  color: #FFF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.login-card .nav-btn {
+  display: flex;
+  justify-content: space-between;
 }
