@@ -1,14 +1,14 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-const RegisterScreen = () => {
+const ForgotPasswordScreen = () => {
   return (
     <>
       <div className="main">
         <Header />
         <section>
           <div className="login-card">
-            <h2>Sign up</h2>
+            <h2>Forgot password</h2>
             <form action="">
               <label htmlFor=""></label>
               <input type="text" placeholder="Username" />
@@ -28,4 +28,4 @@ const RegisterScreen = () => {
   );
 };
 
-export default RegisterScreen;
+export default ForgotPasswordScreen;

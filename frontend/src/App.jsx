@@ -1,15 +1,20 @@
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
     <>
-      <div className="main">
-        <Header />
-        <LoginScreen />
-        <Footer />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/login" element={<LoginScreen />} />
+          <Route path="/register" element={<RegisterScreen />} />
+          <Route path="/forgotpassword" element={<ForgotPasswordScreen />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 };

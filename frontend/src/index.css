@@ -128,11 +128,12 @@ section .login-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
 }
 
 .login-card form button {
   background-color: #587785!important;
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 
@@ -142,7 +143,7 @@ section .login-card {
   font-size: 32px;
   font-style: normal;
   font-weight: 800;
-  margin: 0;
+  margin: 0 0 10px 0;
 }
 
 .login-card input {
