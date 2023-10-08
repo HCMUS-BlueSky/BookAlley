@@ -24,15 +24,15 @@ const LoginScreen = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      if (!username || !password) {
-        toast.error("Invalid username, email or password!");
-      } else {
-        const user = {
-          // username: username,
-          email: "example@gmail.com",
-          password: password,
-        };
+    if (!username || !password) {
+      toast.error("Invalid username, email or password!");
+    } else {
+      const user = {
+        // username: username,
+        email: "example@gmail.com",
+        password: password,
+      };
+      try {
         const response = await toast.promise(
           axios.post("/api/auth/login", user),
           {
@@ -41,16 +41,17 @@ const LoginScreen = () => {
             error: "Something went wrong!",
           }
         );
-        console.log(response);
-        if (response.status === 200) {
-          console.log("Successfully");
-          navigate("/home");
-        }
+        console.log(response.data);
+        const token = response.data.access_token;
+        if (!token) return;
+        localStorage.clear();
+        localStorage.setItem("user-token", token);
+        navigate("/home");
         setUsername("");
         setPassword("");
+      } catch (err) {
+        toast.error(err.response.data);
       }
-    } catch (err) {
-      toast.error(err);
     }
   };
 

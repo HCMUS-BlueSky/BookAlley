@@ -5,11 +5,13 @@ import Footer from "../components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const RegisterScreen = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     let value = e.target.value;
@@ -25,35 +27,32 @@ const RegisterScreen = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (!username || !password || !confirmPassword) {
+      toast.error("Invalid username, email or password!");
+      return;
+    }
+    const user = {
+      username: username,
+      password: password,
+      email: "example4@gmail.com",
+    };
     try {
-      if (!username || !password || !confirmPassword) {
-        toast.error("Invalid username, email or password!");
-      } else if (password !== confirmPassword) {
-        toast.error(
-          "The confirmation password does not match. Please try again!"
-        );
-      } else if (password.length < 7) {
-        toast.error("Password too short");
-      } else {
-        const user = {
-          username: username,
-          password: password,
-          email: "example1@gmail.com",
-        };
-        const response = await toast.promise(
-          axios.post("/api/auth/register", user),
-          {
-            pending: "Loading...",
-            success: "Register Successful!",
-            error: "Something went wrong!",
-          }
-        );
-        setUsername("");
-        setPassword("");
-        setConfirmPassword("");
+      const response = await toast.promise(
+        axios.post("/api/auth/register", user),
+        {
+          pending: "Loading...",
+          success: "Register Successful!",
+          error: "Something went wrong!",
+        }
+      );
+      if (response.status === 201) {
+        setInterval(navigate("/"), 500);
       }
+      setUsername("");
+      setPassword("");
+      setConfirmPassword("");
     } catch (err) {
-      toast.error(err);
+      toast.warning(err.response.data);
     }
   };
 
