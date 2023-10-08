@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const isAuth = require('../../middleware/is_auth');
+const isAuth = require('../../middleware/isAuth');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -133,6 +133,28 @@ router.post('/refresh', async (req, res) => {
     }
   );
 });
+
+router.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+  try {
+    if (!email || typeof email !== 'string') throw new Error("Invalid email!");
+    const user = await User.findOne({ email }).exec();
+    if (!user) throw new Error('Email is not registered!');
+    const resetToken = jwt.sign(
+      {
+        id: user.id
+      },
+      user.password,  // Use salted and hashed password as key
+      {
+        expiresIn:"900s",
+      }
+    );
+    console.log(resetToken)
+    return res.sendStatus(204);
+  } catch(err) {
+    return res.status(400).send(err.message);
+  }
+})
 
 router.post('/user', isAuth, async (req, res) => {
   const user = req.user
