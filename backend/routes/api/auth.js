@@ -3,6 +3,7 @@ const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const isAuth = require('../../middleware/isAuth');
+const sendEmail = require('../../utils/sendEmail');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -149,8 +150,9 @@ router.post('/forgot-password', async (req, res) => {
         expiresIn:"900s",
       }
     );
-    console.log(resetToken)
-    return res.sendStatus(204);
+    const resetLink = `http://localhost:${process.env.PORT}/api/auth/reset-password?id=${user.id}&token=${resetToken}`;
+    await sendEmail(user.email, "RESET PASSWORD", resetLink);
+    return res.send("Password reset link sent to email account!");
   } catch(err) {
     return res.status(400).send(err.message);
   }
