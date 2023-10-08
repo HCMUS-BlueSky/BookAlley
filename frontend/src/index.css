@@ -4,6 +4,10 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
 .main {
   display: flex;
   flex-direction: column;
@@ -12,6 +16,10 @@ body {
 
 p {
   padding: 0;
+}
+
+button {
+  cursor: pointer;
 }
 
 /* Header section */
