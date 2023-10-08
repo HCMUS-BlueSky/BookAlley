@@ -1,7 +1,17 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useState } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 const ForgotPasswordScreen = () => {
+  // non-existent email, cái này tính sau :D 
+  const handleEmail = () => {
+
+  }
   return (
     <>
       <div className="main">
@@ -11,13 +21,9 @@ const ForgotPasswordScreen = () => {
             <h2>Forgot password</h2>
             <form action="">
               <label htmlFor=""></label>
-              <input type="text" placeholder="Username" />
-              <label htmlFor=""></label>
-              <input type="text" placeholder="Password" />
-              <label htmlFor=""></label>
-              <input type="text" placeholder="Confirm password" />
+              <input type="text" placeholder="Enter recovery email:"/>
               <button type="button">
-                <p>Sign Up</p>
+                <p>Next</p>
               </button>
             </form>
           </div>
