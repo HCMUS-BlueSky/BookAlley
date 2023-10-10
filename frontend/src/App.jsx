@@ -1,23 +1,20 @@
-import HomeScreen from "./screens/HomeScreen";
-import LoginScreen from "./screens/LoginScreen";
-import RegisterScreen from "./screens/RegisterScreen";
-import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
-import PrivateRoutes from "./utils/ProtectedRoutes";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { routes } from "./routes";
 
 const App = () => {
   return (
     <>
-      <BrowserRouter>
+      <Router>
         <Routes>
-          <Route element={<PrivateRoutes />}>
-            <Route path="/home" element={<HomeScreen />} />
-          </Route>
-          <Route path="/" element={<LoginScreen />} />
-          <Route path="/register" element={<RegisterScreen />} />
-          <Route path="/forgotpassword" element={<ForgotPasswordScreen />} />
+          {routes.map((route) => {
+            const Page = route.page;
+            return (
+              <Route key={route.path} path={route.path} element={<Page />} />
+            );
+          })}
         </Routes>
-      </BrowserRouter>
+      </Router>
     </>
   );
 };
