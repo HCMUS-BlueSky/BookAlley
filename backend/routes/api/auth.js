@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
       throw new Error('Invalid username, email or password!');
     const exists = await User.exists({ email });
     if (exists) throw new Error('Email already in used');
-    if (password.length < 7) throw new Error('Password too short');
+    if (password.length < 8) throw new Error('Password too short');
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ username, email, password: hashedPassword });
     const user = await newUser.save();
@@ -150,13 +150,36 @@ router.post('/forgot-password', async (req, res) => {
         expiresIn:"900s",
       }
     );
-    const resetLink = `http://localhost:${process.env.PORT}/api/auth/reset-password?id=${user.id}&token=${resetToken}`;
+    const resetLink = `http://${process.env.FE_HOST}/reset-password?id=${user.id}&token=${resetToken}`;
     await sendEmail(user.email, "RESET PASSWORD", resetLink);
     return res.send("Password reset link sent to email account!");
   } catch(err) {
     return res.status(400).send(err.message);
   }
 })
+
+router.post('/reset-password', async (req, res) => {
+  const {id, token, new_password} = req.body;
+  try {
+    if(!id || !token || typeof id !== 'string' || typeof token !== 'string') throw new Error("Invalid id or token!");
+    if (!new_password || typeof new_password !== 'string') throw new Error("Invalid password!");
+    const user = await User.findById(id).exec();
+    jwt.verify(token, user.password, async (err, decoded) =>{
+      try {
+        if (err || decoded.id !== user.id) throw new Error("Invalid token!");
+        if (new_password.length < 8) throw new Error("Password too short!");
+        const hashedPassword = await bcrypt.hash(new_password, 10);
+        user.password = hashedPassword;
+        await user.save();
+        return res.send("Password successfully updated!")
+      } catch (err) {
+         return res.status(400).send(err.message);
+      }
+    })
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
+}) 
 
 router.post('/user', isAuth, async (req, res) => {
   const user = req.user
