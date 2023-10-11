@@ -3,6 +3,8 @@ import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import Products from "../pages/ProductsPage/ProductsPage";
 import SignInPage from "../pages/SignInPage/SignInPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
+import ForgotPasswordPage from "../pages/ForgotPasswordPage/ForgotPasswordPage";
+import ResetPasswordPage from "../pages/ResetPasswordPage/ResetPassword";
 
 export const routes = [
   {
@@ -24,6 +26,14 @@ export const routes = [
   {
     path: "*",
     page: NotFoundPage,
+  },
+  {
+    path: "/forgot-password",
+    page: ForgotPasswordPage,
+  },
+  {
+    path: "/reset-password",
+    page: ResetPasswordPage,
   },
 ];
 

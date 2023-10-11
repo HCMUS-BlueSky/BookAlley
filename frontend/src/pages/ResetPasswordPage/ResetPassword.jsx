@@ -1,25 +1,24 @@
 import React from "react";
-import "../../styles/partials/_SignInUp.scss";
 
-const SignInPage = () => {
+const ResetPassword = () => {
   return (
     <div>
       <div className="container">
-        <h1>Login</h1>
+        <h1>Reset password</h1>
         <form action="">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">New password</label>
           <input type="text" required />
-          <label htmlFor="">Password</label>
+          <label htmlFor="">Confirm new password</label>
           <input type="text" required />
           <p className="noti-info">Wrong password</p>
           <button type="button">Submit</button>
         </form>
         <p>
-          Don't have an account? Register<a href=""> now</a>
+          Just remember your password? <a href="">Sign in</a>
         </p>
       </div>
     </div>
   );
 };
 
-export default SignInPage;
+export default ResetPassword;
