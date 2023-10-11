@@ -40,6 +40,28 @@ var userSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    phone: {
+      type: String,
+      validate: [
+        {
+          validator: (p) =>
+            /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/.test(
+              p
+            ),
+          msg: 'Invalid phone number'
+        }
+      ]
+    },
+    verified: {
+      type: Boolean,
+      default: false
+    },
+    role: {
+      type: String,
+      required: true,
+      enum: ['user', 'seller', 'admin'],
+      default: 'user'
+    },
     refresh_token: {
       type: String
     }

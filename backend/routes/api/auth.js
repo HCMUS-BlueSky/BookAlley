@@ -181,9 +181,4 @@ router.post('/reset-password', async (req, res) => {
   }
 }) 
 
-router.post('/user', isAuth, async (req, res) => {
-  const user = req.user
-  return res.status(200).json(user)
-});
-
 module.exports = router;

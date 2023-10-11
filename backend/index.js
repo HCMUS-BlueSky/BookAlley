@@ -18,9 +18,11 @@ app.use(cors())
 app.use(errorHandler)
 app.use(authentication)
 
-const auth = require('./routes/api/auth')
+const authAPI = require('./routes/api/auth');
+const userAPI = require('./routes/api/user');
 const { default: mongoose } = require('mongoose')
-app.use('/api/auth', auth)
+app.use('/api/auth', authAPI);
+app.use('/api/user', userAPI);
 
 app.all('*', (req, res) => {
   res.status(404)
