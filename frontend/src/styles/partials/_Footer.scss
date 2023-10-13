@@ -1,0 +1,33 @@
+@import "../../styles/global.scss";
+
+footer {
+  background-color: $white;
+  display: flex;
+  padding: 35px 85px;
+  .footer-left {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .footer-mail {
+      display: flex;
+      gap: 10px;
+    }
+  }
+  .footer-right {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .social-icons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: flex-end;
+      gap: 30px;
+    }
+  }
+}
