@@ -1,84 +1,84 @@
-const express = require('express');
-const User = require('../../models/User');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const sendEmail = require('../../utils/sendEmail');
+const express = require("express");
+const User = require("../../models/User");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const sendEmail = require("../../utils/sendEmail");
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('Hehe');
+router.get("/", (req, res) => {
+  res.send("Hehe");
 });
 
-router.post('/register', async (req, res) => {
+router.post("/register", async (req, res) => {
   const { username, password, email } = req.body;
   try {
     if (
       !username ||
       !password ||
       !email ||
-      typeof username !== 'string' ||
-      typeof password !== 'string' ||
-      typeof email !== 'string'
+      typeof username !== "string" ||
+      typeof password !== "string" ||
+      typeof email !== "string"
     )
-      throw new Error('Invalid username, email or password!');
+      throw new Error("Invalid username, email or password!");
     const exists = await User.exists({ email });
-    if (exists) throw new Error('Email already in used');
-    if (password.length < 8) throw new Error('Password too short');
+    if (exists) throw new Error("Email already in used");
+    if (password.length < 8) throw new Error("Password too short");
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ username, email, password: hashedPassword });
     const user = await newUser.save();
-    if (!user) throw new Error('Something went wrong!');
-    return res.status(201).send('User registered!');
+    if (!user) throw new Error("Something went wrong!");
+    return res.status(201).send("User registered!");
   } catch (err) {
     return res.status(400).send(err.message);
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     if (
       !password ||
       !email ||
-      typeof password !== 'string' ||
-      typeof email !== 'string'
+      typeof password !== "string" ||
+      typeof email !== "string"
     )
-      throw new Error('Invalid email or password!');
+      throw new Error("Invalid email or password!");
 
     const user = await User.findOne({ email }).exec();
 
-    if (!user) throw new Error('Email or password is incorrect!');
+    if (!user) throw new Error("Email or password is incorrect!");
 
     const matched = await bcrypt.compare(password, user.password);
 
-    if (!matched) throw new Error('Email or password is incorrect!');
+    if (!matched) throw new Error("Email or password is incorrect!");
 
     const accessToken = jwt.sign(
       {
-        id: user.id
+        id: user.id,
       },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: '3000s'
+        expiresIn: "3000s",
       }
     );
     const refreshToken = jwt.sign(
       {
-        id: user.id
+        id: user.id,
       },
       process.env.REFRESH_TOKEN_SECRET,
       {
-        expiresIn: '2d'
+        expiresIn: "2d",
       }
     );
     user.refresh_token = refreshToken;
     await user.save();
 
-    res.cookie('refresh_token', refreshToken, {
+    res.cookie("refresh_token", refreshToken, {
       httpOnly: true,
-      sameSite: 'None',
+      sameSite: "None",
       secure: true,
-      maxAge: 2 * 24 * 60 * 60 * 1000
+      maxAge: 2 * 24 * 60 * 60 * 1000,
     });
     res.json({ access_token: accessToken });
   } catch (err) {
@@ -86,7 +86,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/logout', async (req, res) => {
+router.post("/logout", async (req, res) => {
   const cookies = req.cookies;
   const refreshToken = cookies?.refresh_token;
   if (!refreshToken) return res.sendStatus(204);
@@ -96,16 +96,16 @@ router.post('/logout', async (req, res) => {
     user.refresh_token = null;
     await user.save();
   }
-  res.clearCookie('refresh_token', {
+  res.clearCookie("refresh_token", {
     httpOnly: true,
-    sameSite: 'None',
-    secure: true
+    sameSite: "None",
+    secure: true,
   });
   res.sendStatus(204);
 });
 
 // Use refresh token to generate new access token if it expires
-router.post('/refresh', async (req, res) => {
+router.post("/refresh", async (req, res) => {
   const cookies = req.cookies;
   const refreshToken = cookies?.refresh_token;
   if (!refreshToken) return res.sendStatus(403);
@@ -121,63 +121,65 @@ router.post('/refresh', async (req, res) => {
 
       const accessToken = jwt.sign(
         {
-          id: user.id
+          id: user.id,
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: '3000s'
+          expiresIn: "3000s",
         }
       );
 
-      return res.json({access_token: accessToken});
+      return res.json({ access_token: accessToken });
     }
   );
 });
 
-router.post('/forgot-password', async (req, res) => {
+router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
   try {
-    if (!email || typeof email !== 'string') throw new Error("Invalid email!");
+    if (!email || typeof email !== "string") throw new Error("Invalid email!");
     const user = await User.findOne({ email }).exec();
-    if (!user) throw new Error('Email is not registered!');
+    if (!user) throw new Error("Email is not registered!");
     const resetToken = jwt.sign(
       {
-        id: user.id
+        id: user.id,
       },
-      user.password,  // Use salted and hashed password as key
+      user.password, // Use salted and hashed password as key
       {
-        expiresIn:"900s",
+        expiresIn: "900s",
       }
     );
     const resetLink = `http://${process.env.FE_HOST}/reset-password?id=${user.id}&token=${resetToken}`;
     await sendEmail(user.email, "RESET PASSWORD", resetLink);
     return res.send("Password reset link sent to your email account!");
-  } catch(err) {
+  } catch (err) {
     return res.status(400).send(err.message);
   }
-})
+});
 
-router.post('/reset-password', async (req, res) => {
-  const {id, token, new_password} = req.body;
+router.post("/reset-password", async (req, res) => {
+  const { id, token, new_password } = req.body;
   try {
-    if(!id || !token || typeof id !== 'string' || typeof token !== 'string') throw new Error("Invalid id or token!");
-    if (!new_password || typeof new_password !== 'string') throw new Error("Invalid password!");
+    if (!id || !token || typeof id !== "string" || typeof token !== "string")
+      throw new Error("Invalid id or token!");
+    if (!new_password || typeof new_password !== "string")
+      throw new Error("Invalid password!");
     const user = await User.findById(id).exec();
-    jwt.verify(token, user.password, async (err, decoded) =>{
+    jwt.verify(token, user.password, async (err, decoded) => {
       try {
         if (err || decoded.id !== user.id) throw new Error("Invalid token!");
         if (new_password.length < 8) throw new Error("Password too short!");
         const hashedPassword = await bcrypt.hash(new_password, 10);
         user.password = hashedPassword;
         await user.save();
-        return res.send("Password successfully updated!")
+        return res.send("Password successfully updated!");
       } catch (err) {
-         return res.status(400).send(err.message);
+        return res.status(400).send(err.message);
       }
-    })
+    });
   } catch (err) {
     return res.status(400).send(err.message);
   }
-}) 
+});
 
 module.exports = router;

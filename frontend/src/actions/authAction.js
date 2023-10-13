@@ -63,3 +63,24 @@ export const userForgotPassword = createAsyncThunk(
     }
   }
 );
+
+export const userResetPassword = createAsyncThunk(
+  "auth/reset-password",
+  async ({ id, token, new_password }, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        `/api/auth/reset-password`,
+        { id, token, new_password },
+        config
+      );
+      console.log(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

@@ -3,6 +3,7 @@ import {
   registerUser,
   userLogin,
   userForgotPassword,
+  userResetPassword,
 } from "../actions/authAction";
 
 const userToken = localStorage.getItem("userToken")
@@ -53,6 +54,17 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(userForgotPassword.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
+      .addCase(userResetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(userResetPassword.fulfilled, (state, { payload }) => {
+        state.loading = false;
+      })
+      .addCase(userResetPassword.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
       });
