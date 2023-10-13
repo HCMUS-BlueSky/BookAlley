@@ -34,6 +34,7 @@ const SignInPage = () => {
             name="email"
             value={email}
             onChange={handleEmail}
+            placeholder=""
             required
           />
           <label htmlFor="">Password</label>

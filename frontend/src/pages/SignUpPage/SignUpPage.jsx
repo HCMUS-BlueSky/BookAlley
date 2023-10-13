@@ -28,7 +28,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div>
+    <div className="auth">
       <div className="container">
         <h1>Register</h1>
         <form action="">

@@ -2,10 +2,10 @@ import React from "react";
 
 const ForgotPasswordPage = () => {
   return (
-    <div>
+    <div className="auth">
       <div className="container">
         <h1>Forgot password</h1>
-        <p style={{ width: "70%", textAlign: "center" }}>
+        <p style={{ padding: "0 40px" }}>
           A password reset link will be sent to your email address
         </p>
         <form action="">
