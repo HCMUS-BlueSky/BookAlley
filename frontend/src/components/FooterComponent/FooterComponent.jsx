@@ -17,7 +17,7 @@ const FooterComponent = () => {
 
         <div className="footer-mail">
           <img src={EmailIcon} alt="" />
-          <div className="mail-info">bookalleyus@gmail.com</div>
+          <p>bookalleyus@gmail.com</p>
         </div>
       </div>
       <div className="footer-right">

@@ -42,3 +42,24 @@ export const userLogin = createAsyncThunk(
     }
   }
 );
+
+export const userForgotPassword = createAsyncThunk(
+  "auth/forgot-password",
+  async ({ email }, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        `/api/auth/forgot-password`,
+        { email },
+        config
+      );
+      console.log(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
