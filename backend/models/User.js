@@ -59,7 +59,10 @@ var userSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
-      enum: ['user', 'seller', 'admin'],
+      enum: {
+        values: ['user', 'seller', 'admin'],
+        message: "{VALUE} is not a valid role"
+      },
       default: 'user'
     },
     refresh_token: {
