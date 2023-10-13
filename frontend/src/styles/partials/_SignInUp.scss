@@ -38,7 +38,9 @@ div {
         background: #d9d9d9;
         height: 40px;
         border: none;
-        padding-left: 20px;
+        padding: 0 20px;
+        font-family: inherit;
+        outline: none;
       }
       .noti-info {
         color: $noti;

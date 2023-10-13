@@ -5,11 +5,9 @@ import { userLogin } from "../../actions/authAction";
 
 const SignInPage = () => {
   const dispatch = useDispatch();
-  // const { loading, error } = useSelector((state) => state.user);
-  // const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -22,15 +20,8 @@ const SignInPage = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(email, password);
-    // setLoading(true);
     dispatch(userLogin({ email, password }));
   };
-
-  // useEffect(() => {
-  //   if (userLogin) {
-  //     navigate("/");
-  //   }
-  // }, [navigate, userLogin]);
 
   return (
     <div className="auth">
@@ -47,15 +38,15 @@ const SignInPage = () => {
           />
           <label htmlFor="">Password</label>
           <input
-            type="text"
+            type="password"
             name="password"
             value={password}
             onChange={handlePassword}
             required
           />
-          <p className="noti-info">Something went wrong</p>
+          <p className="noti-info">{error}</p>
           <button type="button" onClick={handleLogin}>
-            Submit
+            {loading ? "Loading..." : "Submit"}
           </button>
         </form>
         <p>
