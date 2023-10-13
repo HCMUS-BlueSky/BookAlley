@@ -46,7 +46,7 @@ const SignInPage = () => {
           />
           <p className="noti-info">{error}</p>
           <button type="button" onClick={handleLogin}>
-            {loading ? "Loading..." : "Submit"}
+            {loading ? "Loading..." : "Log In"}
           </button>
         </form>
         <p>
