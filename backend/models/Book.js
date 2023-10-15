@@ -54,9 +54,15 @@ var bookSchema = new mongoose.Schema(
     description: {
       type: String
     },
-    tags: {
-      type: [String]
-    },
+    tags: [
+      {
+        type: String,
+        enum: {
+          values: ['literature', 'fiction', 'novel'],
+          message: '{VALUE} is not a valid tag'
+        }
+      }
+    ],
     instock: {
       type: Number,
       default: 0
@@ -82,6 +88,11 @@ var bookSchema = new mongoose.Schema(
         get() {
           return this._id;
         }
+      },
+    },
+    statics: {
+      getTagList() {
+        return this.schema.path('tags.0').enumValues;
       }
     },
     timestamps: {

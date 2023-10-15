@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
 const isAuth = require('../../middleware/isAuth');
-const sendEmail = require('../../utils/sendEmail');
+const { sendEmail, genEmailConfirmTemplate} = require("../../utils/sendEmail");
 const router = express.Router();
 
 router.post('/', isAuth, async (req, res) => {
@@ -22,7 +22,7 @@ router.post('/send-verify-email', isAuth, async (req, res) => {
       }
     );
     const verifyLink = `http://${process.env.FE_HOST}/verify?token=${verifyToken}`
-    await sendEmail(req.user.email, 'VERIFY EMAIL', verifyLink);
+    await sendEmail(req.user.email, 'VERIFY EMAIL', genEmailConfirmTemplate(verifyLink));
     return res.send('Email verification link sent to your email account!');
   } catch (err) {
     return res.status(400).send(err.message);
