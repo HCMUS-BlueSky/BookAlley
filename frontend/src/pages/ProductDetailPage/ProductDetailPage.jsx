@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { GetFirebaseUrl } from "../../utils/GetFirebaseUrl";
+import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
+import FooterComponent from "../../components/FooterComponent/FooterComponent";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -24,22 +27,51 @@ const ProductDetailPage = () => {
     fetchData();
   }, []);
 
+  const decreaseValue = () => {
+    if (count - 1 >= 0) setCount(count - 1);
+  };
+
+  const increaseValue = () => {
+    setCount(count + 1);
+  };
+
   return (
     <>
+      <HeaderComponent />
       {loading ? (
         "Loading..."
       ) : (
-        <div className="detail-product">
-          <div className="detail-main">
-            <img src={product.image} alt="" />
-            <h2>{product.name}</h2>
-            <p>Author: {product.author}</p>
-            <p>{product.price}</p>
-            <p>{product.rating}</p>
+        <div className="product-detail">
+          <div className="product-detail-card">
+            <div className="product-image">
+              <img src={product.image} alt="" />
+            </div>
+            <div className="detail-info">
+              <h2>{product.name}</h2>
+              <p className="author">Author: {product.author}</p>
+              {product.translator && (
+                <p className="translator">Translator: {product.translator}</p>
+              )}
+              <p className="price">{product.price}đ</p>
+              {/* <p className="rating">{product.rating}</p> */}
+              <div className="btn">
+                <div className="value-btn" onClick={decreaseValue}>
+                  -
+                </div>
+                <input type="number" id="number" value={count} />
+                <div className="value-btn" onClick={increaseValue}>
+                  +
+                </div>
+              </div>
+              <div className="cart-btn">
+                <button className="buy-btn">Buy</button>
+                <button className="add-btn">Add to cart</button>
+              </div>
+            </div>
           </div>
-          <div className="detail-info"></div>
         </div>
       )}
+      <FooterComponent />
     </>
   );
 };

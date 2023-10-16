@@ -1,0 +1,102 @@
+@import "../global.scss";
+
+.product-detail {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("/images/bg-log.jpg");
+  display: flex;
+  justify-content: center;
+  .product-detail-card {
+    width: 80%;
+    border-radius: 15px;
+    padding: 30px;
+    background-color: $white;
+    margin: 20px 0 20px 0;
+    display: flex;
+    gap: 20px;
+  }
+  .product-image {
+    img {
+      width: 400px;
+      border: 1px solid $light-gray;
+      border-radius: 15px;
+    }
+  }
+  .detail-info {
+    width: 60%;
+    background-color: $white;
+    border-radius: 0px 15px 15px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .author {
+      font-size: 20px;
+      font-weight: 500;
+    }
+    .translator {
+      font-size: 20px;
+      font-weight: 500;
+    }
+    .price {
+      color: #f00;
+      font-size: 36px;
+      font-weight: 700;
+    }
+    .btn {
+      display: flex;
+      gap: 10px;
+      .value-btn {
+        border: 1px solid #ddd;
+        width: 40px;
+        height: 20px;
+        text-align: center;
+        padding: 6px 0;
+        background: $white;
+        border-radius: 8px;
+      }
+      .value-btn:hover {
+        cursor: pointer;
+      }
+      input {
+        text-align: center;
+        width: 60px;
+        height: 30px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+    .cart-btn {
+      .buy-btn {
+        width: 200px;
+        height: 50px;
+        border-radius: 15px;
+        background: #4e6975;
+        font-size: 24px;
+        font-weight: 600;
+        color: $white;
+        border: none;
+        cursor: pointer;
+        margin-right: 20px;
+      }
+      .add-btn {
+        width: 200px;
+        height: 50px;
+        border-radius: 15px;
+        background: $white;
+        font-size: 24px;
+        font-weight: 600;
+        color: #4e6975;
+        border: none;
+        cursor: pointer;
+        border: 2px solid #4e6975;
+      }
+    }
+  }
+}
