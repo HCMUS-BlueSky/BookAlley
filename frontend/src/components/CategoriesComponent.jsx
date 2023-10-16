@@ -1,7 +1,15 @@
 import React from "react";
 
-const Categories = () => {
-  return <></>;
+const CategoriesComponent = ({ tags }) => {
+  return (
+    <>
+      <h2>Categories</h2>
+      {tags &&
+        tags.map((tag) => {
+          return <p>{tag}</p>;
+        })}
+    </>
+  );
 };
 
-export default Categories;
+export default CategoriesComponent;

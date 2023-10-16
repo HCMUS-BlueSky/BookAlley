@@ -1,7 +1,28 @@
 @import "../global.scss";
 
 .card {
-  height: 100%;
-  background-color: $card-gray;
-  box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff;
+  width: 200px;
+  background-color: $white;
+  margin: auto;
+  border-radius: 10px;
+  border: 1px solid $light-gray;
+  img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px 10px 0 0;
+  }
+  .card-info {
+    background-color: $card-gray;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+    h3 {
+      font-size: 14px;
+      font-weight: 400;
+    }
+    p {
+      margin-top: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+  }
 }

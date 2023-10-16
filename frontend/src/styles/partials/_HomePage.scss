@@ -1,0 +1,40 @@
+@import "../global.scss";
+
+.wrapper {
+  display: flex;
+  padding: 15px 85px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./images/bg-log.jpg");
+  gap: 10px;
+  .categories {
+    width: 20%;
+    height: fit-content;
+    background-color: $white;
+    border-radius: 10px;
+    padding: 15px;
+    text-transform: uppercase;
+    h2 {
+      font-size: 30px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    p {
+      margin-top: 20px;
+      padding-left: 10px;
+    }
+  }
+  .products {
+    width: 80%;
+    background-color: $white;
+    padding: 20px;
+    border-radius: 15px;
+    h2 {
+      margin-bottom: 20px;
+    }
+    .product-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+  }
+}

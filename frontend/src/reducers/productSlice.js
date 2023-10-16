@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProducts } from "../actions/productsAction";
+import { getCategories, getProducts } from "../actions/productsAction";
 
 const initialState = {
   loading: false,
+  tags: [],
   products: [],
   error: null,
 };
@@ -21,6 +22,19 @@ const productSlice = createSlice({
       state.products = payload;
     });
     builder.addCase(getProducts.rejected, (state) => {
+      state.loading = false;
+      state.products = [];
+      // state.error = action.error.message;
+    });
+    builder.addCase(getCategories.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getCategories.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.tags = payload;
+    });
+    builder.addCase(getCategories.rejected, (state) => {
       state.loading = false;
       state.products = [];
       // state.error = action.error.message;
