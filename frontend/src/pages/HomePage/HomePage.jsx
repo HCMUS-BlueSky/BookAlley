@@ -18,16 +18,19 @@ const HomePage = () => {
     <>
       <HeaderComponent />
       <div className="wrapper">
-        <div className="categories">
+        <div className="left">
           <CategoriesComponent tags={tags.tags} />
         </div>
-        <div className="products">
-          <h2>Sản phẩm bán chạy</h2>
-          <div className="product-cards">
-            {products &&
-              products.map((product) => {
-                return <ProductsCardComponent product={product} />;
-              })}
+        <div className="right">
+          <img src="./images/Banner_01.png" alt="" />
+          <div className="products">
+            <h2>SORT BY</h2>
+            <div className="product-cards">
+              {products &&
+                products.map((product) => {
+                  return <ProductsCardComponent product={product} />;
+                })}
+            </div>
           </div>
         </div>
       </div>

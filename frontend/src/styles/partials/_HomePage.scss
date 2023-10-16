@@ -6,7 +6,7 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
     url("./images/bg-log.jpg");
   gap: 10px;
-  .categories {
+  .left {
     width: 20%;
     height: fit-content;
     background-color: $white;
@@ -23,18 +23,24 @@
       padding-left: 10px;
     }
   }
-  .products {
+  .right {
     width: 80%;
-    background-color: $white;
-    padding: 20px;
-    border-radius: 15px;
-    h2 {
+    img {
+      width: 100%;
       margin-bottom: 20px;
     }
-    .product-cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+    .products {
+      background-color: $white;
+      padding: 20px;
+      border-radius: 15px;
+      h2 {
+        margin-bottom: 20px;
+      }
+      .product-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
     }
   }
 }

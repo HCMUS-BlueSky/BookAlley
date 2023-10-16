@@ -5,6 +5,7 @@ import SignInPage from "../pages/SignInPage/SignInPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage/ResetPassword";
+import ProductDetailPage from "../pages/ProductDetailPage/ProductDetailPage";
 
 export const routes = [
   {
@@ -34,6 +35,10 @@ export const routes = [
   {
     path: "/reset-password",
     page: ResetPasswordPage,
+  },
+  {
+    path: "/products/:id",
+    page: ProductDetailPage,
   },
 ];
 

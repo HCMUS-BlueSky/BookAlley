@@ -24,7 +24,6 @@ const productSlice = createSlice({
     builder.addCase(getProducts.rejected, (state) => {
       state.loading = false;
       state.products = [];
-      // state.error = action.error.message;
     });
     builder.addCase(getCategories.pending, (state) => {
       state.loading = true;
@@ -37,7 +36,6 @@ const productSlice = createSlice({
     builder.addCase(getCategories.rejected, (state) => {
       state.loading = false;
       state.products = [];
-      // state.error = action.error.message;
     });
   },
 });

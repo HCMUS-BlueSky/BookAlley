@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { storage } from "../firebase";
-import { ref, getDownloadURL } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
+import { GetFirebaseUrl } from "../utils/GetFirebaseUrl";
 
 const ProductsCardComponent = ({ product }) => {
   const [photoUrl, setPhotoUrl] = useState("");
-  const getPhotoUrl = async () => {
-    const photoRef = ref(storage, product.image);
-    const url = await getDownloadURL(photoRef);
-    setPhotoUrl(url);
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getPhotoUrl();
+    async function GetPhotoUrl() {
+      let url = await GetFirebaseUrl(product.image);
+      setPhotoUrl(url);
+    }
+    GetPhotoUrl();
   }, []);
 
   return (
-    <div className="card">
+    <div
+      className="card"
+      onClick={() => {
+        navigate(`/products/${product._id}`);
+      }}
+    >
       <img src={photoUrl} alt="" />
       <div className="card-info">
         {product.name.length > 30 ? (
