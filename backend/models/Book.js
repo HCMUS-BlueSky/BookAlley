@@ -19,6 +19,10 @@ var bookSchema = new mongoose.Schema(
     provider: {
       type: String
     },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Shop"
+    },
     year_published: {
       type: Number,
       min: 0
@@ -58,7 +62,22 @@ var bookSchema = new mongoose.Schema(
       {
         type: String,
         enum: {
-          values: ['literature', 'fiction', 'novel'],
+          values: [
+            'science',
+            'action',
+            'cookbooks',
+            'horror',
+            'romance',
+            'literature',
+            'economics',
+            'psychology',
+            'manga',
+            'comic',
+            'novel',
+            'history',
+            'geography',
+            'religion'
+          ],
           message: '{VALUE} is not a valid tag'
         }
       }
@@ -88,7 +107,7 @@ var bookSchema = new mongoose.Schema(
         get() {
           return this._id;
         }
-      },
+      }
     },
     statics: {
       getTagList() {

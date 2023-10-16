@@ -52,6 +52,10 @@ var userSchema = new mongoose.Schema(
         }
       ]
     },
+    birthdate: {
+      type: Date,
+      trim: true
+    },
     verified: {
       type: Boolean,
       default: false
@@ -61,7 +65,7 @@ var userSchema = new mongoose.Schema(
       required: true,
       enum: {
         values: ['user', 'seller', 'admin'],
-        message: "{VALUE} is not a valid role"
+        message: '{VALUE} is not a valid role'
       },
       default: 'user'
     },
