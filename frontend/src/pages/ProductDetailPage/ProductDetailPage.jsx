@@ -27,6 +27,11 @@ const ProductDetailPage = () => {
     fetchData();
   }, []);
 
+  const handleCountChange = (e) => {
+    const newValue = parseInt(e.target.value);
+    setCount(newValue);
+  };
+
   const decreaseValue = () => {
     if (count - 1 >= 0) setCount(count - 1);
   };
@@ -52,13 +57,21 @@ const ProductDetailPage = () => {
               {product.translator && (
                 <p className="translator">Translator: {product.translator}</p>
               )}
-              <p className="price">{product.price}đ</p>
+              <p className="price">
+                {product.price && product.price.toLocaleString("en-US")}
+                <span>đ</span>
+              </p>
               {/* <p className="rating">{product.rating}</p> */}
               <div className="btn">
                 <div className="value-btn" onClick={decreaseValue}>
                   -
                 </div>
-                <input type="number" id="number" value={count} />
+                <input
+                  type="number"
+                  id="number"
+                  value={count}
+                  onChange={handleCountChange}
+                />
                 <div className="value-btn" onClick={increaseValue}>
                   +
                 </div>
@@ -68,6 +81,41 @@ const ProductDetailPage = () => {
                 <button className="add-btn">Add to cart</button>
               </div>
             </div>
+          </div>
+          <div className="detail-info">
+            <h2>DETAILS</h2>
+            <div className="info-group">
+              <p>
+                Author: <span>{product.author}</span>
+              </p>
+              {product.translator ? (
+                <p>
+                  Translator: <span>{product.translator}</span>
+                </p>
+              ) : null}
+
+              <p>
+                Publisher: <span>{product.publisher}</span>
+              </p>
+              <p>
+                Publish Date: <span>{product.year_published}</span>
+              </p>
+              <p>
+                Page Count: <span>{product.pages}</span>
+              </p>
+              <p>
+                Dimensions: <span>{product.size}</span>
+              </p>
+            </div>
+            <h2>OVERVIEW</h2>
+            <p className="description">
+              {product.description && product.description.length > 100
+                ? product.description.slice(0, 500) + "..."
+                : product.description}
+            </p>
+          </div>
+          <div className="customer-reviews">
+            <h2>CUSTOMER REVIEWS</h2>
           </div>
         </div>
       )}

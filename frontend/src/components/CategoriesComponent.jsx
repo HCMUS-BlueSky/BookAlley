@@ -5,8 +5,8 @@ const CategoriesComponent = ({ tags }) => {
     <>
       <h2>Categories</h2>
       {tags &&
-        tags.map((tag) => {
-          return <p>{tag}</p>;
+        tags.map((tag, index) => {
+          return <p key={index}>{tag}</p>;
         })}
     </>
   );

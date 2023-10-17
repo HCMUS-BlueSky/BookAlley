@@ -4,7 +4,8 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
     url("/images/bg-log.jpg");
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   .product-detail-card {
     width: 80%;
     border-radius: 15px;
@@ -40,6 +41,9 @@
       color: #f00;
       font-size: 36px;
       font-weight: 700;
+      span {
+        font-size: 24px;
+      }
     }
     .btn {
       display: flex;
@@ -98,5 +102,34 @@
         border: 2px solid #4e6975;
       }
     }
+  }
+  .detail-info {
+    width: 80%;
+    border-radius: 15px;
+    padding: 30px;
+    background-color: $white;
+    margin: 20px 0 20px 0;
+    .info-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 10px;
+      font-weight: 500;
+      padding-left: 20px;
+      span {
+        font-weight: 700;
+      }
+    }
+    .description {
+      padding-left: 20px;
+      letter-spacing: normal;
+      line-height: 150%;
+    }
+  }
+  .customer-reviews {
+    width: 80%;
+    border-radius: 15px;
+    padding: 30px;
+    background-color: $white;
+    margin: 20px 0 20px 0;
   }
 }

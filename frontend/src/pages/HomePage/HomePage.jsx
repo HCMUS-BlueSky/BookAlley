@@ -13,7 +13,6 @@ const HomePage = () => {
     dispatch(getProducts());
     dispatch(getCategories());
   }, []);
-  console.log(tags);
   return (
     <>
       <HeaderComponent />
@@ -28,7 +27,12 @@ const HomePage = () => {
             <div className="product-cards">
               {products &&
                 products.map((product) => {
-                  return <ProductsCardComponent product={product} />;
+                  return (
+                    <ProductsCardComponent
+                      key={product._id}
+                      product={product}
+                    />
+                  );
                 })}
             </div>
           </div>
