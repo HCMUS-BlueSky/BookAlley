@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-var bookSchema = new mongoose.Schema(
+const bookSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -18,7 +18,7 @@ var bookSchema = new mongoose.Schema(
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Shop"
+      ref: 'Shop'
     },
     year_published: {
       type: Number,

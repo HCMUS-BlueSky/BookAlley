@@ -23,7 +23,7 @@ router.post('/send-verify-email', isAuth, async (req, res) => {
     );
     const verifyLink = `http://${process.env.FE_HOST}/verify?token=${verifyToken}`
     await sendEmail(req.user.email, 'VERIFY EMAIL', genEmailConfirmTemplate(verifyLink));
-    return res.send('Email verification link sent to your email account!');
+    return res.send('A verification link has been sent to your email account!');
   } catch (err) {
     return res.status(400).send(err.message);
   }

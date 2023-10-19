@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-var shopSchema = new mongoose.Schema(
+const shopSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -10,12 +10,15 @@ var shopSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    products: [
+    listings: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book'
       }
-    ]
+    ],
+    description: {
+      type: String
+    }
   },
   {
     collection: 'shops',

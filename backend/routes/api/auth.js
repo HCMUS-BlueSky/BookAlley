@@ -28,7 +28,25 @@ router.post("/register", async (req, res) => {
     const newUser = new User({ username, email, password: hashedPassword });
     const user = await newUser.save();
     if (!user) throw new Error("Something went wrong!");
-    return res.status(201).send("User registered!");
+
+    const verifyToken = jwt.sign(
+      {
+        id: req.user.id
+      },
+      process.env.VERIFY_TOKEN_SECRET,
+      {
+        expiresIn: '1d'
+      }
+    );
+    const verifyLink = `http://${process.env.FE_HOST}/verify?token=${verifyToken}`;
+    await sendEmail(
+      req.user.email,
+      'VERIFY EMAIL',
+      genEmailConfirmTemplate(verifyLink)
+    );
+    return res.send(
+      'User registered! A verification link has been sent to your email account!'
+    );
   } catch (err) {
     return res.status(400).send(err.message);
   }
@@ -48,6 +66,8 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email }).exec();
 
     if (!user) throw new Error("Email or password is incorrect!");
+
+    if (!user.verified) throw new Error('Email is not verified!');
 
     const matched = await bcrypt.compare(password, user.password);
 

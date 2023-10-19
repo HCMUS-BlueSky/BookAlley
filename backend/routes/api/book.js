@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
   return res.sendStatus(204);
 });
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', isAdmin, upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
       throw new Error('No files were uploaded');
@@ -25,7 +25,7 @@ router.post('/', upload.single('image'), async (req, res) => {
       uuidv4() + path.extname(req.file.originalname)
     }`;
     const blob = firebase.bucket.file(filePath);
-    
+
     const blobWriter = blob.createWriteStream({
       metadata: {
         contentType: req.file.mimetype
@@ -33,7 +33,7 @@ router.post('/', upload.single('image'), async (req, res) => {
     });
 
     blobWriter.on('error', (err) => {
-      res.status(500).send('Something went wrong!')
+      res.status(500).send('Something went wrong!');
     });
 
     blobWriter.on('finish', async () => {
@@ -52,12 +52,13 @@ router.post('/', upload.single('image'), async (req, res) => {
   } catch (err) {
     return res.status(400).send(err.message);
   }
-})
+});
 
 router.patch('/:id', isAdmin, async (req, res) => {
   const id = req.params.id;
   try {
-    await Book.findByIdAndUpdate(id, req.body);
+    const { image, ...filtered } = req.body;
+    await Book.findByIdAndUpdate(id, filtered, { runValidators: true });
     return res.sendStatus(204);
   } catch (err) {
     return res.status(400).send(err.message);
@@ -77,7 +78,7 @@ router.get('/tags', async (req, res) => {
 
 router.get('/list-brief', async (req, res) => {
   try {
-    const list = await Book.find({}, 'name image image2 rating price').exec();
+    const list = await Book.find({}, 'name image rating price').exec();
     return res.send(list);
   } catch (err) {
     return res.status(500).send(err.message)

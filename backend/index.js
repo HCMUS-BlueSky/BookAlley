@@ -21,10 +21,12 @@ app.use(authentication)
 const authAPI = require('./routes/api/auth');
 const userAPI = require('./routes/api/user');
 const bookAPI = require('./routes/api/book');
+const cartAPI = require('./routes/api/cart');
 const { default: mongoose } = require('mongoose')
 app.use('/api/auth', authAPI);
 app.use('/api/user', userAPI);
 app.use('/api/book', bookAPI);
+app.use('/api/cart', cartAPI);
 
 app.all('*', (req, res) => {
   res.status(404)
