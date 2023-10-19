@@ -16,9 +16,6 @@ var bookSchema = new mongoose.Schema(
     publisher: {
       type: String
     },
-    provider: {
-      type: String
-    },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Shop"
@@ -47,13 +44,10 @@ var bookSchema = new mongoose.Schema(
       required: true
     },
     image: {
-      type: String,
-      validate: [
-        {
-          validator: (path) => /^\/[/.a-zA-Z0-9-_]+$/.test(path),
-          msg: 'Invalid image path'
-        }
-      ]
+      type: String
+    },
+    image2: {
+      type: String
     },
     description: {
       type: String

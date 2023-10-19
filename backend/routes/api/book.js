@@ -1,16 +1,32 @@
 const express = require('express');
 const Book = require('../../models/Book');
 const isAuth = require('../../middleware/isAuth');
+const cloudinary = require('../../config/cloudinary');
 const isAdmin = require('../../middleware/isAdmin');
+const fs = require('fs')
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   return res.sendStatus(204);
 });
 
-router.post('/', isAdmin, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    const book = new Book(req.body);
+    // if (!req.files || Object.keys(req.files).length === 0) {
+    //   throw new Error('No files were uploaded');
+    // }
+    const book = await Book.findOne({name: req.body.name}).exec();
+    // await book.validate();
+    // const image = req.files.image;
+    // const result = await cloudinary.uploader.upload(image.tempFilePath, {
+    //   resource_type: 'image',
+    //   folder: 'assets/products',
+    //   unique_filename: true,
+    //   allowed_formats: ['png', 'jpg', 'jpeg', 'webp']
+    // });
+    // fs.unlinkSync(image.tempFilePath);
+    book.image2 = req.body.image2;
+    // book.image = result.url;
     await book.save();
     return res.sendStatus(204);
   } catch (err) {
