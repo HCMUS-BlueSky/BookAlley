@@ -6,13 +6,13 @@ const ProductsCardComponent = ({ product }) => {
   const [photoUrl, setPhotoUrl] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    async function GetPhotoUrl() {
-      let url = await GetFirebaseUrl(product.image);
-      setPhotoUrl(url);
-    }
-    GetPhotoUrl();
-  }, []);
+  // useEffect(() => {
+  //   async function GetPhotoUrl() {
+  //     let url = await GetFirebaseUrl(product.image);
+  //     setPhotoUrl(url);
+  //   }
+  //   GetPhotoUrl();
+  // }, []);
 
   return (
     <div
@@ -21,7 +21,7 @@ const ProductsCardComponent = ({ product }) => {
         navigate(`/products/${product._id}`);
       }}
     >
-      <img src={photoUrl} alt="" />
+      <img src={product.image} alt="" />
       <div className="card-info">
         {product.name.length > 30 ? (
           <h3>{product.name.slice(0, 30)} ...</h3>

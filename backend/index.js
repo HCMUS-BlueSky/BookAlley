@@ -1,17 +1,24 @@
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
-const connectDB = require('./config/database')
-const errorHandler = require('./middleware/errorHandler')
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const connectDB = require('./config/database');
+const fileUpload = require('express-fileupload');
+const errorHandler = require('./middleware/errorHandler');
 const authentication = require('./middleware/authentication');
-const app = express()
-const port = process.env.PORT || 5000
+const app = express();
+const port = process.env.PORT || 5000;
 
 connectDB()
 // Middleware
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(fileUpload(
+  {
+    useTempFiles: true,
+    limits: {fileSize: 10 * 1024 * 1024}
+  }
+))
 app.use(cookieParser());
 app.use(cors())
 // Error handler
