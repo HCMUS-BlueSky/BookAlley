@@ -57,7 +57,7 @@ router.get('/tags', async (req, res) => {
 
 router.get('/list-brief', async (req, res) => {
   try {
-    const list = await Book.find({}, 'name image rating price').exec();
+    const list = await Book.find({}, 'name image image2 rating price').exec();
     return res.send(list);
   } catch (err) {
     return res.status(500).send(err.message)
