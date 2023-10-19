@@ -1,34 +1,54 @@
 const express = require('express');
 const Book = require('../../models/Book');
+const firebase = require('../../config/firebase');
+const { getDownloadURL } = require('firebase-admin/storage');
+const { v4: uuidv4 } = require('uuid');
+const path = require('path');
 const isAuth = require('../../middleware/isAuth');
-const cloudinary = require('../../config/cloudinary');
 const isAdmin = require('../../middleware/isAdmin');
-const fs = require('fs')
+const upload = require('../../middleware/multer')
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   return res.sendStatus(204);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
   try {
-    // if (!req.files || Object.keys(req.files).length === 0) {
-    //   throw new Error('No files were uploaded');
-    // }
-    const book = await Book.findOne({name: req.body.name}).exec();
-    // await book.validate();
-    // const image = req.files.image;
-    // const result = await cloudinary.uploader.upload(image.tempFilePath, {
-    //   resource_type: 'image',
-    //   folder: 'assets/products',
-    //   unique_filename: true,
-    //   allowed_formats: ['png', 'jpg', 'jpeg', 'webp']
-    // });
-    // fs.unlinkSync(image.tempFilePath);
-    book.image2 = req.body.image2;
-    // book.image = result.url;
-    await book.save();
-    return res.sendStatus(204);
+    if (!req.file) {
+      throw new Error('No files were uploaded');
+    }
+    const book = new Book(req.body);
+    await book.validate();
+
+    const filePath = `assets/products/${
+      uuidv4() + path.extname(req.file.originalname)
+    }`;
+    const blob = firebase.bucket.file(filePath);
+    
+    const blobWriter = blob.createWriteStream({
+      metadata: {
+        contentType: req.file.mimetype
+      }
+    });
+
+    blobWriter.on('error', (err) => {
+      res.status(500).send('Something went wrong!')
+    });
+
+    blobWriter.on('finish', async () => {
+      try {
+        const downloadURL = await getDownloadURL(blob);
+        book.image = downloadURL;
+        await book.save();
+        res.status(200).send('Product created!');
+      } catch (err) {
+        res.status(500).send(err.message);
+      }
+    });
+
+    blobWriter.end(req.file.buffer);
+    return;
   } catch (err) {
     return res.status(400).send(err.message);
   }

@@ -46,9 +46,6 @@ var bookSchema = new mongoose.Schema(
     image: {
       type: String
     },
-    image2: {
-      type: String
-    },
     description: {
       type: String
     },

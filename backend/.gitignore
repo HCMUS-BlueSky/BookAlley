@@ -1,3 +1,4 @@
 node_modules
 .env
 tmp
+config/firebaseServiceCred.json
