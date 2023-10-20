@@ -22,11 +22,13 @@ const authAPI = require('./routes/api/auth');
 const userAPI = require('./routes/api/user');
 const bookAPI = require('./routes/api/book');
 const cartAPI = require('./routes/api/cart');
+const reviewAPI = require('./routes/api/review');
 const { default: mongoose } = require('mongoose')
 app.use('/api/auth', authAPI);
 app.use('/api/user', userAPI);
 app.use('/api/book', bookAPI);
 app.use('/api/cart', cartAPI);
+app.use('/api/review', reviewAPI);
 
 app.all('*', (req, res) => {
   res.status(404)

@@ -8,7 +8,7 @@ const cartSchema = new mongoose.Schema(
     },
     items: [
       {
-        product_id: {
+        product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Book'
         },
@@ -23,9 +23,13 @@ const cartSchema = new mongoose.Schema(
         }
       }
     ],
+    checked_out: {
+      type: Boolean,
+      default: false
+    },
     sub_total: {
       type: Number,
-      min: 0
+      default: 0
     }
   },
   {
@@ -43,5 +47,13 @@ const cartSchema = new mongoose.Schema(
     }
   }
 );
+
+cartSchema.pre('save', function (next) {
+  this.sub_total = 0;
+  for (let item of this.items) {
+    this.sub_total += item.price * item.quantity;
+  }
+  next();
+});
 
 module.exports = mongoose.model('Cart', cartSchema);
