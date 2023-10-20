@@ -7,9 +7,11 @@ const router = express.Router();
 
 router.post('/add-item', isVerified, async (req, res) => {
   const user = req.user;
-  const { product_id } = req.body;
+  const { product_id, quantity } = req.body;
   if (!product_id || typeof product_id !== 'string')
     return res.status(400).send('Invalid id!');
+  if (!quantity || typeof quantity !== 'number')
+    return res.status(400).send('Invalid quantity!');
   try {
     const product = await Book.findById(product_id).exec();
     if (!product) throw new Error('Product does not exist!');
@@ -21,12 +23,12 @@ router.post('/add-item', isVerified, async (req, res) => {
       (p) => p.product == product.id
     );
     if (productIndex > -1) {
-      cart.items[productIndex].quantity += 1;
+      cart.items[productIndex].quantity += quantity;
     } else {
       cart.items.push({
         product: product.id,
         price: product.price,
-        quantity: 1
+        quantity: quantity
       });
     }
     await cart.save();

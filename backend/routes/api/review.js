@@ -3,6 +3,8 @@ const User = require('../../models/User');
 const Review = require('../../models/Review');
 const Book = require('../../models/Book');
 const isVerified = require('../../middleware/isVerified');
+const upload = require('../../middleware/multer');
+const uploadFile = require('../../utils/fileUpload');
 const router = express.Router();
 
 router.get('/:product_id', isVerified, async (req, res) => {
@@ -17,7 +19,8 @@ router.get('/:product_id', isVerified, async (req, res) => {
   }
 });
 
-router.post('/:product_id', isVerified, async (req, res) => {
+router.post('/:product_id', isVerified, upload.array("images", 5), async (req, res) => {
+  if (req?.fileValidationError) return res.status(400).send(req?.fileValidationError.message);
   const product_id = req.params.product_id;
   const user = req.user;
   const { content, rating } = req.body;
@@ -34,6 +37,16 @@ router.post('/:product_id', isVerified, async (req, res) => {
       content: content,
       rating: rating
     });
+    if (req.files) {
+      const urls = []
+      for(let file of req.files) {
+        const url = await uploadFile(`assets/users/${user.id}/reviews`, file);
+        urls.push(url);
+      }
+      for(let url of urls) {
+        review.images.push(url);
+      }
+    }
     await review.save();
     return res.send('Successfully added review!');
   } catch (err) {

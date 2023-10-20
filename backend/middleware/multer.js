@@ -14,11 +14,12 @@ const upload = multer({
 
 const checkFileType = (req, file, cb) => {
   if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|webp|WEBP)$/)) {
-    req.error = new Error('Only images are allowed!');
-    return cb(null, false);
+    req.fileValidationError = new Error('Only images are allowed!');
+    return cb(null, false, req.fileValidationError);
   }
   if (!whitelist.includes(file.mimetype)) {
-    return cb(new Error('Only images are allowed!'));
+    req.fileValidationError = new Error('Only images are allowed!');
+    return cb(null, false, req.fileValidationError);
   }
   return cb(null, true);
 };
