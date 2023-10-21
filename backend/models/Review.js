@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema(
   {
-    user_id: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    product_id : {
+    product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Book'
     },
@@ -22,6 +22,11 @@ const reviewSchema = new mongoose.Schema(
       type: Number,
       min: 0,
       max: 5
+    },
+    likes: {
+      type: Number,
+      min: 0,
+      default: 0
     }
   },
   {

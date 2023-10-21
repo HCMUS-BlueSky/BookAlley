@@ -3,16 +3,26 @@ const User = require('../../models/User');
 const Review = require('../../models/Review');
 const Book = require('../../models/Book');
 const isVerified = require('../../middleware/isVerified');
+const isAdmin = require('../../middleware/isAdmin');
 const upload = require('../../middleware/multer');
 const uploadFile = require('../../utils/fileUpload');
 const router = express.Router();
+
+router.get('/', isAdmin, async (req, res) => {
+  try {
+    const reviews = await Review.find({}).exec();
+    return res.json(reviews);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+});
 
 router.get('/:product_id', isVerified, async (req, res) => {
   const product_id = req.params.product_id;
   try {
     const product_existed = await Book.exists({ _id: product_id }).exec();
     if (!product_existed) throw new Error('Invalid id!');
-    const reviews = await Review.find({ product_id }).exec();
+    const reviews = await Review.find({ product: product_id }).populate("user", "username avatar").exec();
     return res.json(reviews);
   } catch (err) {
     return res.status(400).send(err.message);
@@ -32,18 +42,14 @@ router.post('/:product_id', isVerified, upload.array("images", 5), async (req, r
     const product_existed = await Book.exists({_id: product_id}).exec();
     if (!product_existed) throw new Error("Invalid id!");
     const review = new Review({
-      user_id: user.id,
-      product_id: product_id,
+      user: user.id,
+      product: product_id,
       content: content,
       rating: rating
     });
     if (req.files) {
-      const urls = []
       for(let file of req.files) {
         const url = await uploadFile(`assets/users/${user.id}/reviews`, file);
-        urls.push(url);
-      }
-      for(let url of urls) {
         review.images.push(url);
       }
     }

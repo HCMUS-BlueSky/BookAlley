@@ -69,6 +69,9 @@ const userSchema = new mongoose.Schema(
       },
       default: 'user'
     },
+    avatar: {
+      type: String
+    },
     refresh_token: {
       type: String
     }

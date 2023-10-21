@@ -1,14 +1,37 @@
 const express = require('express');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
+const isVerified = require('../../middleware/isVerified');
 const isAuth = require('../../middleware/isAuth');
+const upload = require('../../middleware/multer');
+const uploadFile = require('../../utils/fileUpload');
 const { sendEmail, genEmailConfirmTemplate} = require("../../utils/sendEmail");
 const router = express.Router();
 
-router.post('/', isAuth, async (req, res) => {
+router.get('/', isAuth, async (req, res) => {
   const user = req.user;
   return res.status(200).json(user);
 });
+
+router.patch('/', isAuth, upload.single("avatar"), async (req, res) => {
+  const user = req.user;
+  const {username, phone, birthdate} = req.body;
+  let avatar;
+  try {
+    if(req.file) {
+      avatar = await uploadFile(`assets/users/${user.id}/avatar`, req.file);
+    }
+    await User.findByIdAndUpdate(user.id, {
+      username,
+      phone,
+      birthdate,
+      avatar
+    });
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
+})
 
 router.post('/send-verify-email', isAuth, async (req, res) => {
   try {

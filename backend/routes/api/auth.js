@@ -5,10 +5,6 @@ const jwt = require("jsonwebtoken");
 const { sendEmail, genPasswordResetTemplate, genEmailConfirmTemplate} = require("../../utils/sendEmail");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Hehe");
-});
-
 router.post("/register", async (req, res) => {
   const { username, password, email } = req.body;
   try {
@@ -66,8 +62,6 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email }).exec();
 
     if (!user) throw new Error("Email or password is incorrect!");
-
-    if (!user.verified) throw new Error('Email is not verified!');
 
     const matched = await bcrypt.compare(password, user.password);
 
