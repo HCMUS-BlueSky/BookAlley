@@ -4,6 +4,7 @@ import axios from "axios";
 import { GetFirebaseUrl } from "../../utils/GetFirebaseUrl";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
+import ReviewsComponent from "../../components/ReviewsComponent";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -114,9 +115,7 @@ const ProductDetailPage = () => {
                 : product.description}
             </p>
           </div>
-          <div className="customer-reviews">
-            <h2>CUSTOMER REVIEWS</h2>
-          </div>
+          <ReviewsComponent />
         </div>
       )}
       <FooterComponent />

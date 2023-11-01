@@ -1,18 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GetFirebaseUrl } from "../utils/GetFirebaseUrl";
 
 const ProductsCardComponent = ({ product }) => {
-  const [photoUrl, setPhotoUrl] = useState("");
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   async function GetPhotoUrl() {
-  //     let url = await GetFirebaseUrl(product.image);
-  //     setPhotoUrl(url);
-  //   }
-  //   GetPhotoUrl();
-  // }, []);
 
   return (
     <div
