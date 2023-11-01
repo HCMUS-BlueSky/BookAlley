@@ -1,7 +1,6 @@
 const express = require('express');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
-const isVerified = require('../../middleware/isVerified');
 const isAuth = require('../../middleware/isAuth');
 const upload = require('../../middleware/multer');
 const uploadFile = require('../../utils/fileUpload');
