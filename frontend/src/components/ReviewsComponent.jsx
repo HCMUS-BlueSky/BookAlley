@@ -26,7 +26,7 @@ const ReviewsComponent = ({ product_id }) => {
 
   const [rating, setRating] = useState(0);
   const [reviewContent, setReviewContent] = useState("");
-  const [reviewImage, setReviewImage] = useState("");
+  const [reviewImage, setReviewImage] = useState();
 
   function openModal() {
     setIsOpen(true);
@@ -49,8 +49,15 @@ const ReviewsComponent = ({ product_id }) => {
         product_id: product_id,
         content: reviewContent,
         rating: rating,
+        images: reviewImage,
       })
     );
+  };
+
+  const onImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setReviewImage(e.target.files);
+    }
   };
 
   return (
@@ -96,7 +103,12 @@ const ReviewsComponent = ({ product_id }) => {
             style={{ width: "500px", outline: "none", fontFamily: "inherit" }}
           ></textarea>
           <label htmlFor="review-images"></label>
-          <input type="file" />
+          <input
+            type="file"
+            onChange={onImageChange}
+            multiple
+            accept="image/png, image/jpeg"
+          />
           <button type="button" className="send-btn" onClick={handleSendReview}>
             Send review
           </button>
