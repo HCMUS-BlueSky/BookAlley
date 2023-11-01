@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Modal from "react-modal";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewReview } from "../actions/reviewsAction";
 
 const customStyles = {
   content: {
@@ -14,10 +16,17 @@ const customStyles = {
 
 Modal.setAppElement();
 
-const ReviewsComponent = () => {
+const ReviewsComponent = ({ product_id }) => {
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.reviews);
+
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
+
+  const [rating, setRating] = useState(0);
+  const [reviewContent, setReviewContent] = useState("");
+  const [reviewImage, setReviewImage] = useState("");
+
   function openModal() {
     setIsOpen(true);
   }
@@ -27,6 +36,19 @@ const ReviewsComponent = () => {
   function closeModal() {
     setIsOpen(false);
   }
+
+  const handleReviewContent = (e) => {
+    setReviewContent(e.target.value);
+  };
+
+  const handleSendReview = () => {
+    dispatch(
+      addNewReview({
+        content: reviewContent,
+        rating: rating,
+      })
+    );
+  };
 
   return (
     <div className="customer-reviews">
@@ -65,12 +87,14 @@ const ReviewsComponent = () => {
             name="review-content"
             id=""
             cols="30"
+            value={reviewContent}
+            onChange={handleReviewContent}
             rows="10"
             style={{ width: "500px", outline: "none", fontFamily: "inherit" }}
           ></textarea>
           <label htmlFor="review-images"></label>
           <input type="file" />
-          <button type="button" className="send-btn">
+          <button type="button" className="send-btn" onClick={handleSendReview}>
             Send review
           </button>
         </form>

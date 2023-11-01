@@ -115,7 +115,7 @@ const ProductDetailPage = () => {
                 : product.description}
             </p>
           </div>
-          <ReviewsComponent />
+          <ReviewsComponent product_id={id} />
         </div>
       )}
       <FooterComponent />
