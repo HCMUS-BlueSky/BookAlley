@@ -1,10 +1,12 @@
 require('dotenv').config();
 const express = require('express');
+const { default: mongoose } = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
 const authentication = require('./middleware/authentication');
+const APIRouter = require('./routes/api');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -18,17 +20,7 @@ app.use(cors())
 app.use(errorHandler)
 app.use(authentication)
 
-const authAPI = require('./routes/api/auth');
-const userAPI = require('./routes/api/user');
-const bookAPI = require('./routes/api/book');
-const cartAPI = require('./routes/api/cart');
-const reviewAPI = require('./routes/api/review');
-const { default: mongoose } = require('mongoose')
-app.use('/api/auth', authAPI);
-app.use('/api/user', userAPI);
-app.use('/api/book', bookAPI);
-app.use('/api/cart', cartAPI);
-app.use('/api/review', reviewAPI);
+app.use('/api', APIRouter);
 
 app.all('*', (req, res) => {
   res.status(404)
