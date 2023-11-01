@@ -8,12 +8,14 @@ const shopSchema = new mongoose.Schema(
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      required: true
     },
     listings: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Book'
+        ref: 'Book',
+        unique: true
       }
     ],
     description: {
