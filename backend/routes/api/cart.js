@@ -1,5 +1,4 @@
 const express = require('express');
-const User = require('../../models/User');
 const Cart = require('../../models/Cart');
 const Book = require('../../models/Book');
 const isVerified = require('../../middleware/isVerified');

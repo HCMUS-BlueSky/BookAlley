@@ -1,14 +1,13 @@
 const express = require("express");
-const User = require("../../models/User");
 const Review = require("../../models/Review");
 const Book = require("../../models/Book");
 const isVerified = require("../../middleware/isVerified");
-const isAdmin = require("../../middleware/isAdmin");
+const hasRoles = require("../../middleware/hasRoles");
 const upload = require("../../middleware/multer");
 const uploadFile = require("../../utils/fileUpload");
 const router = express.Router();
 
-router.get("/", isAdmin, async (req, res) => {
+router.get("/", hasRoles("admin"), async (req, res) => {
   try {
     const reviews = await Review.find({}).exec();
     return res.json(reviews);
@@ -43,7 +42,7 @@ router.post(
     const { content, rating } = req.body;
     if (!content || typeof content !== "string")
       return res.status(400).send("Missing content!");
-    if (!rating || typeof rating !== "string")
+    if (!rating || typeof rating !== "number")
       return res.status(400).send("Missing rating!");
     try {
       const product_existed = await Book.exists({ _id: product_id }).exec();

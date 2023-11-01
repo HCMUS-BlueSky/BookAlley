@@ -2,15 +2,15 @@ const express = require('express');
 const Book = require('../../models/Book');
 const uploadFile = require('../../utils/fileUpload');
 const upload = require('../../middleware/multer');
-const isAuth = require('../../middleware/isAuth');
-const isAdmin = require('../../middleware/isAdmin');
+const isVerified = require('../../middleware/isVerified');
+const hasRoles = require('../../middleware/hasRoles');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   return res.sendStatus(204);
 });
 
-router.post('/', isAdmin, upload.single('image'), async (req, res) => {
+router.post('/', isVerified, hasRoles("seller"), upload.single('image'), async (req, res) => {
   if (req?.fileValidationError) return res.status(400).send(req?.fileValidationError.message);
   try {
     if (!req.file) {
@@ -27,7 +27,7 @@ router.post('/', isAdmin, upload.single('image'), async (req, res) => {
   }
 });
 
-router.patch('/:id', isAdmin, async (req, res) => {
+router.patch('/:id', isVerified, hasRoles("seller"), async (req, res) => {
   const id = req.params.id;
   try {
     const { image, ...filtered } = req.body;
