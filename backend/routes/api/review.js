@@ -42,7 +42,7 @@ router.post(
     const { content, rating } = req.body;
     if (!content || typeof content !== "string")
       return res.status(400).send("Missing content!");
-    if (!rating || typeof rating !== "number")
+    if (!rating || typeof rating !== "string")
       return res.status(400).send("Missing rating!");
     try {
       const product_existed = await Book.exists({ _id: product_id }).exec();
