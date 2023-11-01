@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewReview } from "../actions/reviewsAction";
+import { addNewReview, getProductReview } from "../actions/reviewsAction";
 
 const customStyles = {
   content: {
@@ -18,7 +18,7 @@ Modal.setAppElement();
 
 const ReviewsComponent = ({ product_id }) => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.reviews);
+  const { loading, error, reviews } = useSelector((state) => state.reviews);
   const { userToken } = useSelector((state) => state.auth);
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -60,12 +60,20 @@ const ReviewsComponent = ({ product_id }) => {
     }
   };
 
+  useEffect(() => {
+    dispatch(getProductReview({ product_id: product_id }));
+  }, []);
+
   return (
     <div className="customer-reviews">
       <h2>Reviews</h2>
       <button onClick={openModal} className="add-review-btn">
         Add new review
       </button>
+      {reviews &&
+        reviews.map((review) => {
+          return <p key={review._id}>{review.content}</p>;
+        })}
       <Modal
         isOpen={modalIsOpen}
         onAfterClose={afterOpenModal}

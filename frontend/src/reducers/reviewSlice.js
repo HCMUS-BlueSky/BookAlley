@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addNewReview } from "../actions/reviewsAction";
+import { addNewReview, getProductReview } from "../actions/reviewsAction";
 
 const initialState = {
   loading: false,
@@ -19,6 +19,16 @@ const reviewSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(addNewReview.rejected, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getProductReview.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getProductReview.fulfilled, (state, payload) => {
+      state.loading = false;
+      state.reviews = payload.payload;
+    });
+    builder.addCase(getProductReview.rejected, (state) => {
       state.loading = true;
     });
   },
