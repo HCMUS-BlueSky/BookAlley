@@ -15,9 +15,8 @@ const reviewSlice = createSlice({
     builder.addCase(addNewReview.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(addNewReview.fulfilled, (state, { payload }) => {
+    builder.addCase(addNewReview.fulfilled, (state) => {
       state.loading = false;
-      state.reviews = payload;
     });
     builder.addCase(addNewReview.rejected, (state) => {
       state.loading = true;

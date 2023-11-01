@@ -35,7 +35,7 @@ export const userLogin = createAsyncThunk(
         { email, password },
         config
       );
-      localStorage.setItem("userToken", data.userToken);
+      localStorage.setItem("access_token", data.access_token);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);

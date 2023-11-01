@@ -6,8 +6,8 @@ import {
   userResetPassword,
 } from "../actions/authAction";
 
-const userToken = localStorage.getItem("userToken")
-  ? localStorage.getItem("userToken")
+const userToken = localStorage.getItem("access_token")
+  ? localStorage.getItem("access_token")
   : null;
 
 const initialState = {
@@ -39,8 +39,7 @@ const authSlice = createSlice({
       })
       .addCase(userLogin.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.userInfo = payload;
-        state.userToken = payload.userToken;
+        state.userToken = payload.access_token;
       })
       .addCase(userLogin.rejected, (state, { payload }) => {
         state.loading = false;
