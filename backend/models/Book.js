@@ -44,7 +44,9 @@ const bookSchema = new mongoose.Schema(
       required: true
     },
     image: {
-      type: String
+      type: String,
+      default:
+        'https://firebasestorage.googleapis.com/v0/b/bookalley-b6495.appspot.com/o/assets%2Fdefault%2Fno-image.png?alt=media&token=72bf0771-8a7a-4c54-87cc-614088a80769'
     },
     description: {
       type: String
