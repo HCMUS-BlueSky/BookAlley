@@ -10,7 +10,7 @@ export const getProductsForSeller = createAsyncThunk(
           'Content-Type': 'application/json'
         }
       };
-      let { data } = await axiosInstance.get(`/api/shop/${shop_id}`, config);
+      let { data } = await axiosInstance.get(`/api/shop/get-detail/${shop_id}`, config);
       console.log(data);
       return data;
     } catch (error) {
