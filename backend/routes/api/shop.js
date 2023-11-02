@@ -7,13 +7,37 @@ const router = express.Router();
 
 router.get('/', hasRoles('admin'), async (req, res) => {
   try {
-    const shopes = await Shop.find({}).exec();
-    return res.json(shopes);
+    const shops = await Shop.find({}).exec();
+    return res.json(shops);
   } catch (err) {
     return res.status(500).send(err.message);
   }
 });
 
+router.get('/:shop_id', async (req, res) => {
+  try {
+    const shop_id = req.params.shop_id;
+    const shops = await Shop.findById(shop_id)
+      .populate('listings', 'name image rating price')
+      .exec();
+    return res.json(shops);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+});
+
+router.get('/:shop_id/products', async (req, res) => {
+  try {
+    const shop_id = req.params.shop_id;
+    const shops = await Shop.findById(shop_id)
+      .populate('listings', 'name image rating price')
+      .select('listings')
+      .exec();
+    return res.json(shops);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+});
 // router.post('/', hasRoles('admin'), async (req, res) => {
 //   const {name, owner, description} = req.body;
 //   try {

@@ -77,7 +77,7 @@ router.get('/list-brief', async (req, res) => {
 router.get('/get-detail/:id', async (req, res) => {
   const id = req.params.id;
   try {
-    const book = await Book.findById(id).exec();
+    const book = await Book.findById(id).populate("seller", "name ").exec();
     if (!book) throw new Error("Book doesn't exist!");
     return res.json(book);
   } catch(err) {
