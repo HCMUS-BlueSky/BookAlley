@@ -3,6 +3,7 @@ const User = require('../../models/User');
 const Shop = require('../../models/Shop');
 const Book = require('../../models/Book');
 const hasRoles = require('../../middleware/hasRoles');
+const isVerified = require('../../middleware/isVerified');
 const router = express.Router();
 
 router.get('/', hasRoles('admin'), async (req, res) => {
@@ -29,15 +30,29 @@ router.get('/:shop_id', async (req, res) => {
 router.get('/:shop_id/products', async (req, res) => {
   try {
     const shop_id = req.params.shop_id;
-    const shops = await Shop.findById(shop_id)
+    const products = await Shop.findById(shop_id)
       .populate('listings', 'name image rating price')
       .select('listings')
       .exec();
-    return res.json(shops);
+    return res.json(products);
   } catch (err) {
     return res.status(500).send(err.message);
   }
 });
+
+// router.post('/products', isVerified, hasRoles('seller'), async (req, res) => {
+//   try {
+//     const user = req.user;
+//     console.log(user._id);
+//     const products = await Shop.find({owner: user._id})
+//       .populate('listings', 'name image rating price')
+//       .select('listings')
+//       .exec();
+//     return res.json(products);
+//   } catch (err) {
+//     return res.status(500).send(err.message);
+//   }
+// });
 // router.post('/', hasRoles('admin'), async (req, res) => {
 //   const {name, owner, description} = req.body;
 //   try {
