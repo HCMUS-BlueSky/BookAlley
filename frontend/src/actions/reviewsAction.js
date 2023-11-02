@@ -42,6 +42,7 @@ export const getProductReview = createAsyncThunk(
         },
       };
       let { data } = await axios.get(`/api/review/${product_id}`, config);
+      // data.created_at = await Date.parse(date.created_at);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
