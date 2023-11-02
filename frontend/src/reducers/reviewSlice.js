@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   reviews: [],
   error: null,
+  success: false,
 };
 
 const reviewSlice = createSlice({
@@ -16,6 +17,7 @@ const reviewSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(addNewReview.fulfilled, (state) => {
+      state.success = true;
       state.loading = false;
     });
     builder.addCase(addNewReview.rejected, (state) => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { redirect, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
@@ -19,6 +19,7 @@ const ProductDetailPage = () => {
         let data = await axios.get(`/api/book/get-detail/${id}`);
         setProduct(data.data);
       } catch (error) {
+        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -47,7 +48,7 @@ const ProductDetailPage = () => {
     <>
       <HeaderComponent />
       {loading ? (
-        "Loading..."
+        <h1>Loading...</h1>
       ) : (
         <div className="product-detail">
           <div className="product-detail-card">
