@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 import { axiosInstance } from '../../utils/axios';
-import { GetFirebaseUrl } from "../../utils/GetFirebaseUrl";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import ReviewsComponent from "../../components/ReviewsComponent";
@@ -11,6 +10,7 @@ const ProductDetailPage = () => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -18,9 +18,8 @@ const ProductDetailPage = () => {
       try {
         let data = await axiosInstance.get(`/api/book/get-detail/${id}`);
         setProduct(data.data);
-        let url = await GetFirebaseUrl(data.data.image);
-        setProduct({ ...data.data, image: url });
       } catch (error) {
+        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -39,6 +38,10 @@ const ProductDetailPage = () => {
 
   const increaseValue = () => {
     setCount(count + 1);
+  };
+
+  const handleNavShop = () => {
+    navigate(`/seller/${product.seller._id}`);
   };
 
   return (
@@ -62,6 +65,16 @@ const ProductDetailPage = () => {
                 {product.price && product.price.toLocaleString("en-US")}
                 <span>đ</span>
               </p>
+              <div className="shop">
+                <p>Cửa hàng: {product.seller && product.seller.name}</p>
+                <button
+                  type="button"
+                  className="shop-btn"
+                  onClick={handleNavShop}
+                >
+                  <p>Xem Shop</p>
+                </button>
+              </div>
               {/* <p className="rating">{product.rating}</p> */}
               <div className="btn">
                 <div className="value-btn" onClick={decreaseValue}>

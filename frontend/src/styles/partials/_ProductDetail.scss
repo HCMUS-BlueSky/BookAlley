@@ -45,6 +45,19 @@
         font-size: 24px;
       }
     }
+    .shop {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      .shop-btn {
+        background-color: #4e6975;
+        color: $white;
+        cursor: pointer;
+        padding: 10px 15px;
+        border: 1px solid rgba(0, 0, 0, 0.09);
+        border-radius: 10px;
+      }
+    }
     .btn {
       display: flex;
       gap: 10px;

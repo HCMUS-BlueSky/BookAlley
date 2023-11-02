@@ -40,6 +40,10 @@ export const routes = [
     path: "/seller",
     page: SellerPage,
   },
+  {
+    path: "/seller/:shop_id",
+    page: SellerPage,
+  },
 ];
 
 export default routes;

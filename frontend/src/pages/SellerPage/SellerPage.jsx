@@ -3,14 +3,17 @@ import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import CategoriesComponent from "../../components/CategoriesComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../actions/productsAction";
 import ProductsCardComponent from "../../components/ProductCardComponent";
+
+import { useParams } from "react-router-dom";
+import { getProductsForSeller } from "../../actions/shopAction";
 
 const SellerPage = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.products);
+  const { shop_id } = useParams();
+  const { infos } = useSelector((state) => state.shop);
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getProductsForSeller({ shop_id: shop_id }));
   }, []);
   const sidebarNavs = [
     "Home",
@@ -30,6 +33,10 @@ const SellerPage = () => {
           <CategoriesComponent tags={sidebarNavs} />
         </div>
         <div className="right">
+          <div className="info">
+            <h2>{infos.name}</h2>
+            <p>{infos.description}</p>
+          </div>
           <div className="analytic">
             <h2>Analytic</h2>
             <p>Total order this month</p>
@@ -48,8 +55,8 @@ const SellerPage = () => {
           <h2>Products</h2>
           <button type="button">Add new book</button>
           <div className="product-cards">
-            {products &&
-              products.map((product) => {
+            {infos.listings &&
+              infos.listings.map((product) => {
                 return (
                   <ProductsCardComponent key={product._id} product={product} />
                 );
