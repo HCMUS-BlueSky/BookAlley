@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewReview, getProductReview } from "../actions/reviewsAction";
+import ReviewCardComponent from "./ReviewCardComponent";
 
 const customStyles = {
   content: {
@@ -62,6 +63,7 @@ const ReviewsComponent = ({ product_id }) => {
 
   useEffect(() => {
     dispatch(getProductReview({ product_id: product_id }));
+    console.log(reviews);
   }, []);
 
   return (
@@ -72,7 +74,7 @@ const ReviewsComponent = ({ product_id }) => {
       </button>
       {reviews &&
         reviews.map((review) => {
-          return <p key={review._id}>{review.content}</p>;
+          return <ReviewCardComponent key={review._id} review={review} />;
         })}
       <Modal
         isOpen={modalIsOpen}
