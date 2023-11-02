@@ -1,16 +1,16 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { axiosInstance } from '../utils/axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getProductsForSeller = createAsyncThunk(
-  "products/seller",
+  'products/seller',
   async ({ shop_id }) => {
     try {
       const config = {
         headers: {
-          "Content-Type": "application/json",
-        },
+          'Content-Type': 'application/json'
+        }
       };
-      let { data } = await axios.get(`/api/shop/${shop_id}`, config);
+      let { data } = await axiosInstance.get(`/api/shop/${shop_id}`, config);
       console.log(data);
       return data;
     } catch (error) {
