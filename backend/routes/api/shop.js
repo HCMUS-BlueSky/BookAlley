@@ -15,26 +15,25 @@ router.get('/', hasRoles('admin'), async (req, res) => {
   }
 });
 
-router.get('/:shop_id', async (req, res) => {
+router.get('/get-detail', isVerified, hasRoles('seller', 'admin'), async (req, res) => {
   try {
-    const shop_id = req.params.shop_id;
-    const shops = await Shop.findById(shop_id)
+    const seller = req.user;
+    const shop = await Shop.find({owner: seller.id})
       .populate('listings', 'name image rating price')
       .exec();
-    return res.json(shops);
+    return res.json(shop);
   } catch (err) {
     return res.status(500).send(err.message);
   }
 });
 
-router.get('/:shop_id/products', async (req, res) => {
+router.get('/get-detail/:shop_id', async (req, res) => {
   try {
     const shop_id = req.params.shop_id;
-    const products = await Shop.findById(shop_id)
+    const shop = await Shop.findById(shop_id)
       .populate('listings', 'name image rating price')
-      .select('listings')
       .exec();
-    return res.json(products);
+    return res.json(shop);
   } catch (err) {
     return res.status(500).send(err.message);
   }
