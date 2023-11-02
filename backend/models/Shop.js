@@ -25,6 +25,11 @@ const shopSchema = new mongoose.Schema(
     ],
     description: {
       type: String
+    },
+    followers: {
+      type: Number,
+      min: 0,
+      default: 0
     }
   },
   {
@@ -33,6 +38,11 @@ const shopSchema = new mongoose.Schema(
       id: {
         get() {
           return this._id;
+        }
+      },
+      product_count: {
+        get() {
+          return this.listings.length;
         }
       }
     },
