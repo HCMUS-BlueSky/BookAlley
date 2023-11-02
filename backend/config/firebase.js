@@ -1,7 +1,7 @@
 const admin = require('firebase-admin');
 
 const firebaseConfig = {
-  credential: admin.credential.cert('./config/firebaseServiceCred.json'),
+  credential: admin.credential.cert('firebaseServiceCred.json'),
   storageBucket: 'bookalley-b6495.appspot.com'
 };
 
