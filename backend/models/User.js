@@ -70,7 +70,9 @@ const userSchema = new mongoose.Schema(
       default: 'user'
     },
     avatar: {
-      type: String
+      type: String,
+      default:
+        'https://firebasestorage.googleapis.com/v0/b/bookalley-b6495.appspot.com/o/assets%2Fusers%2F10a18b60-5119-42df-a529-7553a34c13b3.png?alt=media&token=4163719c-2ed2-4341-a315-55ad814111da'
     },
     refresh_token: {
       type: String
