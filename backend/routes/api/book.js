@@ -50,8 +50,24 @@ router.get('/tags', async (req, res) => {
 })
 
 router.get('/list-brief', async (req, res) => {
+
   try {
-    const list = await Book.find({}, 'name image rating price').exec();
+    const amount = parseInt(req.query.amount);
+    let list;
+    if (!amount) {
+      list = await Book.find({}, 'name image rating price').exec();
+    } else {
+      list = await Book.aggregate([
+        {
+          $project: {
+            name: 1,
+            image: 1,
+            rating: 1,
+            price: 1,
+          }
+        }
+      ]).sample(amount);
+    }
     return res.send(list);
   } catch (err) {
     return res.status(500).send(err.message)
