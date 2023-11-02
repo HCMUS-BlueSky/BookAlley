@@ -1,10 +1,7 @@
 @import "../global.scss";
 
-.wrapper {
+.main {
   display: flex;
-  padding: 15px 85px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    url("/images/bg-log.jpg");
   gap: 10px;
   .left {
     width: 20%;

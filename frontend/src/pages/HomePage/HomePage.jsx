@@ -16,24 +16,35 @@ const HomePage = () => {
   return (
     <>
       <HeaderComponent />
-      <div className="wrapper">
-        <div className="left">
-          <CategoriesComponent header={true} tags={tags.tags} />
-        </div>
-        <div className="right">
-          <img src="./images/Banner_01.png" alt="" />
-          <div className="products">
-            <h2>SORT BY</h2>
-            <div className="product-cards">
-              {products &&
-                products.map((product) => {
-                  return (
-                    <ProductsCardComponent
-                      key={product._id}
-                      product={product}
-                    />
-                  );
-                })}
+      <div
+        className="container-fluid"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("/images/bg-log.jpg")`,
+          paddingTop: "0.5rem",
+          paddingBottom: "0.5rem",
+        }}
+      >
+        <div className="container main">
+          <div className="left">
+            <div className="container">
+              <CategoriesComponent header={true} tags={tags.tags} />
+            </div>
+          </div>
+          <div className="right">
+            <img src="./images/Banner_01.png" alt="" />
+            <div className="products">
+              <h2>SORT BY</h2>
+              <div className="product-cards">
+                {products &&
+                  products.map((product) => {
+                    return (
+                      <ProductsCardComponent
+                        key={product._id}
+                        product={product}
+                      />
+                    );
+                  })}
+              </div>
             </div>
           </div>
         </div>
