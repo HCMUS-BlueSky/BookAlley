@@ -7,6 +7,7 @@ const connectDB = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
 const authentication = require('./middleware/authentication');
 const APIRouter = require('./routes/api');
+const corsOptions = require('./config/cors');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -15,7 +16,7 @@ connectDB()
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());
-app.use(cors())
+app.use(cors(corsOptions));
 // Error handler
 app.use(errorHandler)
 app.use(authentication)

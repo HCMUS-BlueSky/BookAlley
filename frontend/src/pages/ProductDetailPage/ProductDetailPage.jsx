@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { axiosInstance } from '../../utils/axios';
 import { GetFirebaseUrl } from "../../utils/GetFirebaseUrl";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
@@ -16,7 +16,7 @@ const ProductDetailPage = () => {
     setLoading(true);
     async function fetchData() {
       try {
-        let data = await axios.get(`/api/book/get-detail/${id}`);
+        let data = await axiosInstance.get(`/api/book/get-detail/${id}`);
         setProduct(data.data);
         let url = await GetFirebaseUrl(data.data.image);
         setProduct({ ...data.data, image: url });
