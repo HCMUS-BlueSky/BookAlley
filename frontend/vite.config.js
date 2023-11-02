@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://book-alley-api.onrender.com/api',
+        target: 'https://book-alley-api.onrender.com',
         changeOrigin: true,
         secure: false,
         ws: true

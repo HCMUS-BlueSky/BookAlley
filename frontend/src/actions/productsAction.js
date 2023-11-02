@@ -1,4 +1,4 @@
-import axios from "axios";
+import { axiosInstance } from '../utils/axios';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getCategories = createAsyncThunk("categoris", async () => {
@@ -8,7 +8,7 @@ export const getCategories = createAsyncThunk("categoris", async () => {
         "Content-Type": "application/json",
       },
     };
-    let { data } = await axios.get(`api/book/tags`, config);
+    let { data } = await axiosInstance.get(`api/book/tags`, config);
     return data;
   } catch (error) {
     return error;
@@ -22,7 +22,7 @@ export const getProducts = createAsyncThunk("products", async () => {
         "Content-Type": "application/json",
       },
     };
-    let { data } = await axios.get(`api/book/list-brief`, config);
+    let { data } = await axiosInstance.get(`api/book/list-brief`, config);
     return data;
   } catch (error) {
     return error;

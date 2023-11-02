@@ -1,4 +1,4 @@
-import axios from "axios";
+import { axiosInstance } from '../utils/axios';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addNewReview = createAsyncThunk(
@@ -20,7 +20,7 @@ export const addNewReview = createAsyncThunk(
       }
       formData.append("content", content);
       formData.append("rating", rating);
-      const { data } = await axios.post(
+      const { data } = await axiosInstance.post(
         `/api/review/${product_id}`,
         formData,
         config
@@ -41,7 +41,7 @@ export const getProductReview = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      let { data } = await axios.get(`/api/review/${product_id}`, config);
+      let { data } = await axiosInstance.get(`/api/review/${product_id}`, config);
       // data.created_at = await Date.parse(date.created_at);
       return data;
     } catch (error) {
