@@ -1,4 +1,4 @@
-import { axiosInstance } from '../utils/axios';
+import { axiosInstance, axiosPublicInstance } from '../utils/axios';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const registerUser = createAsyncThunk(
@@ -43,6 +43,19 @@ export const userLogin = createAsyncThunk(
   }
 );
 
+export const refreshToken = createAsyncThunk(
+  'auth/refresh',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPublicInstance.post(`/api/auth/refresh`);
+      // localStorage.setItem('access_token', data.access_token);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const userForgotPassword = createAsyncThunk(
   "auth/forgot-password",
   async ({ email }, { rejectWithValue }) => {
@@ -52,7 +65,7 @@ export const userForgotPassword = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.post(
+      const { data } = await axiosPublicInstance.post(
         `/api/auth/forgot-password`,
         { email },
         config
@@ -73,7 +86,7 @@ export const userResetPassword = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.post(
+      const { data } = await axiosPublicInstance.post(
         `/api/auth/reset-password`,
         { id, token, new_password },
         config

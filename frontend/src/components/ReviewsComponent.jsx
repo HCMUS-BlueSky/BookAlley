@@ -20,8 +20,7 @@ Modal.setAppElement();
 const ReviewsComponent = ({ product_id }) => {
   const dispatch = useDispatch();
   const { loading, error, reviews } = useSelector((state) => state.reviews);
-  const { userToken } = useSelector((state) => state.auth);
-
+  
   const [modalIsOpen, setIsOpen] = useState(false);
   const [hover, setHover] = useState(0);
 
@@ -46,7 +45,6 @@ const ReviewsComponent = ({ product_id }) => {
   const handleSendReview = () => {
     dispatch(
       addNewReview({
-        access_token: userToken,
         product_id: product_id,
         content: reviewContent,
         rating: rating,

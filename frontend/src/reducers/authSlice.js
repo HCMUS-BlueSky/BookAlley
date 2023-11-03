@@ -4,18 +4,19 @@ import {
   userLogin,
   userForgotPassword,
   userResetPassword,
+  refreshToken,
 } from "../actions/authAction";
 
-const userToken = localStorage.getItem("access_token")
-  ? localStorage.getItem("access_token")
+const access_token = localStorage.getItem('access_token')
+  ? localStorage.getItem('access_token')
   : null;
 
 const initialState = {
   loading: false,
   userInfo: null,
-  userToken,
+  access_token,
   error: null,
-  success: false,
+  success: false
 };
 
 const authSlice = createSlice({
@@ -27,7 +28,7 @@ const authSlice = createSlice({
       .addCase(registerUser.pending, (state) => {
         (state.loading = true), (state.error = null);
       })
-      .addCase(registerUser.fulfilled, (state, { payload }) => {
+      .addCase(registerUser.fulfilled, (state) => {
         (state.loading = false), (state.success = true);
       })
       .addCase(registerUser.rejected, (state, { payload }) => {
@@ -39,7 +40,7 @@ const authSlice = createSlice({
       })
       .addCase(userLogin.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.userToken = payload.access_token;
+        state.access_token = payload.access_token;
       })
       .addCase(userLogin.rejected, (state, { payload }) => {
         state.loading = false;
@@ -49,7 +50,7 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(userForgotPassword.fulfilled, (state, { payload }) => {
+      .addCase(userForgotPassword.fulfilled, (state) => {
         state.loading = false;
       })
       .addCase(userForgotPassword.rejected, (state, { payload }) => {
@@ -60,10 +61,22 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(userResetPassword.fulfilled, (state, { payload }) => {
+      .addCase(userResetPassword.fulfilled, (state) => {
         state.loading = false;
       })
       .addCase(userResetPassword.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
+      .addCase(refreshToken.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(refreshToken.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.access_token = payload.access_token;
+      })
+      .addCase(refreshToken.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
       });

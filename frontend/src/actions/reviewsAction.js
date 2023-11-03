@@ -1,17 +1,16 @@
-import { axiosInstance } from '../utils/axios';
+import { axiosInstance, axiosPublicInstance } from '../utils/axios';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addNewReview = createAsyncThunk(
   "add-review",
   async (
-    { access_token, product_id, content, rating, images },
+    { product_id, content, rating, images },
     { rejectWithValue }
   ) => {
     try {
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${access_token}`,
         },
       };
       const formData = new FormData();
@@ -34,14 +33,17 @@ export const addNewReview = createAsyncThunk(
 
 export const getProductReview = createAsyncThunk(
   "get-review",
-  async ({ product_id }) => {
+  async ({ product_id },  { rejectWithValue }) => {
     try {
       const config = {
         headers: {
           "Content-Type": "application/json",
         },
       };
-      let { data } = await axiosInstance.get(`/api/review/${product_id}`, config);
+      let { data } = await axiosPublicInstance.get(
+        `/api/review/${product_id}`,
+        config
+      );
       // data.created_at = await Date.parse(date.created_at);
       return data;
     } catch (error) {
