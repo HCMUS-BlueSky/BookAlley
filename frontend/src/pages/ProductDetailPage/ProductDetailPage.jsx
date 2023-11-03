@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { redirect, useNavigate, useParams } from 'react-router-dom';
-import { axiosInstance } from '../../utils/axios';
+import { redirect, useNavigate, useParams } from "react-router-dom";
+import { axiosInstance } from "../../utils/axios";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import ReviewsComponent from "../../components/ReviewsComponent";
@@ -47,90 +47,103 @@ const ProductDetailPage = () => {
   return (
     <>
       <HeaderComponent />
-      {loading ? (
-        <h1>Loading...</h1>
-      ) : (
-        <div className="product-detail">
-          <div className="product-detail-card">
-            <div className="product-image">
-              <img src={product.image} alt="" />
-            </div>
-            <div className="detail-info">
-              <h2>{product.name}</h2>
-              <p className="author">Author: {product.author}</p>
-              {product.translator && (
-                <p className="translator">Translator: {product.translator}</p>
-              )}
-              <p className="price">
-                {product.price && product.price.toLocaleString("en-US")}
-                <span>đ</span>
-              </p>
-              <div className="shop">
-                <p>Cửa hàng: {product.seller && product.seller.name}</p>
-                <button
-                  type="button"
-                  className="shop-btn"
-                  onClick={handleNavShop}
-                >
-                  <p>Xem Shop</p>
-                </button>
-              </div>
-              {/* <p className="rating">{product.rating}</p> */}
-              <div className="btn">
-                <div className="value-btn" onClick={decreaseValue}>
-                  -
+      <div
+        className="container-fluid"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("/images/bg-log.jpg")`,
+          paddingTop: "0.5rem",
+          paddingBottom: "0.5rem",
+        }}
+      >
+        <div className="container product-detail">
+          {loading ? (
+            <h1>Loading...</h1>
+          ) : (
+            <>
+              <div className="product-card">
+                <div className="col">
+                  <img src={product.image} alt="" />
                 </div>
-                <input
-                  type="number"
-                  id="number"
-                  value={count}
-                  onChange={handleCountChange}
-                />
-                <div className="value-btn" onClick={increaseValue}>
-                  +
+                <div className="product-info">
+                  <h2>{product.name}</h2>
+                  <p className="author">Author: {product.author}</p>
+                  {product.translator && (
+                    <p className="translator">
+                      Translator: {product.translator}
+                    </p>
+                  )}
+                  <p className="price">
+                    {product.price && product.price.toLocaleString("en-US")}
+                    <span>đ</span>
+                  </p>
+                  {/* <div className="shop">
+                    <p>Cửa hàng: {product.seller && product.seller.name}</p>
+                    <button
+                      type="button"
+                      className="shop-btn"
+                      onClick={handleNavShop}
+                    >
+                      <p>Xem Shop</p>
+                    </button>
+                  </div> */}
+                  {/* <p className="rating">{product.rating}</p> */}
+                  <div className="btn">
+                    <div className="value-btn" onClick={decreaseValue}>
+                      -
+                    </div>
+                    <input
+                      type="number"
+                      id="number"
+                      value={count}
+                      onChange={handleCountChange}
+                    />
+                    <div className="value-btn" onClick={increaseValue}>
+                      +
+                    </div>
+                  </div>
+                  <div className="cart-btn">
+                    <button className="buy-btn">Buy</button>
+                    <button className="add-btn">Add to cart</button>
+                  </div>
                 </div>
               </div>
-              <div className="cart-btn">
-                <button className="buy-btn">Buy</button>
-                <button className="add-btn">Add to cart</button>
-              </div>
-            </div>
-          </div>
-          <div className="detail-info">
-            <h2>DETAILS</h2>
-            <div className="info-group">
-              <p>
-                Author: <span>{product.author}</span>
-              </p>
-              {product.translator ? (
-                <p>
-                  Translator: <span>{product.translator}</span>
-                </p>
-              ) : null}
+              <div className="detail-card">
+                <h2>DETAILS</h2>
+                <div className="info-group">
+                  <p>
+                    Author: <span>{product.author}</span>
+                  </p>
+                  {product.translator ? (
+                    <p>
+                      Translator: <span>{product.translator}</span>
+                    </p>
+                  ) : null}
 
-              <p>
-                Publisher: <span>{product.publisher}</span>
-              </p>
-              <p>
-                Publish Date: <span>{product.year_published}</span>
-              </p>
-              <p>
-                Page Count: <span>{product.pages}</span>
-              </p>
-              <p>
-                Dimensions: <span>{product.size}</span>
-              </p>
-            </div>
-            <h2>OVERVIEW</h2>
-            <p className="description">
-              {product.description && product.description.length > 100
-                ? product.description.slice(0, 500) + "..."
-                : product.description}
-            </p>
-          </div>
-          <ReviewsComponent product_id={id} />
+                  <p>
+                    Publisher: <span>{product.publisher}</span>
+                  </p>
+                  <p>
+                    Publish Date: <span>{product.year_published}</span>
+                  </p>
+                  <p>
+                    Page Count: <span>{product.pages}</span>
+                  </p>
+                  <p>
+                    Dimensions: <span>{product.size}</span>
+                  </p>
+                </div>
+                <h2>OVERVIEW</h2>
+                <p className="description">
+                  {product.description && product.description.length > 100
+                    ? product.description.slice(0, 500) + "..."
+                    : product.description}
+                </p>
+              </div>
+              <ReviewsComponent product_id={id} />
+            </>
+          )}
         </div>
-      )}
+      </div>
       <FooterComponent />
     </>
   );
