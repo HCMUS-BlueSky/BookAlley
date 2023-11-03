@@ -7,14 +7,10 @@ import {
   refreshToken,
 } from "../actions/authAction";
 
-const access_token = localStorage.getItem('access_token')
-  ? localStorage.getItem('access_token')
-  : null;
-
 const initialState = {
   loading: false,
   userInfo: null,
-  access_token,
+  access_token: null,
   error: null,
   success: false
 };
