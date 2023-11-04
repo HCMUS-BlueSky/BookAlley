@@ -63,7 +63,6 @@ const ReviewsComponent = ({ product_id }) => {
 
   useEffect(() => {
     dispatch(getProductReview({ product_id: product_id }));
-    console.log(reviews);
   }, []);
 
   return (

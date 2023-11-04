@@ -18,6 +18,7 @@ const ProductDetailPage = () => {
       try {
         let data = await axiosInstance.get(`/api/book/get-detail/${id}`);
         setProduct(data.data);
+        console.log(data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -76,17 +77,6 @@ const ProductDetailPage = () => {
                     {product.price && product.price.toLocaleString("en-US")}
                     <span>đ</span>
                   </p>
-                  {/* <div className="shop">
-                    <p>Cửa hàng: {product.seller && product.seller.name}</p>
-                    <button
-                      type="button"
-                      className="shop-btn"
-                      onClick={handleNavShop}
-                    >
-                      <p>Xem Shop</p>
-                    </button>
-                  </div> */}
-                  {/* <p className="rating">{product.rating}</p> */}
                   <div className="btn">
                     <div className="value-btn" onClick={decreaseValue}>
                       -
@@ -107,37 +97,52 @@ const ProductDetailPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="detail-card">
-                <h2>DETAILS</h2>
-                <div className="info-group">
-                  <p>
-                    Author: <span>{product.author}</span>
-                  </p>
-                  {product.translator ? (
-                    <p>
-                      Translator: <span>{product.translator}</span>
-                    </p>
-                  ) : null}
 
-                  <p>
-                    Publisher: <span>{product.publisher}</span>
-                  </p>
-                  <p>
-                    Publish Date: <span>{product.year_published}</span>
-                  </p>
-                  <p>
-                    Page Count: <span>{product.pages}</span>
-                  </p>
-                  <p>
-                    Dimensions: <span>{product.size}</span>
-                  </p>
+              <div className="detail-info">
+                <div className="left">
+                  <div className="shop-card">
+                    <div className="shop">
+                      <img src="" alt="" />
+                      <p>{product.seller && product.seller.name}</p>
+                      <button type="button">Follow</button>
+                      <button type="button">Chat</button>
+                    </div>
+                  </div>
+                  <div className="detail-card">
+                    <h2>DETAILS</h2>
+                    <p>
+                      Author: <span>{product.author}</span>
+                    </p>
+                    {product.translator ? (
+                      <p>
+                        Translator: <span>{product.translator}</span>
+                      </p>
+                    ) : null}
+
+                    <p>
+                      Publisher: <span>{product.publisher}</span>
+                    </p>
+                    <p>
+                      Publish Date: <span>{product.year_published}</span>
+                    </p>
+                    <p>
+                      Page Count: <span>{product.pages}</span>
+                    </p>
+                    <p>
+                      Dimensions: <span>{product.size}</span>
+                    </p>
+                  </div>
                 </div>
-                <h2>OVERVIEW</h2>
-                <p className="description">
-                  {product.description && product.description.length > 100
-                    ? product.description.slice(0, 500) + "..."
-                    : product.description}
-                </p>
+                <div className="right">
+                  <div className="description-card">
+                    <h2>DESCRIPTION</h2>
+                    <p className="description">
+                      {product.description && product.description.length > 100
+                        ? product.description.slice(0, 500) + "..."
+                        : product.description}
+                    </p>
+                  </div>
+                </div>
               </div>
               <ReviewsComponent product_id={id} />
             </>
