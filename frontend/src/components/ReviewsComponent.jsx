@@ -66,9 +66,9 @@ const ReviewsComponent = ({ product_id }) => {
   return (
     <div className="customer-reviews">
       <h2>Reviews</h2>
-      <button onClick={openModal} className="add-review-btn">
+      {/* <button onClick={openModal} className="add-review-btn">
         Add new review
-      </button>
+      </button> */}
       {reviews &&
         reviews.map((review) => {
           return <ReviewCardComponent key={review._id} review={review} />;

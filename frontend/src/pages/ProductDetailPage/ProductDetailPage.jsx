@@ -18,7 +18,6 @@ const ProductDetailPage = () => {
       try {
         let data = await axiosInstance.get(`/api/book/get-detail/${id}`);
         setProduct(data.data);
-        console.log(data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -101,7 +100,7 @@ const ProductDetailPage = () => {
               <div className="detail-info">
                 <div className="left">
                   <div className="shop-card">
-                    <img src={product.seller.logo} alt="" />
+                    <img src={product.seller && product.seller.logo} alt="" />
                     <div className="shop-info">
                       <p>{product.seller && product.seller.name}</p>
                       <div className="shop-btn">

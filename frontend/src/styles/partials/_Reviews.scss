@@ -1,11 +1,9 @@
 @import "../global.scss";
 
 .customer-reviews {
-  width: 80%;
   border-radius: 15px;
   padding: 30px;
   background-color: $white;
-  margin: 20px 0 20px 0;
   h2 {
     margin-bottom: 20px;
   }
@@ -56,5 +54,33 @@
     border: none;
     cursor: pointer;
     margin-right: 20px;
+  }
+}
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  .user-info {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+    }
+    .info-right {
+      h4 {
+        margin-left: 8px;
+      }
+    }
+  }
+  .date {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .content {
+    font-weight: 600;
   }
 }
