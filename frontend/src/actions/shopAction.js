@@ -1,20 +1,19 @@
-import { axiosPublicInstance } from '../utils/axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { axiosPublicInstance } from "../utils/axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getProductsForSeller = createAsyncThunk(
-  'products/seller',
+  "products/seller",
   async ({ shop_id }) => {
     try {
       const config = {
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       };
       let { data } = await axiosPublicInstance.get(
         `/api/shop/get-detail/${shop_id}`,
         config
       );
-      console.log(data);
       return data;
     } catch (error) {
       return error;
