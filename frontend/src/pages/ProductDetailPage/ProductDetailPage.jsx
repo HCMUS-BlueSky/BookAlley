@@ -101,11 +101,13 @@ const ProductDetailPage = () => {
               <div className="detail-info">
                 <div className="left">
                   <div className="shop-card">
-                    <div className="shop">
-                      <img src="" alt="" />
+                    <img src={product.seller.logo} alt="" />
+                    <div className="shop-info">
                       <p>{product.seller && product.seller.name}</p>
-                      <button type="button">Follow</button>
-                      <button type="button">Chat</button>
+                      <div className="shop-btn">
+                        <button type="button">Follow</button>
+                        <button type="button">Chat</button>
+                      </div>
                     </div>
                   </div>
                   <div className="detail-card">

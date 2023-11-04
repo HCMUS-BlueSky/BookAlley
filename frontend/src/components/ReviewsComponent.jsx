@@ -20,7 +20,7 @@ Modal.setAppElement();
 const ReviewsComponent = ({ product_id }) => {
   const dispatch = useDispatch();
   const { loading, error, reviews } = useSelector((state) => state.reviews);
-  
+
   const [modalIsOpen, setIsOpen] = useState(false);
   const [hover, setHover] = useState(0);
 
