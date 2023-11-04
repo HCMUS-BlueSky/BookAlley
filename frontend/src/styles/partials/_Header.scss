@@ -38,5 +38,12 @@
     display: flex;
     align-items: center;
     gap: 36px;
+    img {
+      width: 80%;
+      height: 80%;
+    }
+    img:hover {
+      color: #a0c3d2;
+    }
   }
 }

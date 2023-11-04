@@ -1,0 +1,40 @@
+@import "../global.scss";
+
+.seller-add {
+  .general-info-card {
+    background-color: $white;
+    padding: 20px 60px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    label {
+      font-weight: 600;
+    }
+    input {
+      width: 100%;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      padding: 10px;
+    }
+  }
+  .detail-card {
+    background-color: $white;
+    padding: 20px 60px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    form {
+      label {
+        display: block;
+        font-weight: 600;
+      }
+      input {
+        width: 80%;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        padding: 10px;
+      }
+    }
+  }
+}
