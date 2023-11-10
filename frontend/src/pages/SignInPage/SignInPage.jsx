@@ -6,9 +6,10 @@ import { Link } from "react-router-dom";
 
 const SignInPage = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+  const { access_token, loading, error } = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -20,9 +21,14 @@ const SignInPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(email, password);
     dispatch(userLogin({ email, password }));
   };
+
+  useEffect(() => {
+    if (access_token !== null) {
+      navigate("/");
+    }
+  }, [access_token, navigate]);
 
   return (
     <div className="auth">

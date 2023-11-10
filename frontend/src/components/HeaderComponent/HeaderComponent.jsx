@@ -5,6 +5,7 @@ import { cartTotalSelector } from "../../reducers/cart/cartSelectors";
 
 const HeaderComponent = () => {
   const totalCart = useSelector(cartTotalSelector);
+  const { access_token } = useSelector((state) => state.auth);
   const [openAccount, setOpenAccount] = useState(false);
 
   return (
@@ -33,23 +34,26 @@ const HeaderComponent = () => {
               <img src="/images/Cart.png" alt="" />
             </div>
           </Link>
-          <Link to="/signin">
-            <img src="/images/Account.png" alt="" />
-          </Link>
-          {/* <div
-            className="account"
-            onMouseEnter={() => setOpenAccount(true)}
-            onMouseLeave={() => setOpenAccount(false)}
-          >
-            <img src="/images/Account.png" alt="" />
-            {openAccount && (
-              <div class="account-content">
-                <a href="#">Profile</a>
-                <a href="#">My orders</a>
-                <a href="#">Log out</a>
-              </div>
-            )}
-          </div> */}
+          {access_token ? (
+            <div
+              className="account"
+              onMouseEnter={() => setOpenAccount(true)}
+              onMouseLeave={() => setOpenAccount(false)}
+            >
+              <img src="/images/Account.png" alt="" />
+              {openAccount && (
+                <div class="account-content">
+                  <a href="#">Profile</a>
+                  <a href="#">My orders</a>
+                  <a href="#">Log out</a>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link to="/signin">
+              <img src="/images/Account.png" alt="" />
+            </Link>
+          )}
         </div>
       </div>
     </>
