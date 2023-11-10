@@ -26,9 +26,7 @@ const HomePage = () => {
       >
         <div className="container main">
           <div className="left">
-            <div className="container">
-              <CategoriesComponent header={true} tags={tags.tags} />
-            </div>
+            <CategoriesComponent header={true} tags={tags.tags} />
           </div>
           <div className="right">
             <img src="./images/Banner_01.png" alt="" />

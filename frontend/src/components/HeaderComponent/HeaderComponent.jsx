@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { cartTotalSelector } from "../../reducers/cart/cartSelectors";
 
 const HeaderComponent = () => {
   const totalCart = useSelector(cartTotalSelector);
+  const [openAccount, setOpenAccount] = useState(false);
 
   return (
     <>
@@ -33,10 +34,22 @@ const HeaderComponent = () => {
             </div>
           </Link>
           <Link to="/signin">
-            <a href="">
-              <img src="/images/Account.png" alt="" />
-            </a>
+            <img src="/images/Account.png" alt="" />
           </Link>
+          {/* <div
+            className="account"
+            onMouseEnter={() => setOpenAccount(true)}
+            onMouseLeave={() => setOpenAccount(false)}
+          >
+            <img src="/images/Account.png" alt="" />
+            {openAccount && (
+              <div class="account-content">
+                <a href="#">Profile</a>
+                <a href="#">My orders</a>
+                <a href="#">Log out</a>
+              </div>
+            )}
+          </div> */}
         </div>
       </div>
     </>
