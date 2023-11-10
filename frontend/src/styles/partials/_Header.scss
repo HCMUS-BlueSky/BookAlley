@@ -38,6 +38,23 @@
     display: flex;
     align-items: center;
     gap: 36px;
+    .icon-wrapper {
+      position: relative;
+      .bubble {
+        color: rgb(255, 255, 255);
+        background: rgb(255, 66, 79);
+        height: 16px;
+        right: 0px;
+        top: -8px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 150%;
+        position: absolute;
+        padding: 2px 6px;
+      }
+    }
     img {
       width: 80%;
       height: 80%;

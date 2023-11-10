@@ -1,8 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 import authReducer from "./reducers/authSlice.js";
 import productSlice from "./reducers/productSlice.js";
 import reviewSlice from "./reducers/reviewSlice.js";
 import shopSlice from "./reducers/shopSlice.js";
+import cartSlice from "./reducers/cartSlice.js";
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     products: productSlice,
     reviews: reviewSlice,
     shop: shopSlice,
+    cart: cartSlice,
   },
 });

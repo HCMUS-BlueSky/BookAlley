@@ -4,6 +4,8 @@ import { axiosInstance } from "../../utils/axios";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import ReviewsComponent from "../../components/ReviewsComponent";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../reducers/cartSlice";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -11,6 +13,7 @@ const ProductDetailPage = () => {
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLoading(true);
@@ -92,7 +95,14 @@ const ProductDetailPage = () => {
                   </div>
                   <div className="cart-btn">
                     <button className="buy-btn">Buy</button>
-                    <button className="add-btn">Add to cart</button>
+                    <button
+                      className="add-btn"
+                      onClick={() => {
+                        dispatch(addToCart(product));
+                      }}
+                    >
+                      Add to cart
+                    </button>
                   </div>
                 </div>
               </div>

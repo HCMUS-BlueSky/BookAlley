@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "../../actions/authAction";
+import { Link } from "react-router-dom";
 
 const SignUpPage = () => {
   const { loading, error } = useSelector((state) => state.auth);
@@ -62,7 +63,7 @@ const SignUpPage = () => {
           </button>
         </form>
         <p>
-          Already have an account? <a href="">Sign in</a>
+          Already have an account? <Link to="/signin">Sign in</Link>
         </p>
       </div>
     </div>

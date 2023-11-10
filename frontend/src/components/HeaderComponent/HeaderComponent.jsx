@@ -1,6 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const HeaderComponent = () => {
+  const cartSelector = useSelector((state) => state.cart);
+
   return (
     <>
       <div className="container header" style={{ backgroundColor: "#fff" }}>
@@ -22,11 +26,16 @@ const HeaderComponent = () => {
             <img src="/images/Chat.png" alt="" />
           </a>
           <a href="">
-            <img src="/images/Cart.png" alt="" />
+            <div className="icon-wrapper">
+              <div className="bubble">{cartSelector.length}</div>
+              <img src="/images/Cart.png" alt="" />
+            </div>
           </a>
-          <a href="">
-            <img src="/images/Account.png" alt="" />
-          </a>
+          <Link to="/signin">
+            <a href="">
+              <img src="/images/Account.png" alt="" />
+            </a>
+          </Link>
         </div>
       </div>
     </>

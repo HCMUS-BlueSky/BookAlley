@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../actions/authAction";
+import { Link } from "react-router-dom";
 
 const SignInPage = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const SignInPage = () => {
           </button>
         </form>
         <p>
-          Don't have an account? Register<a href=""> now</a>
+          Don't have an account? Register <Link to="/signup">now</Link>
         </p>
       </div>
     </div>
