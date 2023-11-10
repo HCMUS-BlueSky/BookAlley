@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { cartTotalSelector } from "../../reducers/cart/cartSelectors";
+import { logout } from "../../reducers/authSlice";
 
 const HeaderComponent = () => {
   const totalCart = useSelector(cartTotalSelector);
   const { access_token } = useSelector((state) => state.auth);
   const [openAccount, setOpenAccount] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -44,8 +46,8 @@ const HeaderComponent = () => {
               {openAccount && (
                 <div class="account-content">
                   <a href="#">Profile</a>
-                  <a href="#">My orders</a>
-                  <a href="#">Log out</a>
+                  <Link to="/cart">My orders</Link>
+                  <a onClick={() => dispatch(logout())}>Log out</a>
                 </div>
               )}
             </div>
