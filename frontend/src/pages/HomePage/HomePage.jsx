@@ -9,10 +9,12 @@ import CategoriesComponent from "../../components/CategoriesComponent";
 const HomePage = () => {
   const dispatch = useDispatch();
   const { tags, products } = useSelector((state) => state.products);
+
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
   }, []);
+
   return (
     <>
       <HeaderComponent />
