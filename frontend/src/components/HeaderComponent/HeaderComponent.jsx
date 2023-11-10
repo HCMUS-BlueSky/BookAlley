@@ -26,12 +26,12 @@ const HeaderComponent = () => {
           <a href="">
             <img src="/images/Chat.png" alt="" />
           </a>
-          <a href="">
+          <Link to="/cart">
             <div className="icon-wrapper">
               <div className="bubble">{totalCart}</div>
               <img src="/images/Cart.png" alt="" />
             </div>
-          </a>
+          </Link>
           <Link to="/signin">
             <a href="">
               <img src="/images/Account.png" alt="" />

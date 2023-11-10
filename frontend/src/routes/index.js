@@ -7,6 +7,7 @@ import ResetPasswordPage from "../pages/ResetPasswordPage/ResetPassword";
 import ProductDetailPage from "../pages/ProductDetailPage/ProductDetailPage";
 import SellerPage from "../pages/SellerPage/SellerPage";
 import AddProductPage from "../pages/SellerPage/AddProductPage";
+import CartPage from "../pages/CartPage/CartPage";
 
 export const routes = [
   {
@@ -48,6 +49,10 @@ export const routes = [
   {
     path: "/seller/:shop_id/add",
     page: AddProductPage,
+  },
+  {
+    path: "/cart",
+    page: CartPage,
   },
 ];
 

@@ -1,0 +1,61 @@
+@import "../global.scss";
+
+.cart {
+  display: flex;
+  gap: 12px;
+  .cart-product {
+    width: 70%;
+    background-color: $white;
+    padding: 20px 15px;
+    border-radius: 10px;
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      .product {
+        width: 390px;
+      }
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .name-image {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        width: 390px;
+        img {
+          width: 110px;
+          height: 110px;
+        }
+      }
+    }
+  }
+  .cart-main {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    .delivery {
+      background-color: $white;
+      padding: 20px 15px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .voucher {
+      background-color: $white;
+      padding: 20px 15px;
+      border-radius: 10px;
+      h3 {
+        margin-bottom: 24px;
+      }
+    }
+    .total {
+      background-color: $white;
+      padding: 20px 15px;
+      border-radius: 10px;
+    }
+  }
+}
