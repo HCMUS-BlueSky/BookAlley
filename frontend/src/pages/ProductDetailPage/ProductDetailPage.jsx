@@ -5,7 +5,7 @@ import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import ReviewsComponent from "../../components/ReviewsComponent";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../reducers/cartSlice";
+import { addToCart } from "../../reducers/cart/cartSlice";
 
 const ProductDetailPage = () => {
   const { id } = useParams();

@@ -3,7 +3,7 @@ import authReducer from "./reducers/authSlice.js";
 import productSlice from "./reducers/productSlice.js";
 import reviewSlice from "./reducers/reviewSlice.js";
 import shopSlice from "./reducers/shopSlice.js";
-import cartSlice from "./reducers/cartSlice.js";
+import cartSlice from "./reducers/cart/cartSlice.js";
 
 export default configureStore({
   reducer: {

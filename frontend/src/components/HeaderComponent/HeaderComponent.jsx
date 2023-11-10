@@ -1,9 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { cartTotalSelector } from "../../reducers/cart/cartSelectors";
 
 const HeaderComponent = () => {
-  const cartSelector = useSelector((state) => state.cart);
+  const totalCart = useSelector(cartTotalSelector);
 
   return (
     <>
@@ -27,7 +28,7 @@ const HeaderComponent = () => {
           </a>
           <a href="">
             <div className="icon-wrapper">
-              <div className="bubble">{cartSelector.length}</div>
+              <div className="bubble">{totalCart}</div>
               <img src="/images/Cart.png" alt="" />
             </div>
           </a>
