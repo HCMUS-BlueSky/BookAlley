@@ -4,14 +4,15 @@ const Book = require('../../models/Book');
 const isVerified = require('../../middleware/isVerified');
 const router = express.Router();
 
-router.post('/add-item', isVerified, async (req, res) => {
+router.post('/', isVerified, async (req, res) => {
   const user = req.user;
   const { product_id, quantity } = req.body;
   if (!product_id || typeof product_id !== 'string')
     return res.status(400).send('Invalid id!');
-  if (!quantity || typeof quantity !== 'number')
+  if (!quantity || typeof quantity !== 'string')
     return res.status(400).send('Invalid quantity!');
   try {
+    const quantityInt = parseInt(quantity);
     const product = await Book.findById(product_id).exec();
     if (!product) throw new Error('Product does not exist!');
     let cart = await Cart.findOne({ owner: user.id }).exec();
@@ -22,16 +23,43 @@ router.post('/add-item', isVerified, async (req, res) => {
       (p) => p.product == product.id
     );
     if (productIndex > -1) {
-      cart.items[productIndex].quantity += quantity;
+      cart.items[productIndex].quantity += quantityInt;
     } else {
       cart.items.push({
         product: product.id,
         price: product.price,
-        quantity: quantity
+        quantity: quantityInt
       });
     }
     await cart.save();
     return res.send('Item successfully added to cart!');
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
+});
+
+router.delete('/', isVerified, async (req, res) => {
+  const user = req.user;
+  const { product_id, quantity } = req.body;
+  if (!product_id || typeof product_id !== 'string')
+    return res.status(400).send('Invalid id!');
+  if (!quantity || typeof quantity !== 'string')
+    return res.status(400).send('Invalid quantity!');
+  try {
+    const quantityInt = parseInt(quantity);
+    const product = await Book.findById(product_id).exec();
+    if (!product) throw new Error('Product does not exist!');
+    let cart = await Cart.findOne({ owner: user.id }).exec();
+    if (!cart) throw new Error("Cart does not exist!");
+    const productIndex = cart.items.findIndex((p) => p.product == product.id);
+    if (productIndex > -1) {
+      cart.items[productIndex].quantity -= quantityInt;
+    }
+    if (cart.items[productIndex].quantity < 1) {
+      cart.items.splice(productIndex, 1);
+    } 
+    await cart.save();
+    return res.send('Item successfully removed from cart!');
   } catch (err) {
     return res.status(400).send(err.message);
   }

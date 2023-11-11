@@ -6,8 +6,9 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    code: {
-      type: String
+    voucher: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     },
     quantity: {
       type: Number
