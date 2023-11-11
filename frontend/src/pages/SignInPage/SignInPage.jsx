@@ -34,7 +34,7 @@ const SignInPage = () => {
     <div className="auth">
       <div className="container">
         <h1>Login</h1>
-        <form action="">
+        <form action="" onClick={handleLogin}>
           <label htmlFor="email">Email</label>
           <input
             type="text"
@@ -53,9 +53,7 @@ const SignInPage = () => {
             required
           />
           <p className="noti-info">{error}</p>
-          <button type="button" onClick={handleLogin}>
-            {loading ? "Loading..." : "Log In"}
-          </button>
+          <button type="submit">{loading ? "Loading..." : "Log In"}</button>
         </form>
         <p>
           Don't have an account? Register <Link to="/signup">now</Link>
