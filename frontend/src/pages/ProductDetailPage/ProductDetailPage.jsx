@@ -5,13 +5,13 @@ import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import ReviewsComponent from "../../components/ReviewsComponent";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../reducers/cart/cartSlice";
+import { addCart } from "../../actions/cartAction";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -98,7 +98,12 @@ const ProductDetailPage = () => {
                     <button
                       className="add-btn"
                       onClick={() => {
-                        dispatch(addToCart(product));
+                        dispatch(
+                          addCart({
+                            product_id: product._id,
+                            quantity: count.toString(),
+                          })
+                        );
                       }}
                     >
                       Add to cart

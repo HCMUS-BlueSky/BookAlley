@@ -34,7 +34,7 @@ const SignInPage = () => {
     <div className="auth">
       <div className="container">
         <h1>Login</h1>
-        <form action="" onClick={handleLogin}>
+        <form action="" onSubmit={handleLogin}>
           <label htmlFor="email">Email</label>
           <input
             type="text"
