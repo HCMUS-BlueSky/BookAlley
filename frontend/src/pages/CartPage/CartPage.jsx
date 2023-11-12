@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,55 @@ import { getCart, removeItems } from "../../actions/cartAction";
 
 const CartPage = () => {
   const { loading, cart } = useSelector((state) => state.cart);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedAllItems, setSelectedAllItems] = useState(false);
   const dispatch = useDispatch();
+
+  const handleAllCheckboxChange = () => {
+    setSelectedAllItems(() => {
+      const updatedAllItems = !selectedAllItems;
+      if (updatedAllItems) {
+        const allProductIds = cart.items.map(
+          (cartItem) => cartItem.product._id
+        );
+        setSelectedItems(allProductIds);
+      } else {
+        setSelectedItems([]);
+      }
+      return updatedAllItems;
+    });
+  };
+
+  const handleCheckboxChange = (productId) => {
+    if (selectedItems.includes(productId)) {
+      setSelectedItems((prevSelected) => {
+        const updatedSelected = prevSelected.filter((id) => id !== productId);
+        if (selectedAllItems) {
+          setSelectedAllItems(false);
+        }
+        return updatedSelected;
+      });
+    } else {
+      setSelectedItems((prevSelected) => {
+        const updatedSelected = [...prevSelected, productId];
+        if (updatedSelected.length == cart.items.length) {
+          setSelectedAllItems(true);
+        }
+        return updatedSelected;
+      });
+    }
+  };
+
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    cart.items.forEach((cartItem) => {
+      if (selectedItems.includes(cartItem.product._id)) {
+        totalPrice += cartItem.price * cartItem.quantity;
+      }
+    });
+    return totalPrice;
+  };
+
   const handleRemoveToCart = async (product_id, quantity) => {
     const result = await dispatch(
       removeItems({ product_id, quantity: quantity.toString() })
@@ -33,9 +81,13 @@ const CartPage = () => {
           <div className="cart-product">
             <h2>CART</h2>
             <div className="cart-header">
-              <label class="checkmark-container">
+              <label className="checkmark-container">
                 Product
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={selectedAllItems}
+                  onChange={() => handleAllCheckboxChange()}
+                />
                 <span className="checkmark"></span>
               </label>
               <span>Price</span>
@@ -47,10 +99,16 @@ const CartPage = () => {
               cart.items.map((cartItem) => {
                 return (
                   <div className="cart-item" key={cartItem._id}>
-                    <label class="checkmark-container name-image">
+                    <label className="checkmark-container name-image">
                       <img src={cartItem.product.image} alt="" />
                       <p>{cartItem.product.name}</p>
-                      <input type="checkbox" />
+                      <input
+                        type="checkbox"
+                        checked={selectedItems.includes(cartItem.product._id)}
+                        onChange={() =>
+                          handleCheckboxChange(cartItem.product._id)
+                        }
+                      />
                       <span className="checkmark checkmark-center"></span>
                     </label>
                     <span>{cartItem.price}</span>
@@ -80,9 +138,17 @@ const CartPage = () => {
               <p>Choose your voucher</p>
             </div>
             <div className="total">
-              <p>Provisional</p>
+              <div className="total-provisional">
+                <p>Provisional</p>
+                <span>{cart.items && calculateTotalPrice()}đ</span>
+              </div>
+
               <hr />
-              <p>Total</p>
+              <div className="total-count">
+                <p>Total</p>
+                <span>{cart.items && calculateTotalPrice()}đ</span>
+              </div>
+              <button className="checkout-btn">Checkout</button>
             </div>
           </div>
         </div>
