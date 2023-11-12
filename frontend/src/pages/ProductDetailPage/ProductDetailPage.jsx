@@ -5,7 +5,7 @@ import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import ReviewsComponent from "../../components/ReviewsComponent";
 import { useDispatch } from "react-redux";
-import { addCart } from "../../actions/cartAction";
+import { addCart, getCart } from "../../actions/cartAction";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -45,6 +45,15 @@ const ProductDetailPage = () => {
 
   const handleNavShop = () => {
     navigate(`/seller/${product.seller._id}`);
+  };
+
+  const handleAddToCart = async () => {
+    const result = await dispatch(
+      addCart({ product_id: product._id, quantity: count.toString() })
+    );
+    if (addCart.fulfilled.match(result)) {
+      dispatch(getCart());
+    }
   };
 
   return (
@@ -95,17 +104,7 @@ const ProductDetailPage = () => {
                   </div>
                   <div className="cart-btn">
                     <button className="buy-btn">Buy</button>
-                    <button
-                      className="add-btn"
-                      onClick={() => {
-                        dispatch(
-                          addCart({
-                            product_id: product._id,
-                            quantity: count.toString(),
-                          })
-                        );
-                      }}
-                    >
+                    <button className="add-btn" onClick={handleAddToCart}>
                       Add to cart
                     </button>
                   </div>

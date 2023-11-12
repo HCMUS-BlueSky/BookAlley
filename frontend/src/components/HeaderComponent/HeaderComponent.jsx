@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 // import { cartTotalSelector } from "../../reducers/cart/cartSelectors";
 import { logout } from "../../reducers/authSlice";
+import { getCart } from "../../actions/cartAction";
 
 const HeaderComponent = () => {
   // const totalCart = useSelector(cartTotalSelector);
+  const { cart } = useSelector((state) => state.cart);
   const { access_token } = useSelector((state) => state.auth);
   const [openAccount, setOpenAccount] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
 
   return (
     <>
@@ -32,7 +38,7 @@ const HeaderComponent = () => {
           </a>
           <Link to="/cart">
             <div className="icon-wrapper">
-              <div className="bubble">0</div>
+              <div className="bubble">{cart.items && cart.items.length}</div>
               <img src="/images/Cart.png" alt="" />
             </div>
           </Link>
