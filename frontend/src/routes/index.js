@@ -8,6 +8,7 @@ import ProductDetailPage from "../pages/ProductDetailPage/ProductDetailPage";
 import SellerPage from "../pages/SellerPage/SellerPage";
 import AddProductPage from "../pages/SellerPage/AddProductPage";
 import CartPage from "../pages/CartPage/CartPage";
+import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
 
 export const routes = [
   {
@@ -51,8 +52,12 @@ export const routes = [
     page: AddProductPage,
   },
   {
-    path: "/cart",
+    path: "/checkout/cart",
     page: CartPage,
+  },
+  {
+    path: "/checkout/payment",
+    page: CheckoutPage,
   },
 ];
 

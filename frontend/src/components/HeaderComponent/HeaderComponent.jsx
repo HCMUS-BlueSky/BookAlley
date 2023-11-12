@@ -29,7 +29,7 @@ const HeaderComponent = () => {
           <a href="">
             <img src="/images/Chat.png" alt="" />
           </a>
-          <Link to="/cart">
+          <Link to="/checkout/cart">
             <div className="icon-wrapper">
               <div className="bubble">
                 {cart.items

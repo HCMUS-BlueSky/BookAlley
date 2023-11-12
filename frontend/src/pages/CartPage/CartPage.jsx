@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { getCart, removeItems } from "../../actions/cartAction";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
   const { loading, cart } = useSelector((state) => state.cart);
@@ -148,7 +149,17 @@ const CartPage = () => {
                 <p>Total</p>
                 <span>{cart.items && calculateTotalPrice()}đ</span>
               </div>
-              <button className="checkout-btn">Checkout</button>
+              <Link
+                to="/checkout/payment"
+                state={{
+                  selectedItems: cart.items.filter((item) => {
+                    return selectedItems.includes(item.product._id);
+                  }),
+                  totalPrice: calculateTotalPrice(),
+                }}
+              >
+                <button className="checkout-btn">Checkout</button>
+              </Link>
             </div>
           </div>
         </div>
