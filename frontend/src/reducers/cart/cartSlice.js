@@ -1,63 +1,40 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { addCart, getCart } from "../../actions/cartAction";
 
-const initialState = [];
+const initialState = {
+  loading: false,
+  cart: [],
+  error: null,
+  success: false,
+};
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {
-    addToCart(state, { payload }) {
-      const { _id } = payload;
-
-      const find = state.find((item) => {
-        if (item._id === _id) {
-          return item;
-        }
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(addCart.pending, (state) => {
+        (state.loading = true), (state.error = null);
+      })
+      .addCase(addCart.fulfilled, (state) => {
+        (state.loading = false), (state.success = true);
+      })
+      .addCase(addCart.rejected, (state, { payload }) => {
+        (state.loading = false), (state.error = payload);
+      })
+      .addCase(getCart.pending, (state) => {
+        (state.loading = true), (state.error = null);
+      })
+      .addCase(getCart.fulfilled, (state, { payload }) => {
+        (state.loading = false), (state.cart = payload), (state.success = true);
+      })
+      .addCase(getCart.rejected, (state, { payload }) => {
+        (state.loading = false), (state.error = payload);
       });
-
-      if (find) {
-        return state.map((item) =>
-          item._id === _id
-            ? {
-                ...item,
-                quantity: item.quantity + 1,
-              }
-            : item
-        );
-      } else {
-        state.push({
-          ...payload,
-          quantity: 1,
-        });
-      }
-    },
-    increament(state, { payload }) {
-      return state.map((item) =>
-        item.id === payload
-          ? {
-              ...item,
-              quantity: item.quantity + 1,
-            }
-          : item
-      );
-    },
-    decrement(state, { payload }) {
-      return state.map((item) =>
-        item.id === payload
-          ? {
-              ...item,
-              quantity: item.quantity - 1,
-            }
-          : item
-      );
-    },
-    clear(state) {
-      return [];
-    },
   },
 });
 
-export const { addToCart, increament, decrement, clear } = cartSlice.actions;
 const cartReducer = cartSlice.reducer;
 
 export default cartReducer;
