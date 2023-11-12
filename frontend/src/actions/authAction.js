@@ -1,4 +1,4 @@
-import { axiosInstance, axiosPublicInstance } from '../utils/axios';
+import { axiosInstance, axiosPublicInstance } from "../utils/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const registerUser = createAsyncThunk(
@@ -43,7 +43,7 @@ export const userLogin = createAsyncThunk(
 );
 
 export const refreshToken = createAsyncThunk(
-  'auth/refresh',
+  "auth/refresh",
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axiosPublicInstance.post(`/api/auth/refresh`);

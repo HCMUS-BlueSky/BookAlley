@@ -5,7 +5,7 @@ import "./styles/index.scss";
 import { Provider } from "react-redux";
 import store from "./store.js";
 import { injectStore } from "./utils/axios.js";
-injectStore(store)
+injectStore(store);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>

@@ -5,7 +5,7 @@ const voucherSchema = new mongoose.Schema(
     name: {
       type: String
     },
-    code: {
+    voucher: {
       type: String
     },
     quantity: {

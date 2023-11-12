@@ -6,9 +6,10 @@ import { Link } from "react-router-dom";
 
 const SignInPage = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+  const { access_token, loading, error } = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -20,15 +21,20 @@ const SignInPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(email, password);
     dispatch(userLogin({ email, password }));
   };
+
+  useEffect(() => {
+    if (access_token !== null) {
+      navigate("/");
+    }
+  }, [access_token, navigate]);
 
   return (
     <div className="auth">
       <div className="container">
         <h1>Login</h1>
-        <form action="">
+        <form action="" onSubmit={handleLogin}>
           <label htmlFor="email">Email</label>
           <input
             type="text"
@@ -47,9 +53,7 @@ const SignInPage = () => {
             required
           />
           <p className="noti-info">{error}</p>
-          <button type="button" onClick={handleLogin}>
-            {loading ? "Loading..." : "Log In"}
-          </button>
+          <button type="submit">{loading ? "Loading..." : "Log In"}</button>
         </form>
         <p>
           Don't have an account? Register <Link to="/signup">now</Link>

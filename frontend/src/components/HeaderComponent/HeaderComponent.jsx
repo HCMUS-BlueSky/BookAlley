@@ -1,10 +1,20 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { cartTotalSelector } from "../../reducers/cart/cartSelectors";
+// import { cartTotalSelector } from "../../reducers/cart/cartSelectors";
+import { logout } from "../../reducers/authSlice";
+import { getCart } from "../../actions/cartAction";
 
 const HeaderComponent = () => {
-  const totalCart = useSelector(cartTotalSelector);
+  // const totalCart = useSelector(cartTotalSelector);
+  const { cart } = useSelector((state) => state.cart);
+  const { access_token } = useSelector((state) => state.auth);
+  const [openAccount, setOpenAccount] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
 
   return (
     <>
@@ -28,15 +38,30 @@ const HeaderComponent = () => {
           </a>
           <Link to="/cart">
             <div className="icon-wrapper">
-              <div className="bubble">{totalCart}</div>
+              <div className="bubble">{cart.items && cart.items.length}</div>
               <img src="/images/Cart.png" alt="" />
             </div>
           </Link>
-          <Link to="/signin">
-            <a href="">
+          {access_token ? (
+            <div
+              className="account"
+              onMouseEnter={() => setOpenAccount(true)}
+              onMouseLeave={() => setOpenAccount(false)}
+            >
               <img src="/images/Account.png" alt="" />
-            </a>
-          </Link>
+              {openAccount && (
+                <div class="account-content">
+                  <a href="#">Profile</a>
+                  <Link to="/cart">My orders</Link>
+                  <a onClick={() => dispatch(logout())}>Log out</a>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link to="/signin">
+              <img src="/images/Account.png" alt="" />
+            </Link>
+          )}
         </div>
       </div>
     </>

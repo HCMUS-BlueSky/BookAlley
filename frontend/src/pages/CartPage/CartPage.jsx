@@ -23,7 +23,11 @@ const CartPage = () => {
           <div className="cart-product">
             <h2>CART</h2>
             <div className="cart-header">
-              <span className="product">Product</span>
+              <label class="checkmark-container">
+                Product
+                <input type="checkbox" />
+                <span className="checkmark"></span>
+              </label>
               <span>Price</span>
               <span>Quantity</span>
               <span>Total</span>
@@ -31,10 +35,12 @@ const CartPage = () => {
             {cart.map((cartItem) => {
               return (
                 <div className="cart-item" key={cartItem._id}>
-                  <div className="name-image">
+                  <label class="checkmark-container name-image">
                     <img src={cartItem.image} alt="" />
-                    <span>{cartItem.name}</span>
-                  </div>
+                    <p>{cartItem.name}</p>
+                    <input type="checkbox" />
+                    <span className="checkmark checkmark-center"></span>
+                  </label>
                   <span>{cartItem.price}</span>
                   <span>{cartItem.quantity}</span>
                   <span>{totalPrice}</span>

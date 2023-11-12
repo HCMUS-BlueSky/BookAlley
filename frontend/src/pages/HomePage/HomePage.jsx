@@ -9,10 +9,12 @@ import CategoriesComponent from "../../components/CategoriesComponent";
 const HomePage = () => {
   const dispatch = useDispatch();
   const { tags, products } = useSelector((state) => state.products);
+
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
   }, []);
+
   return (
     <>
       <HeaderComponent />
@@ -26,9 +28,7 @@ const HomePage = () => {
       >
         <div className="container main">
           <div className="left">
-            <div className="container">
-              <CategoriesComponent header={true} tags={tags.tags} />
-            </div>
+            <CategoriesComponent header={true} tags={tags.tags} />
           </div>
           <div className="right">
             <img src="./images/Banner_01.png" alt="" />
