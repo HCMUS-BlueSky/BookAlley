@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
-import { useSelector } from "react-redux";
-import { cartTotalPriceSelector } from "../../reducers/cart/cartSelectors";
+import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { getCart, removeItems } from "../../actions/cartAction";
 
 const CartPage = () => {
-  const cart = useSelector((state) => state.cart);
-  const totalPrice = useSelector(cartTotalPriceSelector);
+  const { loading, cart } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const handleRemoveToCart = async (product_id, quantity) => {
+    const result = await dispatch(
+      removeItems({ product_id, quantity: quantity.toString() })
+    );
+    if (removeItems.fulfilled.match(result)) {
+      dispatch(getCart());
+    }
+  };
 
   return (
     <>
@@ -31,22 +41,33 @@ const CartPage = () => {
               <span>Price</span>
               <span>Quantity</span>
               <span>Total</span>
+              <FontAwesomeIcon icon={faTrashCan} />
             </div>
-            {cart.map((cartItem) => {
-              return (
-                <div className="cart-item" key={cartItem._id}>
-                  <label class="checkmark-container name-image">
-                    <img src={cartItem.image} alt="" />
-                    <p>{cartItem.name}</p>
-                    <input type="checkbox" />
-                    <span className="checkmark checkmark-center"></span>
-                  </label>
-                  <span>{cartItem.price}</span>
-                  <span>{cartItem.quantity}</span>
-                  <span>{totalPrice}</span>
-                </div>
-              );
-            })}
+            {cart.items &&
+              cart.items.map((cartItem) => {
+                return (
+                  <div className="cart-item" key={cartItem._id}>
+                    <label class="checkmark-container name-image">
+                      <img src={cartItem.product.image} alt="" />
+                      <p>{cartItem.product.name}</p>
+                      <input type="checkbox" />
+                      <span className="checkmark checkmark-center"></span>
+                    </label>
+                    <span>{cartItem.price}</span>
+                    <span>{cartItem.quantity}</span>
+                    <span>{cartItem.price * cartItem.quantity}</span>
+                    <FontAwesomeIcon
+                      icon={faTrashCan}
+                      onClick={() => {
+                        handleRemoveToCart(
+                          cartItem.product._id,
+                          cartItem.quantity
+                        );
+                      }}
+                    />
+                  </div>
+                );
+              })}
           </div>
           <div className="cart-main">
             <div className="delivery">

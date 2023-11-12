@@ -38,3 +38,24 @@ export const getCart = createAsyncThunk(
     }
   }
 );
+
+export const removeItems = createAsyncThunk(
+  "cart/remove-item",
+  async ({ product_id, quantity }, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      let { data } = await axiosInstance.delete(
+        `/api/cart`,
+        { data: { product_id, quantity } },
+        config
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
