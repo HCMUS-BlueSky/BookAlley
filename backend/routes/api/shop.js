@@ -1,7 +1,5 @@
 const express = require('express');
-const User = require('../../models/User');
 const Shop = require('../../models/Shop');
-const Book = require('../../models/Book');
 const hasRoles = require('../../middleware/hasRoles');
 const isVerified = require('../../middleware/isVerified');
 const router = express.Router();
@@ -18,7 +16,7 @@ router.get('/', hasRoles('admin'), async (req, res) => {
 router.get('/get-detail', isVerified, hasRoles('seller', 'admin'), async (req, res) => {
   try {
     const seller = req.user;
-    const shop = await Shop.find({owner: seller.id})
+    const shop = await Shop.findOne({owner: seller.id})
       .populate('listings', 'name image rating price')
       .exec();
     return res.json(shop);

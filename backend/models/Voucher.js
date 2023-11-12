@@ -3,17 +3,21 @@ const mongoose = require('mongoose');
 const voucherSchema = new mongoose.Schema(
   {
     name: {
-      type: String
+      type: String,
+      trim: true
     },
-    voucher: {
-      type: String
+    code: {
+      type: String,
+      unique: true,
+      trim: true
     },
     quantity: {
       type: Number,
       min: 0
     },
     description: {
-      type: String
+      type: String,
+      trim: true
     },
     discount: {
       type: Number,

@@ -1,10 +1,12 @@
 const express = require('express');
 const User = require('../../models/User');
+const Address = require('../../models/Address');
 const jwt = require('jsonwebtoken');
 const isAuth = require('../../middleware/isAuth');
 const upload = require('../../middleware/multer');
 const uploadFile = require('../../utils/fileUpload');
 const { sendEmail, genEmailConfirmTemplate} = require("../../utils/sendEmail");
+const isVerified = require('../../middleware/isVerified');
 const router = express.Router();
 
 router.get('/', isAuth, async (req, res) => {
@@ -67,6 +69,47 @@ router.post('/verify', async (req, res) => {
       return res.status(400).send(err.message);
     }
   });
+})
+
+router.post('/address', isVerified, async (req, res) => {
+  const user = req.user;
+  const {fullname, phone, city, district, ward, address, alias, type, is_default} = req.body;
+  if (!fullname || typeof fullname !== 'string') 
+    return res.status(400).send('Invalid name!');
+  if (!phone || typeof phone !== 'string') 
+    return res.status(400).send('Invalid phone!');
+  if (!city || typeof city !== 'string') 
+    return res.status(400).send('Invalid city!');
+  if (!district || typeof district !== 'string') 
+    return res.status(400).send('Invalid district!');
+  if (!ward || typeof ward !== 'string')
+    return res.status(400).send('Invalid ward!');
+  if (!address || typeof address !== 'string')
+    return res.status(400).send('Invalid address!');  
+  if (!alias || typeof alias !== 'string')
+    return res.status(400).send('Invalid alias!');  
+  if (!type || typeof type !== 'string')
+    return res.status(400).send('Invalid type!');  
+  try {
+    const existed = await Address.exists({ ownder: user.id, alias }).exec();
+    if (existed) throw new Error("Address already existed!");
+    const adr = new Address({
+      owner: user.id,
+      fullname,
+      phone,
+      city,
+      district,
+      ward,
+      address,
+      alias,
+      type,
+      is_default: (is_default ? true: false)
+    }); 
+    await adr.save();
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
 })
 
 module.exports = router;

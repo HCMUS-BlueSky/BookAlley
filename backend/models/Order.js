@@ -6,17 +6,34 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
+    items: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Book'
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+          min: [1, 'Quantity can not be less then 1!']
+        }
+      }
+    ],
+    shipping_info: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Address'
+    },
     voucher: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'Voucher'
     },
-    quantity: {
-      type: Number
-    },
-    description: {
+    shipping_method: {
       type: String
     },
-    discount: {
+    sub_total: {
+      type: Number
+    },
+    total: {
       type: Number
     }
   },
