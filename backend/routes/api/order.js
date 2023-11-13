@@ -15,13 +15,8 @@ router.post('/', isVerified, async (req, res) => {
     return res.status(400).send('Invalid shipping method!');
   if (!items || !Array.isArray(items))
     return res.status(400).send('Invalid items!');
-  if (!voucher || typeof voucher !== 'string')
-    return res.status(400).send('Invalid voucher!');
   try {
     if(!(await Address.exists({ _id: shipping_info }))) throw new Error('Invalid address ID!');
-    const voucherItem = await Voucher.findById(voucher).select("quantity").exec();
-    if (!voucherItem) throw new Error('Invalid voucher!');
-    if (voucherItem.quantity < 1) throw new Error('Invalid voucher!');
     let sub_total = 0, total;
     for(const item of items) {
       if (!item.product || typeof item.product !== 'string' || !item.quantity || typeof item.quantity !== 'number' || item.quantity < 1) throw new Error('Invalid products!');
@@ -30,7 +25,17 @@ router.post('/', isVerified, async (req, res) => {
       item.quantity = parseInt(item.quantity);
       sub_total += product.price * item.quantity;
     }
-    total = sub_total * (1 - voucherItem.discount);
+    if (voucher) {
+      if (typeof voucher !== 'string') throw new Error('Invalid voucher');
+      const voucherItem = await Voucher.findById(voucher).select("quantity").exec();
+      if (!voucherItem) throw new Error('Invalid voucher!');
+      if (voucherItem.quantity < 1) throw new Error('Invalid voucher!');
+      total = sub_total * (1 - voucherItem.discount);
+      await Voucher.findByIdAndUpdate(voucher, {$inc: { quantity: -1 }}).exec();
+    }
+    else {
+      total = sub_total;
+    }
     const order = new Order({
       owner: user.id,
       items,

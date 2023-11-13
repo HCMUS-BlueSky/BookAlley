@@ -112,4 +112,17 @@ router.post('/address', isVerified, async (req, res) => {
   }
 })
 
+router.get('/address', isVerified, async (req, res) => {
+  const user = req.user;
+  try {
+    if (req.query.default) {
+      const addr = await Address.findOne({ owner: user.id, is_default: true }).exec();
+      return res.json(addr);
+    }
+    const addr = await Address.find({ owner: user.id }).exec();
+    return res.json(addr);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+});
 module.exports = router;
