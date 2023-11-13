@@ -4,6 +4,8 @@ const Book = require('../../models/Book');
 const Address = require('../../models/Address');
 const Order = require('../../models/Order');
 const isVerified = require('../../middleware/isVerified');
+const hasRoles = require('../../middleware/hasRoles');
+const Shop = require('../../models/Shop');
 const router = express.Router();
 
 router.post('/', isVerified, async (req, res) => {
@@ -49,6 +51,56 @@ router.post('/', isVerified, async (req, res) => {
     return res.sendStatus(204);
   } catch (err) {
     return res.status(400).send(err.message);
+  }
+})
+
+router.get('/', isVerified, hasRoles("admin"), async (req, res) => {
+  try {
+    const orders = await Order.find({})
+      .populate('items.product shipping_info voucher')
+      .exec();
+    return res.json(orders);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+})
+
+router.get('/self', isVerified, async (req, res) => {
+  const user = req.user;
+  try {
+    const orders = await Order.find({ owner: user.id })
+      .populate([{path: "items.product", select: "name price image seller"}, "shipping_info"])
+      .exec();
+    return res.json(orders);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+})
+
+router.get('/shop', isVerified, hasRoles("seller", "admin"), async (req, res) => {
+  const user = req.user;
+  try {
+    const shop = await Shop.findOne({ owner: user.id }).exec();
+    const orders = await Order.find({})
+      .populate([
+        {
+          path: 'items.product',
+          select: 'name price image seller',
+          match: { seller: { $eq: shop.id } }
+        },
+        'shipping_info'
+      ])
+      .exec();
+    
+    const result = orders.filter((order) => {
+      order.items = order.items.filter((item) => {
+        return item.product;
+      })
+      return order.items.length;
+    });
+    return res.json(result);
+  } catch (err) {
+    return res.status(500).send(err.message);
   }
 })
 
