@@ -4,6 +4,7 @@ import productSlice from "./reducers/productSlice.js";
 import reviewSlice from "./reducers/reviewSlice.js";
 import shopSlice from "./reducers/shopSlice.js";
 import cartSlice from "./reducers/cart/cartSlice.js";
+import voucherReducer from "./reducers/voucherSlice.js";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     reviews: reviewSlice,
     shop: shopSlice,
     cart: cartSlice,
+    voucher: voucherReducer,
   },
 });

@@ -13,6 +13,10 @@ const CartPage = () => {
   const [selectedAllItems, setSelectedAllItems] = useState(false);
   const dispatch = useDispatch();
 
+  useDispatch(() => {
+    dispatch(getCart());
+  }, []);
+
   const handleAllCheckboxChange = () => {
     setSelectedAllItems(() => {
       const updatedAllItems = !selectedAllItems;
@@ -50,11 +54,12 @@ const CartPage = () => {
 
   const calculateTotalPrice = () => {
     let totalPrice = 0;
-    cart.items.forEach((cartItem) => {
-      if (selectedItems.includes(cartItem.product._id)) {
-        totalPrice += cartItem.price * cartItem.quantity;
-      }
-    });
+    cart.items &&
+      cart.items.forEach((cartItem) => {
+        if (selectedItems.includes(cartItem.product._id)) {
+          totalPrice += cartItem.product.price * cartItem.quantity;
+        }
+      });
     return totalPrice;
   };
 
@@ -112,9 +117,9 @@ const CartPage = () => {
                       />
                       <span className="checkmark checkmark-center"></span>
                     </label>
-                    <span>{cartItem.price}</span>
+                    <span>{cartItem.product.price}</span>
                     <span>{cartItem.quantity}</span>
-                    <span>{cartItem.price * cartItem.quantity}</span>
+                    <span>{cartItem.product.price * cartItem.quantity}</span>
                     <FontAwesomeIcon
                       icon={faTrashCan}
                       onClick={() => {
@@ -152,9 +157,11 @@ const CartPage = () => {
               <Link
                 to="/checkout/payment"
                 state={{
-                  selectedItems: cart.items.filter((item) => {
-                    return selectedItems.includes(item.product._id);
-                  }),
+                  selectedItems:
+                    cart.items &&
+                    cart.items.filter((item) => {
+                      return selectedItems.includes(item.product._id);
+                    }),
                   totalPrice: calculateTotalPrice(),
                 }}
               >

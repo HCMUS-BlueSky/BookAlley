@@ -59,3 +59,27 @@ export const removeItems = createAsyncThunk(
     }
   }
 );
+
+export const addOder = createAsyncThunk(
+  "cart/add/order",
+  async (
+    { voucher, items, shipping_info, shipping_method },
+    { rejectWithValue }
+  ) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      let { data } = await axiosInstance.post(
+        `/api/order`,
+        { voucher, items, shipping_info, shipping_method },
+        config
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

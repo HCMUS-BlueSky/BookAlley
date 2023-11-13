@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../../reducers/authSlice";
+import { clearCart } from "../../reducers/cart/cartSlice";
+import { getCart } from "../../actions/cartAction";
 
 const HeaderComponent = () => {
   const { cart } = useSelector((state) => state.cart);
   const { access_token } = useSelector((state) => state.auth);
   const [openAccount, setOpenAccount] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
 
   return (
     <>
@@ -49,10 +55,17 @@ const HeaderComponent = () => {
             >
               <img src="/images/Account.png" alt="" />
               {openAccount && (
-                <div class="account-content">
+                <div className="account-content">
                   <a href="#">Profile</a>
                   <Link to="/cart">My orders</Link>
-                  <a onClick={() => dispatch(logout())}>Log out</a>
+                  <a
+                    onClick={() => {
+                      dispatch(logout());
+                      dispatch(clearCart());
+                    }}
+                  >
+                    Log out
+                  </a>
                 </div>
               )}
             </div>

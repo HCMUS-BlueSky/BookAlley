@@ -1,11 +1,24 @@
 import { useLocation } from "react-router-dom";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
+import { useDispatch } from "react-redux";
+import { addOder } from "../../actions/cartAction";
 
 const CheckoutPage = () => {
   const location = useLocation();
   const { selectedItems, totalPrice } = location.state || {};
-  console.log(selectedItems);
+  const dispatch = useDispatch();
+
+  const handleCheckout = () => {
+    dispatch(
+      addOder({
+        voucher: "65519806ab6d0c8940e97e9c",
+        items: [{ product: "653130d6373cc7a68167233d" }],
+        shipping_info: "65519c6cab6d0c8940e97e9d",
+        shipping_method: "Standard",
+      })
+    );
+  };
 
   return (
     <>
@@ -43,9 +56,9 @@ const CheckoutPage = () => {
                       <img src={item.product.image} alt="" />
                       <p>{item.product.name}</p>
                     </div>
-                    <span>{item.price}</span>
+                    <span>{item.product.price}</span>
                     <span>{item.quantity}</span>
-                    <span>{item.price * item.quantity}</span>
+                    <span>{item.product.price * item.quantity}</span>
                   </div>
                 );
               })}
@@ -72,7 +85,9 @@ const CheckoutPage = () => {
                 <span>{totalPrice}đ</span>
               </div>
 
-              <button className="checkout-btn">Checkout</button>
+              <button className="checkout-btn" onClick={handleCheckout}>
+                Checkout
+              </button>
             </div>
           </div>
         </div>

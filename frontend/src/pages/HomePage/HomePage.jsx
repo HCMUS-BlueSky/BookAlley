@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCategories, getProducts } from "../../actions/productsAction";
 import ProductsCardComponent from "../../components/ProductCardComponent";
 import CategoriesComponent from "../../components/CategoriesComponent";
+import { getCart } from "../../actions/cartAction";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
+    dispatch(getCart());
   }, []);
 
   return (
