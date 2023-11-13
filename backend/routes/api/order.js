@@ -31,6 +31,7 @@ router.post('/', isVerified, async (req, res) => {
       if (!voucherItem) throw new Error('Invalid voucher!');
       if (voucherItem.quantity < 1) throw new Error('Invalid voucher!');
       total = sub_total * (1 - voucherItem.discount);
+      await Voucher.findByIdAndUpdate(voucher, {$inc: { quantity: -1 }}).exec();
     }
     else {
       total = sub_total;
