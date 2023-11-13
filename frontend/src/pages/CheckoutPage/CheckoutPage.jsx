@@ -1,23 +1,32 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import { useDispatch } from "react-redux";
-import { addOder } from "../../actions/cartAction";
+import { addOrder } from "../../actions/cartAction";
 
 const CheckoutPage = () => {
   const location = useLocation();
   const { selectedItems, totalPrice } = location.state || {};
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleCheckout = () => {
     dispatch(
-      addOder({
-        voucher: "65519806ab6d0c8940e97e9c",
-        items: [{ product: "653130d6373cc7a68167233d" }],
+      addOrder({
         shipping_info: "65519c6cab6d0c8940e97e9d",
         shipping_method: "Standard",
+        items: selectedItems.map((item) => {
+          return {
+            product: item.product._id,
+            quantity: item.quantity,
+          };
+        }),
       })
-    );
+    ).then((result) => {
+      if (addOrder.fulfilled.match(result)) {
+        navigate("/");
+      }
+    });
   };
 
   return (
@@ -32,36 +41,79 @@ const CheckoutPage = () => {
         }}
       >
         <div className="container checkout">
-          <div className="products-list">
-            <h2>PRODUCTS LIST</h2>
-            <div className="products-header">
-              <div style={{ width: "390px" }}>
-                <span>Product</span>
+          <div className="left">
+            <div className="payment-part">
+              <div className="delivery">
+                <h2>DELIVERY</h2>
+                <div className="delivery-type">
+                  <input type="radio" id="same-day" name="delivery" />
+                  <label htmlFor="same-day">Same-day delivery</label>
+                </div>
+                <div className="delivery-type">
+                  <input type="radio" id="overnight" name="delivery" />
+                  <label htmlFor="overnight">Overnight delivery</label>
+                </div>
+                <div className="delivery-type">
+                  <input type="radio" id="international" name="delivery" />
+                  <label htmlFor="international">International delivery</label>
+                </div>
+                <div className="delivery-type">
+                  <input type="radio" id="normal" name="delivery" />
+                  <label htmlFor="normal">Normal delivery</label>
+                </div>
               </div>
-              <span>Price</span>
-              <span>Quantity</span>
-              <span>Total</span>
+              <div className="payment">
+                <h2>PAYMENT</h2>
+                <div className="payment-type">
+                  <input type="radio" id="cash" name="payment" />
+                  <label htmlFor="cash">In cash</label>
+                </div>
+                <div className="payment-type">
+                  <input type="radio" id="paypal" name="payment" disabled />
+                  <label htmlFor="paypal">Paypal</label>
+                </div>
+                <div className="payment-type">
+                  <input type="radio" id="momo" name="payment" disabled />
+                  <label htmlFor="momo">Momo</label>
+                </div>
+                <div className="payment-type">
+                  <input type="radio" id="banking" name="payment" disabled />
+                  <label htmlFor="banking">Internet Banking</label>
+                </div>
+              </div>
             </div>
-            {selectedItems &&
-              selectedItems.map((item) => {
-                return (
-                  <div className="product-item" key={item._id}>
-                    <div
-                      style={{
-                        width: "390px",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <img src={item.product.image} alt="" />
-                      <p>{item.product.name}</p>
+
+            <div className="products-list">
+              <h2>PRODUCTS LIST</h2>
+              <div className="products-header">
+                <div style={{ width: "390px" }}>
+                  <span>Product</span>
+                </div>
+                <span>Price</span>
+                <span>Quantity</span>
+                <span>Total</span>
+              </div>
+              {selectedItems &&
+                selectedItems.map((item) => {
+                  return (
+                    <div className="product-item" key={item._id}>
+                      <div
+                        style={{
+                          width: "390px",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img src={item.product.image} alt="" />
+                        <p>{item.product.name}</p>
+                      </div>
+                      <span>{item.product.price}</span>
+                      <span>{item.quantity}</span>
+                      <span>{item.product.price * item.quantity}</span>
                     </div>
-                    <span>{item.product.price}</span>
-                    <span>{item.quantity}</span>
-                    <span>{item.product.price * item.quantity}</span>
-                  </div>
-                );
-              })}
+                  );
+                })}
+            </div>
           </div>
           <div className="cart-main">
             <div className="delivery">

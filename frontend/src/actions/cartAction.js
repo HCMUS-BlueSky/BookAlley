@@ -60,7 +60,7 @@ export const removeItems = createAsyncThunk(
   }
 );
 
-export const addOder = createAsyncThunk(
+export const addOrder = createAsyncThunk(
   "cart/add/order",
   async (
     { voucher, items, shipping_info, shipping_method },
