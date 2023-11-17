@@ -1,0 +1,19 @@
+@import "../global.scss";
+
+.orders {
+  background-color: $white;
+  padding: 20px 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  .order-card {
+    display: flex;
+    gap: 24px;
+    cursor: pointer;
+    img {
+      width: 110px;
+      height: 110px;
+    }
+  }
+}
