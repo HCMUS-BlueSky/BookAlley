@@ -57,7 +57,7 @@ const HeaderComponent = () => {
               {openAccount && (
                 <div className="account-content">
                   <a href="#">Profile</a>
-                  <Link to="/order">My orders</Link>
+                  <Link to="/order/history">My orders</Link>
                   <a
                     onClick={() => {
                       dispatch(logout());

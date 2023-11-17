@@ -10,6 +10,7 @@ import AddProductPage from "../pages/SellerPage/AddProductPage";
 import CartPage from "../pages/CartPage/CartPage";
 import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
 import OrderPage from "../pages/OrderPage/OrderPage";
+import OrderDetail from "../pages/OrderDetailPage/OrderDetail";
 
 export const routes = [
   {
@@ -61,8 +62,12 @@ export const routes = [
     page: CheckoutPage,
   },
   {
-    path: "/order",
+    path: "/order/history",
     page: OrderPage,
+  },
+  {
+    path: "/order/view/:order_id",
+    page: OrderDetail,
   },
 ];
 

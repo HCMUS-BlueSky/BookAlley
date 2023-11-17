@@ -1,0 +1,27 @@
+@import "../global.scss";
+
+.orders-detail {
+  .order-info {
+    display: flex;
+    gap: 12px;
+    .self-info {
+      width: 40%;
+      background-color: $white;
+      padding: 20px 15px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .delivery-info,
+    .payment-info {
+      width: 30%;
+      background-color: $white;
+      padding: 20px 15px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+}
