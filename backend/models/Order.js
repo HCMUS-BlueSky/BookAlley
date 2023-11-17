@@ -6,6 +6,10 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Shop'
+    },
     items: [
       {
         product: {
@@ -28,13 +32,27 @@ const orderSchema = new mongoose.Schema(
       ref: 'Voucher'
     },
     shipping_method: {
-      type: String
+      type: String,
+      trim: true
+    },
+    payment_method: {
+      type: String,
+      trim: true
     },
     sub_total: {
-      type: Number
+      type: Number,
+      min: 0,
+      default: 0
     },
     total: {
-      type: Number
+      type: Number,
+      min: 0,
+      default: 0
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'delivering', 'completed', 'canceled'],
+      default: 'pending'
     }
   },
   {
