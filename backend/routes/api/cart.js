@@ -3,6 +3,7 @@ const Cart = require("../../models/Cart");
 const Voucher = require('../../models/Voucher');
 const Book = require("../../models/Book");
 const isVerified = require("../../middleware/isVerified");
+const isAuth = require('../../middleware/isAuth');
 const router = express.Router();
 
 router.post("/", isVerified, async (req, res) => {
@@ -49,14 +50,14 @@ router.delete("/", isVerified, async (req, res) => {
     if (quantityInt < 1) throw new Error('Invalid quantity!');
     const existed = await Book.exists({ _id: product_id }).exec();
     if (!existed) throw new Error('Product does not exist!');
-    let cart = await Cart.findOne({ owner: user.id }).exec();
+    const cart = await Cart.findOne({ owner: user.id }).exec();
     if (!cart) throw new Error("Cart does not exist!");
     const productIndex = cart.items.findIndex((p) => p.product == product_id);
     if (productIndex > -1) {
       cart.items[productIndex].quantity -= quantityInt;
-    }
-    if (cart.items[productIndex].quantity < 1) {
-      cart.items.splice(productIndex, 1);
+      if (cart.items[productIndex].quantity < 1) {
+        cart.items.splice(productIndex, 1);
+      }
     }
     await cart.save();
     return res.send("Item successfully removed from cart!");
@@ -65,11 +66,11 @@ router.delete("/", isVerified, async (req, res) => {
   }
 });
 
-router.get("/", isVerified, async (req, res) => {
+router.get('/', isAuth, async (req, res) => {
   const user = req.user;
   try {
     const cart = await Cart.findOne({ owner: user.id })
-      .populate("items.product", "name image price")
+      .populate('items.product', 'name image price')
       .exec();
     return res.json(cart);
   } catch (err) {
