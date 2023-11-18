@@ -1,0 +1,141 @@
+import React, { useState } from "react";
+import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
+import FooterComponent from "../../components/FooterComponent/FooterComponent";
+import { Link } from "react-router-dom";
+
+const AddressPage = () => {
+  const [formData, setFormData] = useState({
+    fullname: "",
+    phone: "",
+    city: "",
+    district: "",
+    ward: "",
+    address: "",
+    addressType: "Home/Apartment",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    console.log(formData);
+  };
+
+  return (
+    <>
+      <HeaderComponent />
+      <div
+        className="container-fluid"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("/images/bg-log.jpg")`,
+          paddingTop: "0.5rem",
+          paddingBottom: "0.5rem",
+        }}
+      >
+        <div className="container address-page">
+          <h2>Shipping address</h2>
+          <form onSubmit={handleFormSubmit}>
+            <div className="row">
+              <label htmlFor="fullname">Fullname</label>
+              <input
+                type="text"
+                name="fullname"
+                value={formData.fullname}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="row">
+              <label htmlFor="phone">Phone</label>
+              <input
+                type="number"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="row">
+              <label htmlFor="city">City</label>
+              <input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="row">
+              <label htmlFor="district">District</label>
+              <input
+                type="number"
+                name="district"
+                value={formData.district}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="row">
+              <label htmlFor="ward">Ward</label>
+              <input
+                type="number"
+                name="ward"
+                value={formData.ward}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="row">
+              <label htmlFor="address">Address</label>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="address-row">
+              <label htmlFor="address">Type</label>
+              <div className="address-input">
+                <div>
+                  <input
+                    type="radio"
+                    id="home"
+                    name="address"
+                    value="Home/Apartment"
+                    checked={formData.addressType === "Home/Apartment"}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="home">Home/Apartment</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="company"
+                    name="address"
+                    value="Company"
+                    checked={formData.addressType === "Company"}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="company">Company</label>
+                </div>
+              </div>
+            </div>
+            <div className="btn-row">
+              <button type="button" className="cancel-btn">
+                Cancel
+              </button>
+              <button type="submit" className="update-btn">
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <FooterComponent />
+    </>
+  );
+};
+
+export default AddressPage;

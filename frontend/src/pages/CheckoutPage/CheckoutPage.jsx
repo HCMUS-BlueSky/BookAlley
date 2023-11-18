@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import { useDispatch } from "react-redux";
-import { addOrder } from "../../actions/cartAction";
+import { addOrder } from "../../actions/orderAction";
 
 const CheckoutPage = () => {
   const location = useLocation();
@@ -15,6 +15,7 @@ const CheckoutPage = () => {
       addOrder({
         shipping_info: "65519c6cab6d0c8940e97e9d",
         shipping_method: "Standard",
+        payment_method: "COD",
         items: selectedItems.map((item) => {
           return {
             product: item.product._id,

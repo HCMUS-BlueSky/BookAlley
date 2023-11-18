@@ -135,7 +135,10 @@ const CartPage = () => {
           </div>
           <div className="cart-main">
             <div className="delivery">
-              <h3>Deliver to</h3>
+              <div className="address">
+                <h3>Deliver to</h3>
+                <Link to="/order/shipping">Change</Link>
+              </div>
               <span>John Doe | 0696969696</span>
               <p>275 Điện Biên Phủ, Võ Thị Sáu, Quận 3 Thành phố Hồ Chí Minh</p>
             </div>

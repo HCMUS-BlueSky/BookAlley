@@ -3,12 +3,16 @@ import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrders } from "../../actions/orderAction";
+import { useNavigate } from "react-router-dom";
 
 const OrderPage = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
+  const navigate = useNavigate();
 
-  const handleClickOrderDetail = () => {};
+  const handleClickOrderDetail = (orderId) => {
+    navigate(`/order/view/${orderId}`);
+  };
 
   useEffect(() => {
     dispatch(getOrders());
@@ -29,7 +33,11 @@ const OrderPage = () => {
           <h2>My order</h2>
           {orders.map((order) => {
             return (
-              <div className="order-card" onClick={handleClickOrderDetail}>
+              <div
+                className="order-card"
+                key={order._id}
+                onClick={() => handleClickOrderDetail(order._id)}
+              >
                 <img src={order.items[0].product.image}></img>
                 <div>
                   <h3>{order.items[0].product.name}</h3>

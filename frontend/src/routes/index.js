@@ -11,6 +11,7 @@ import CartPage from "../pages/CartPage/CartPage";
 import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
 import OrderPage from "../pages/OrderPage/OrderPage";
 import OrderDetail from "../pages/OrderDetailPage/OrderDetail";
+import AddressPage from "../pages/AddressPage/AddressPage";
 
 export const routes = [
   {
@@ -68,6 +69,10 @@ export const routes = [
   {
     path: "/order/view/:order_id",
     page: OrderDetail,
+  },
+  {
+    path: "/order/shipping",
+    page: AddressPage,
   },
 ];
 

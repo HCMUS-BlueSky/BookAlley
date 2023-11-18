@@ -37,8 +37,8 @@ const HomePage = () => {
             <div className="products">
               <h2>SORT BY</h2>
               <div className="product-cards">
-                {products &&
-                  products.map((product) => {
+                {products.docs &&
+                  products.docs.map((product) => {
                     return (
                       <ProductsCardComponent
                         key={product._id}
