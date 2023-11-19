@@ -1,41 +1,22 @@
-.main {
+.home {
   display: flex;
-  gap: 10px;
-  .left {
-    width: 20%;
-    height: fit-content;
-    background-color: $white;
-    border-radius: 10px;
-    padding: 15px;
-    text-transform: uppercase;
-    h2 {
-      font-size: 30px;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    p {
-      margin-top: 20px;
-      padding-left: 10px;
-    }
+  flex-direction: column;
+  gap: 12px;
+  img {
+    width: 100%;
+    margin-bottom: 6px;
   }
-  .right {
-    width: 80%;
-    img {
-      width: 100%;
+  .products {
+    background-color: $white;
+    padding: 20px;
+    border-radius: 15px;
+    h2 {
       margin-bottom: 20px;
     }
-    .products {
-      background-color: $white;
-      padding: 20px;
-      border-radius: 15px;
-      h2 {
-        margin-bottom: 20px;
-      }
-      .product-cards {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-      }
+    .product-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
     }
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProductsCardComponent = ({ product }) => {
@@ -13,8 +13,8 @@ const ProductsCardComponent = ({ product }) => {
     >
       <img src={product.image} alt="" />
       <div className="card-info">
-        {product.name.length > 30 ? (
-          <h3>{product.name.slice(0, 30)} ...</h3>
+        {product.name.length > 20 ? (
+          <h3>{product.name.slice(0, 20)} ...</h3>
         ) : (
           <h3>{product.name}</h3>
         )}

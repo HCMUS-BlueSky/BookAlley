@@ -2,17 +2,16 @@ import React, { useEffect } from "react";
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories, getProducts } from "../actions/productsAction";
-import ProductsCardComponent from "../components/ProductCardComponent";
-import CategoriesComponent from "../components/CategoriesComponent";
+import { getProducts } from "../actions/productsAction";
+import ProductScrollComponents from "../components/ProductScrollComponents";
+import SliderComponent from "../components/SliderComponent";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const { tags, products } = useSelector((state) => state.products);
+  const { products } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(getProducts());
-    dispatch(getCategories());
   }, []);
 
   return (
@@ -21,32 +20,21 @@ const HomePage = () => {
       <div
         className="container-fluid"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("/images/bg-log.jpg")`,
+          backgroundColor: "#F0F0F0",
           paddingTop: "0.5rem",
           paddingBottom: "0.5rem",
         }}
       >
-        <div className="container main">
-          <div className="left">
-            <CategoriesComponent header={true} tags={tags.tags} />
-          </div>
-          <div className="right">
-            <img src="./images/Banner_01.png" alt="" />
-            <div className="products">
-              <h2>SORT BY</h2>
-              <div className="product-cards">
-                {products.docs &&
-                  products.docs.map((product) => {
-                    return (
-                      <ProductsCardComponent
-                        key={product._id}
-                        product={product}
-                      />
-                    );
-                  })}
-              </div>
-            </div>
-          </div>
+        <div className="container home">
+          <SliderComponent />
+          <ProductScrollComponents
+            headerContent="For you"
+            products={products}
+          />
+          <ProductScrollComponents
+            headerContent="Flash sales"
+            products={products}
+          />
         </div>
       </div>
       <FooterComponent />

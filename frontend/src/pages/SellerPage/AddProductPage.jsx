@@ -9,7 +9,7 @@ const AddProductPage = () => {
       <div
         className="container-fluid"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("/images/bg-log.jpg")`,
+          backgroundColor: "#F0F0F0",
           paddingTop: "0.5rem",
           paddingBottom: "0.5rem",
         }}
