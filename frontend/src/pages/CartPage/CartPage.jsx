@@ -6,15 +6,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { getCart, removeItems } from "../../actions/cartAction";
 import { Link } from "react-router-dom";
+import { getAddress } from "../../actions/userActions";
 
 const CartPage = () => {
   const { loading, cart } = useSelector((state) => state.cart);
+  const { name, phone, address } = useSelector((state) => state.user);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedAllItems, setSelectedAllItems] = useState(false);
   const dispatch = useDispatch();
 
-  useDispatch(() => {
+  useEffect(() => {
     dispatch(getCart());
+    dispatch(getAddress());
   }, []);
 
   const handleAllCheckboxChange = () => {
@@ -139,8 +142,10 @@ const CartPage = () => {
                 <h3>Deliver to</h3>
                 <Link to="/order/shipping">Change</Link>
               </div>
-              <span>John Doe | 0696969696</span>
-              <p>275 Điện Biên Phủ, Võ Thị Sáu, Quận 3 Thành phố Hồ Chí Minh</p>
+              <span>
+                {name} | {phone}
+              </span>
+              <p>{address}</p>
             </div>
             <div className="voucher">
               <h3>Voucher</h3>

@@ -6,6 +6,7 @@ import { getCategories, getProducts } from "../../actions/productsAction";
 import ProductsCardComponent from "../../components/ProductCardComponent";
 import CategoriesComponent from "../../components/CategoriesComponent";
 import { getCart } from "../../actions/cartAction";
+import { getAddress } from "../../actions/userActions";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const HomePage = () => {
     dispatch(getProducts());
     dispatch(getCategories());
     dispatch(getCart());
+    dispatch(getAddress());
   }, []);
 
   return (

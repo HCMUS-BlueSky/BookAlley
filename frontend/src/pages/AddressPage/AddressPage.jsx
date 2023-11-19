@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateAddress } from "../../actions/userActions";
 
 const AddressPage = () => {
   const [formData, setFormData] = useState({
@@ -11,8 +13,10 @@ const AddressPage = () => {
     district: "",
     ward: "",
     address: "",
-    addressType: "Home/Apartment",
+    alias: "",
+    type: "Home/Apartment",
   });
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,7 +28,7 @@ const AddressPage = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log(formData);
+    dispatch(updateAddress(formData));
   };
 
   return (
@@ -95,6 +99,15 @@ const AddressPage = () => {
                 onChange={handleChange}
               />
             </div>
+            <div className="row">
+              <label htmlFor="alias">Alias</label>
+              <input
+                type="text"
+                name="alias"
+                value={formData.alias}
+                onChange={handleChange}
+              />
+            </div>
             <div className="address-row">
               <label htmlFor="address">Type</label>
               <div className="address-input">
@@ -104,7 +117,7 @@ const AddressPage = () => {
                     id="home"
                     name="address"
                     value="Home/Apartment"
-                    checked={formData.addressType === "Home/Apartment"}
+                    checked={formData.type === "Home/Apartment"}
                     onChange={handleChange}
                   />
                   <label htmlFor="home">Home/Apartment</label>
@@ -115,7 +128,7 @@ const AddressPage = () => {
                     id="company"
                     name="address"
                     value="Company"
-                    checked={formData.addressType === "Company"}
+                    checked={formData.type === "Company"}
                     onChange={handleChange}
                   />
                   <label htmlFor="company">Company</label>

@@ -6,6 +6,7 @@ import shopSlice from "./reducers/shopSlice.js";
 import cartSlice from "./reducers/cart/cartSlice.js";
 import voucherReducer from "./reducers/voucherSlice.js";
 import orderReducer from "./reducers/orderSlice.js";
+import userReducer from "./reducers/userSlice.js";
 
 export default configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export default configureStore({
     cart: cartSlice,
     voucher: voucherReducer,
     orders: orderReducer,
+    user: userReducer,
   },
 });

@@ -1,21 +1,27 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addOrder } from "../../actions/orderAction";
+import { useState } from "react";
 
 const CheckoutPage = () => {
   const location = useLocation();
   const { selectedItems, totalPrice } = location.state || {};
+  const [selectedDelivery, setSelectedDelivery] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const { name, phone, address, addressId } = useSelector(
+    (state) => state.user
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleCheckout = () => {
     dispatch(
       addOrder({
-        shipping_info: "65519c6cab6d0c8940e97e9d",
-        shipping_method: "Standard",
-        payment_method: "COD",
+        shipping_info: addressId,
+        shipping_method: selectedDelivery,
+        payment_method: paymentMethod,
         items: selectedItems.map((item) => {
           return {
             product: item.product._id,
@@ -47,26 +53,53 @@ const CheckoutPage = () => {
               <div className="delivery">
                 <h2>DELIVERY</h2>
                 <div className="delivery-type">
-                  <input type="radio" id="same-day" name="delivery" />
+                  <input
+                    type="radio"
+                    id="same-day"
+                    name="delivery"
+                    onChange={() => setSelectedDelivery("Same-day delivery")}
+                  />
                   <label htmlFor="same-day">Same-day delivery</label>
                 </div>
                 <div className="delivery-type">
-                  <input type="radio" id="overnight" name="delivery" />
+                  <input
+                    type="radio"
+                    id="overnight"
+                    name="delivery"
+                    onChange={() => setSelectedDelivery("Overnight delivery")}
+                  />
                   <label htmlFor="overnight">Overnight delivery</label>
                 </div>
                 <div className="delivery-type">
-                  <input type="radio" id="international" name="delivery" />
+                  <input
+                    type="radio"
+                    id="international"
+                    name="delivery"
+                    onChange={() =>
+                      setSelectedDelivery("International delivery")
+                    }
+                  />
                   <label htmlFor="international">International delivery</label>
                 </div>
                 <div className="delivery-type">
-                  <input type="radio" id="normal" name="delivery" />
+                  <input
+                    type="radio"
+                    id="normal"
+                    name="delivery"
+                    onChange={() => setSelectedDelivery("Normal delivery")}
+                  />
                   <label htmlFor="normal">Normal delivery</label>
                 </div>
               </div>
               <div className="payment">
                 <h2>PAYMENT</h2>
                 <div className="payment-type">
-                  <input type="radio" id="cash" name="payment" />
+                  <input
+                    type="radio"
+                    id="cash"
+                    name="payment"
+                    onChange={() => setPaymentMethod("In cash")}
+                  />
                   <label htmlFor="cash">In cash</label>
                 </div>
                 <div className="payment-type">
@@ -119,8 +152,10 @@ const CheckoutPage = () => {
           <div className="cart-main">
             <div className="delivery">
               <h3>Deliver to</h3>
-              <span>John Doe | 0696969696</span>
-              <p>275 Điện Biên Phủ, Võ Thị Sáu, Quận 3 Thành phố Hồ Chí Minh</p>
+              <span>
+                {name} | {phone}
+              </span>
+              <p>{address}</p>
             </div>
             <div className="voucher">
               <h3>Voucher</h3>
