@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { userResetPassword } from "../../actions/authAction";
+import { userResetPassword } from "../actions/authAction";
 
-const ResetPassword = () => {
+const ResetPasswordPage = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const id = params.get("id");
@@ -63,4 +63,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ResetPasswordPage;

@@ -2,7 +2,7 @@ import { axiosPublicInstance } from "../utils/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getProductsForSeller = createAsyncThunk(
-  "products/seller",
+  "shop/products",
   async ({ shop_id }) => {
     try {
       const config = {

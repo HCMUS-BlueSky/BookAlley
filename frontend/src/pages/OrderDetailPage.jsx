@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
-import FooterComponent from "../../components/FooterComponent/FooterComponent";
+import HeaderComponent from "../components/HeaderComponent";
+import FooterComponent from "../components/FooterComponent";
 import { useParams } from "react-router-dom";
-import { axiosInstance } from "../../utils/axios";
+import { axiosInstance } from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
-import { getAddress } from "../../actions/userActions";
 
-const OrderDetail = () => {
+const OrderDetailPage = () => {
   const { order_id } = useParams();
-  // const [loading, setLoading] = useState(false);
   const [order, setOrder] = useState({});
 
   useEffect(() => {
-    // setLoading(true);
     async function fetchData() {
       try {
         let data = await axiosInstance.get(`/api/order/detail/${order_id}`);
@@ -20,7 +17,6 @@ const OrderDetail = () => {
       } catch (error) {
         console.log(error);
       } finally {
-        // setLoading(false);
       }
     }
     fetchData();
@@ -39,9 +35,9 @@ const OrderDetail = () => {
         <div className="container orders-detail">
           <div className="order-info">
             <div className="self-info">
-              <h2></h2>
+              <h2>{order.shipping_info && order.shipping_info.fullname}</h2>
               <p>
-                Address:
+                <span>Address: </span>
                 {order.shipping_info &&
                   order.shipping_info.address +
                     ", Phường " +
@@ -51,7 +47,7 @@ const OrderDetail = () => {
                     ", " +
                     order.shipping_info.city}
               </p>
-              {/* <p>Phone: 069696969</p> */}
+              <p>Phone: {order.shipping_info && order.shipping_info.phone}</p>
             </div>
             <div className="delivery-info">
               <p>Delivery: {order.shipping_method}</p>
@@ -91,4 +87,4 @@ const OrderDetail = () => {
   );
 };
 
-export default OrderDetail;
+export default OrderDetailPage;

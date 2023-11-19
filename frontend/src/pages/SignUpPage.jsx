@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { registerUser } from "../../actions/authAction";
+import { registerUser } from "../actions/authAction";
 import { Link } from "react-router-dom";
 
 const SignUpPage = () => {

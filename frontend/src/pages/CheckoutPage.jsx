@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
-import FooterComponent from "../../components/FooterComponent/FooterComponent";
+import HeaderComponent from "../components/HeaderComponent";
+import FooterComponent from "../components/FooterComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrder } from "../../actions/orderAction";
+import { addOrder } from "../actions/orderAction";
 import { useState } from "react";
 
 const CheckoutPage = () => {

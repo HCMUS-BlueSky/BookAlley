@@ -30,7 +30,7 @@ const ReviewCardComponent = ({ review }) => {
         </p>
         <p className="content">{review.content}</p>
         {review.images.map((image) => {
-          return <img src={image} alt="" width="100px" />;
+          return <img key={image} src={image} alt="" width="100px" />;
         })}
       </div>
       <hr />

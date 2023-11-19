@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import FooterComponent from "../../components/FooterComponent/FooterComponent";
-import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
+import FooterComponent from "../components/FooterComponent";
+import HeaderComponent from "../components/HeaderComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders } from "../../actions/orderAction";
+import { getOrders } from "../actions/orderAction";
 import { useNavigate } from "react-router-dom";
 
 const OrderPage = () => {

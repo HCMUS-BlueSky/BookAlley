@@ -16,7 +16,7 @@ export const getOrders = createAsyncThunk("order/get", async () => {
 });
 
 export const addOrder = createAsyncThunk(
-  "cart/add/order",
+  "order/add",
   async (
     { voucher, items, shipping_info, shipping_method, payment_method },
     { rejectWithValue }

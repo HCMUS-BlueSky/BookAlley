@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
-import FooterComponent from "../../components/FooterComponent/FooterComponent";
+import HeaderComponent from "../components/HeaderComponent";
+import FooterComponent from "../components/FooterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { getCart, removeItems } from "../../actions/cartAction";
+import { getCart, removeItems } from "../actions/cartAction";
 import { Link } from "react-router-dom";
-import { getAddress } from "../../actions/userActions";
+import { getAddress } from "../actions/userActions";
 
 const CartPage = () => {
   const { loading, cart } = useSelector((state) => state.cart);

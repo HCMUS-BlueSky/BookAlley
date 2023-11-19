@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userForgotPassword } from "../../actions/authAction";
+import { userForgotPassword } from "../actions/authAction";
 
 const ForgotPasswordPage = () => {
   const dispatch = useDispatch();

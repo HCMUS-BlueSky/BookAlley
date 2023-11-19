@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../../reducers/authSlice";
-import { clearCart } from "../../reducers/cart/cartSlice";
-import { getCart } from "../../actions/cartAction";
+import { logout } from "../reducers/authSlice";
+import { clearCart } from "../reducers/cart/cartSlice";
+import { getCart } from "../actions/cartAction";
 
 const HeaderComponent = () => {
   const { cart } = useSelector((state) => state.cart);
@@ -19,7 +19,9 @@ const HeaderComponent = () => {
     <>
       <div className="container header" style={{ backgroundColor: "#fff" }}>
         <div className="header-left">
-          <img src="/images/Logo.png" alt="" />
+          <Link to="/">
+            <img src="/images/Logo.png" alt="" />
+          </Link>
           <div className="search">
             <input type="text" />
             <button type="submit">Search</button>

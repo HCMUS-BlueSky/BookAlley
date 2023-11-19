@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { redirect, useNavigate, useParams } from "react-router-dom";
-import { axiosInstance } from "../../utils/axios";
-import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
-import FooterComponent from "../../components/FooterComponent/FooterComponent";
-import ReviewsComponent from "../../components/ReviewsComponent";
+import { axiosInstance } from "../utils/axios";
+import HeaderComponent from "../components/HeaderComponent";
+import FooterComponent from "../components/FooterComponent";
+import ReviewsComponent from "../components/ReviewsComponent";
 import { useDispatch } from "react-redux";
-import { addCart, getCart } from "../../actions/cartAction";
+import { addCart, getCart } from "../actions/cartAction";
 
 const ProductDetailPage = () => {
   const { id } = useParams();

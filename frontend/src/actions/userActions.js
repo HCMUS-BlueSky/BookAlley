@@ -2,7 +2,7 @@ import { axiosInstance } from "../utils/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const updateAddress = createAsyncThunk(
-  "user/addAddress",
+  "user/add-address",
   async (
     { fullname, phone, city, district, ward, address, alias, type },
     { rejectWithValue }
@@ -25,7 +25,7 @@ export const updateAddress = createAsyncThunk(
 );
 
 export const getAddress = createAsyncThunk(
-  "user/getAddress",
+  "user/get-address",
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(`/api/user/address`);

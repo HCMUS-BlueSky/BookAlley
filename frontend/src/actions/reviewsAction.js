@@ -1,12 +1,9 @@
-import { axiosInstance, axiosPublicInstance } from '../utils/axios';
+import { axiosInstance, axiosPublicInstance } from "../utils/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addNewReview = createAsyncThunk(
-  "add-review",
-  async (
-    { product_id, content, rating, images },
-    { rejectWithValue }
-  ) => {
+  "review/add",
+  async ({ product_id, content, rating, images }, { rejectWithValue }) => {
     try {
       const config = {
         headers: {
@@ -32,8 +29,8 @@ export const addNewReview = createAsyncThunk(
 );
 
 export const getProductReview = createAsyncThunk(
-  "get-review",
-  async ({ product_id },  { rejectWithValue }) => {
+  "review/get",
+  async ({ product_id }, { rejectWithValue }) => {
     try {
       const config = {
         headers: {

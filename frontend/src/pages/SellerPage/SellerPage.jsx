@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
-import FooterComponent from "../../components/FooterComponent/FooterComponent";
+import HeaderComponent from "../../components/HeaderComponent";
+import FooterComponent from "../../components/FooterComponent";
 import CategoriesComponent from "../../components/CategoriesComponent";
 import { useDispatch, useSelector } from "react-redux";
 import ProductsCardComponent from "../../components/ProductCardComponent";

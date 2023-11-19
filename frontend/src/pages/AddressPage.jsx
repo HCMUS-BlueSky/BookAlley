@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
-import FooterComponent from "../../components/FooterComponent/FooterComponent";
+import HeaderComponent from "../components/HeaderComponent";
+import FooterComponent from "../components/FooterComponent";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateAddress } from "../../actions/userActions";
+import { updateAddress } from "../actions/userActions";
 
 const AddressPage = () => {
   const [formData, setFormData] = useState({

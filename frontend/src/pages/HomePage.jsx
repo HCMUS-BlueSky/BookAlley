@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
-import FooterComponent from "../../components/FooterComponent/FooterComponent";
+import HeaderComponent from "../components/HeaderComponent";
+import FooterComponent from "../components/FooterComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories, getProducts } from "../../actions/productsAction";
-import ProductsCardComponent from "../../components/ProductCardComponent";
-import CategoriesComponent from "../../components/CategoriesComponent";
-import { getCart } from "../../actions/cartAction";
-import { getAddress } from "../../actions/userActions";
+import { getCategories, getProducts } from "../actions/productsAction";
+import ProductsCardComponent from "../components/ProductCardComponent";
+import CategoriesComponent from "../components/CategoriesComponent";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -15,8 +13,6 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
-    dispatch(getCart());
-    dispatch(getAddress());
   }, []);
 
   return (
@@ -53,7 +49,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-
       <FooterComponent />
     </>
   );
