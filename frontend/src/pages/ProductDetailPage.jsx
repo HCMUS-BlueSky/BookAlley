@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { redirect, useNavigate, useParams } from "react-router-dom";
+import { Link, redirect, useNavigate, useParams } from "react-router-dom";
 import { axiosInstance } from "../utils/axios";
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
@@ -41,10 +41,6 @@ const ProductDetailPage = () => {
 
   const increaseValue = () => {
     setCount(count + 1);
-  };
-
-  const handleNavShop = () => {
-    navigate(`/seller/${product.seller._id}`);
   };
 
   const handleAddToCart = async () => {
@@ -114,12 +110,17 @@ const ProductDetailPage = () => {
               <div className="detail-info">
                 <div className="left">
                   <div className="shop-card">
-                    <img src={product.seller && product.seller.logo} alt="" />
+                    <Link to={product.seller && `/shop/${product.seller._id}`}>
+                      <img src={product.seller && product.seller.logo} alt="" />
+                    </Link>
                     <div className="shop-info">
-                      <p>{product.seller && product.seller.name}</p>
+                      <Link
+                        to={product.seller && `/shop/${product.seller._id}`}
+                      >
+                        <h3>{product.seller && product.seller.name}</h3>
+                      </Link>
                       <div className="shop-btn">
                         <button type="button">Follow</button>
-                        <button type="button">Chat</button>
                       </div>
                     </div>
                   </div>

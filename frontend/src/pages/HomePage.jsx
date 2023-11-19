@@ -29,11 +29,11 @@ const HomePage = () => {
           <SliderComponent />
           <ProductScrollComponents
             headerContent="For you"
-            products={products}
+            products={products.docs}
           />
           <ProductScrollComponents
             headerContent="Flash sales"
-            products={products}
+            products={products.docs}
           />
         </div>
       </div>

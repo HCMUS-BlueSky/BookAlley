@@ -116,7 +116,10 @@
           border-radius: 50%;
         }
         .shop-info {
-          p {
+          a {
+            color: black;
+          }
+          h3 {
             margin-bottom: 12px;
           }
           .shop-btn {

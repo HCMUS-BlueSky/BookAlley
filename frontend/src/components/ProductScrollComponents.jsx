@@ -7,8 +7,8 @@ const ProductScrollComponents = ({ headerContent, products }) => {
       <div className="products">
         <h2>{headerContent}</h2>
         <div className="product-cards">
-          {products.docs &&
-            products.docs.map((product) => {
+          {products &&
+            products.map((product) => {
               return (
                 <ProductsCardComponent key={product._id} product={product} />
               );

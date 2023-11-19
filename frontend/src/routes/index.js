@@ -5,13 +5,14 @@ import SignUpPage from "../pages/SignUpPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
-import SellerPage from "../pages/SellerPage/AddProductPage";
-import AddProductPage from "../pages/SellerPage/SellerPage";
+import SellerPage from "../pages/SellerPage/SellerPage";
+import AddProductPage from "../pages/SellerPage/AddProductPage";
 import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import OrderPage from "../pages/OrderPage";
 import OrderDetailPage from "../pages/OrderDetailPage";
 import AddressPage from "../pages/AddressPage";
+import ShopPage from "../pages/ShopPage";
 
 export const routes = [
   {
@@ -43,18 +44,6 @@ export const routes = [
     page: ProductDetailPage,
   },
   {
-    path: "/seller",
-    page: SellerPage,
-  },
-  {
-    path: "/seller/:shop_id",
-    page: SellerPage,
-  },
-  {
-    path: "/seller/:shop_id/add",
-    page: AddProductPage,
-  },
-  {
     path: "/checkout/cart",
     page: CartPage,
   },
@@ -73,6 +62,18 @@ export const routes = [
   {
     path: "/order/shipping",
     page: AddressPage,
+  },
+  {
+    path: "/shop/:shop_id",
+    page: ShopPage,
+  },
+  {
+    path: "/seller/:shop_id",
+    page: SellerPage,
+  },
+  {
+    path: "/seller/:shop_id/add",
+    page: AddProductPage,
   },
 ];
 
