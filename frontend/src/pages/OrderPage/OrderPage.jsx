@@ -38,14 +38,15 @@ const OrderPage = () => {
                 key={order._id}
                 onClick={() => handleClickOrderDetail(order._id)}
               >
-                <img src={order.items[0].product.image}></img>
-                <div>
-                  <h3>{order.items[0].product.name}</h3>
-                  <p>Shop Name</p>
-                  <p>Status: </p>
+                <div className="order-info">
+                  <img src={order.items[0].product.image}></img>
+                  <div>
+                    <h3>{order.items[0].product.name}</h3>
+                    <p>Status: {order.status}</p>
+                  </div>
                 </div>
-                <div>
-                  <p>{order.total}</p>
+                <div className="order-total">
+                  <p>{order.total}đ</p>
                 </div>
               </div>
             );
