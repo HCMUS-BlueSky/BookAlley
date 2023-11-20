@@ -4,10 +4,13 @@ import FooterComponent from "../components/FooterComponent";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
+import AddReviewComponent from "../components/AddReviewComponent";
 
 const OrderDetailPage = () => {
   const { order_id } = useParams();
   const [order, setOrder] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productId, setProductId] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -21,6 +24,12 @@ const OrderDetailPage = () => {
     }
     fetchData();
   }, []);
+
+  const handleOpenModal = (product_id) => {
+    setIsModalOpen(true);
+    setProductId(product_id);
+  };
+
   return (
     <>
       <HeaderComponent />
@@ -69,8 +78,15 @@ const OrderDetailPage = () => {
                   <div className="order-card" key={item._id}>
                     <div className="order-info">
                       <img src={item.product.image}></img>
-                      <div>
+                      <div className="order-review">
                         <h3>{item.product.name}</h3>
+                        <button
+                          type="button"
+                          className="review-btn"
+                          onClick={() => handleOpenModal(item.product._id)}
+                        >
+                          Write review
+                        </button>
                       </div>
                     </div>
                     <div className="order-total">
@@ -79,6 +95,11 @@ const OrderDetailPage = () => {
                   </div>
                 );
               })}
+            <AddReviewComponent
+              product_id={productId}
+              isOpen={isModalOpen}
+              closeModal={() => setIsModalOpen(false)}
+            />
           </div>
         </div>
       </div>
