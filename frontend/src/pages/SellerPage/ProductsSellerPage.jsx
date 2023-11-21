@@ -58,7 +58,7 @@ const ProductsSellerPage = () => {
               <table>
                 <thead>
                   <tr>
-                    <th>#</th>
+                    <th></th>
                     <th>Name</th>
                     <th>Price</th>
                     <th>In Stock</th>

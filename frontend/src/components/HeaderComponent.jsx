@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { logout } from "../reducers/authSlice";
 import { clearCart } from "../reducers/cart/cartSlice";
 import { getCart } from "../actions/cartAction";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faHome } from "@fortawesome/free-solid-svg-icons";
 
 const HeaderComponent = () => {
   const { cart } = useSelector((state) => state.cart);
@@ -28,34 +30,20 @@ const HeaderComponent = () => {
           </div>
         </div>
         <div className="header-right">
-          <a href="">
-            <img src="/images/vietnam.png" alt="" />
-          </a>
-          <a href="">
-            <img src="/images/Bell.png" alt="" />
-          </a>
-          <a href="">
-            <img src="/images/Chat.png" alt="" />
-          </a>
-          <Link to="/checkout/cart">
-            <div className="icon-wrapper">
-              <div className="bubble">
-                {cart.items
-                  ? cart.items.reduce((total, item) => {
-                      return total + item.quantity;
-                    }, 0)
-                  : 0}
-              </div>
-              <img src="/images/Cart.png" alt="" />
-            </div>
-          </Link>
+          <div className="seller-btn">
+            <FontAwesomeIcon icon={faHome} />
+            <Link to="/">Home</Link>
+          </div>
           {access_token ? (
             <div
               className="account"
               onMouseEnter={() => setOpenAccount(true)}
               onMouseLeave={() => setOpenAccount(false)}
             >
-              <img src="/images/Account.png" alt="" />
+              <div className="seller-btn">
+                <FontAwesomeIcon icon={faUser} />
+                <Link to="/signin">Account</Link>
+              </div>
               {openAccount && (
                 <div className="account-content">
                   <a href="#">Profile</a>
@@ -72,10 +60,23 @@ const HeaderComponent = () => {
               )}
             </div>
           ) : (
-            <Link to="/signin">
-              <img src="/images/Account.png" alt="" />
-            </Link>
+            <div className="seller-btn">
+              <FontAwesomeIcon icon={faUser} />
+              <Link to="/signin">Account</Link>
+            </div>
           )}
+          <Link to="/checkout/cart">
+            <div className="icon-wrapper">
+              <div className="bubble">
+                {cart.items
+                  ? cart.items.reduce((total, item) => {
+                      return total + item.quantity;
+                    }, 0)
+                  : 0}
+              </div>
+              <img src="/images/Cart.png" alt="" />
+            </div>
+          </Link>
         </div>
       </div>
     </>

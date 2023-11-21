@@ -14,31 +14,6 @@
       flex-direction: column;
       gap: 12px;
       font-size: 20px;
-      .seller-btn {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-        padding: 12px 15px;
-        border-radius: 10px;
-        cursor: pointer;
-        a {
-          color: #000;
-        }
-      }
-      .seller-btn:hover {
-        color: #fff;
-        background-color: #4e6975;
-        a {
-          color: #fff;
-        }
-      }
-      .active {
-        color: #fff;
-        background-color: #4e6975;
-        a {
-          color: #fff;
-        }
-      }
     }
     .right {
       width: 80%;
@@ -72,5 +47,31 @@
       flex-wrap: wrap;
       gap: 6px;
     }
+  }
+}
+
+.seller-btn {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  a {
+    color: #000;
+  }
+}
+.seller-btn:hover {
+  color: #fff;
+  background-color: #4e6975;
+  a {
+    color: #fff;
+  }
+}
+.active {
+  color: #fff;
+  background-color: #4e6975;
+  a {
+    color: #fff;
   }
 }
