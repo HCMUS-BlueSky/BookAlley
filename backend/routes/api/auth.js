@@ -111,7 +111,7 @@ router.post("/logout", async (req, res) => {
     sameSite: "None",
     secure: true,
   });
-  res.sendStatus(204);
+  return res.sendStatus(204);
 });
 
 // Use refresh token to generate new access token if it expires
