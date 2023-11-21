@@ -2,6 +2,7 @@ const express = require('express');
 const Shop = require('../../models/Shop');
 const hasRoles = require('../../middleware/hasRoles');
 const isVerified = require('../../middleware/isVerified');
+const User = require('../../models/User');
 const router = express.Router();
 
 router.get('/', hasRoles('admin'), async (req, res) => {
@@ -37,6 +38,23 @@ router.get('/get-detail/:shop_id', async (req, res) => {
   }
 });
 
+router.post('/follow/:shop_id', isVerified, async (req, res) => {
+  const user = req.user;
+  try {
+    const shop_id = req.params.shop_id;
+    const shop = await Shop.findById(shop_id)
+      .select('owner followers')
+      .exec();
+    if (shop.owner == user.id) throw new Error("Can't follow your own shop!");
+    if (shop.followers.includes(user.id)) throw new Error("Already followed!");
+    shop.followers.push(user.id);
+    await shop.save();
+    await User.findByIdAndUpdate(user.id, { $push: { following: shop_id } });
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
+});
 // router.post('/products', isVerified, hasRoles('seller'), async (req, res) => {
 //   try {
 //     const user = req.user;

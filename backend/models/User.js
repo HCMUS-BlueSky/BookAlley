@@ -74,6 +74,12 @@ const userSchema = new mongoose.Schema(
       default:
         'https://firebasestorage.googleapis.com/v0/b/bookalley-b6495.appspot.com/o/assets%2Fusers%2F10a18b60-5119-42df-a529-7553a34c13b3.png?alt=media&token=4163719c-2ed2-4341-a315-55ad814111da'
     },
+    following: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Shop'
+      }
+    ],
     refresh_token: {
       type: String
     }
