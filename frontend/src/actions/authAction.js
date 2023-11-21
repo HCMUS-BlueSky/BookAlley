@@ -68,7 +68,6 @@ export const userForgotPassword = createAsyncThunk(
         { email },
         config
       );
-      console.log(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -89,7 +88,25 @@ export const userResetPassword = createAsyncThunk(
         { id, token, new_password },
         config
       );
-      console.log(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const userLogout = createAsyncThunk(
+  "auth/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axiosPublicInstance.post(
+        `/api/auth/logout`,
+        config
+      );
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

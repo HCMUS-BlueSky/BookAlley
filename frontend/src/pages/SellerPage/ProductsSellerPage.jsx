@@ -44,43 +44,56 @@ const ProductsSellerPage = () => {
                 <Link to={"/seller/products"}>Products</Link>
               </div>
             </div>
-            <div className="seller-products-detail">
-              <h2>Products</h2>
-              <div className="utils-seller">
-                <div className="search-seller">
-                  <input type="text" placeholder="Find product" />
-                  <button type="submit">Search</button>
-                </div>
-                <Link to={"/seller/products/add"}>
-                  <button type="submit">+ Create</button>
-                </Link>
+            <div className="right">
+              <img src={infos.logo} alt="" />
+              <div className="info-text">
+                <h2>{infos.name}</h2>
+                <p>
+                  <span style={{ fontSize: "150%", color: "yellow" }}>
+                    &#9733;
+                  </span>{" "}
+                  {infos.rating}
+                  /5 | {infos.followers} followers
+                </p>
               </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>In Stock</th>
-                    <th>Sold</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {infos.listings &&
-                    infos.listings.map((book, index) => {
-                      return (
-                        <tr key={book._id}>
-                          <td>{index + 1}</td>
-                          <td style={{ width: "70%" }}>{book.name}</td>
-                          <td>{book.price}</td>
-                          <td>0</td>
-                          <td>0</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
             </div>
+          </div>
+          <div className="seller-products-detail">
+            <h2>Products</h2>
+            <div className="utils-seller">
+              <div className="search-seller">
+                <input type="text" placeholder="Find product" />
+                <button type="submit">Search</button>
+              </div>
+              <Link to={"/seller/products/add"}>
+                <button type="submit">+ Create</button>
+              </Link>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>In Stock</th>
+                  <th>Sold</th>
+                </tr>
+              </thead>
+              <tbody>
+                {infos.listings &&
+                  infos.listings.map((book, index) => {
+                    return (
+                      <tr key={book._id}>
+                        <td>{index + 1}</td>
+                        <td style={{ width: "70%" }}>{book.name}</td>
+                        <td>{book.price}</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

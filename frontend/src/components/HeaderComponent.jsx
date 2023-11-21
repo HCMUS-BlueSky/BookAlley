@@ -6,6 +6,7 @@ import { clearCart } from "../reducers/cart/cartSlice";
 import { getCart } from "../actions/cartAction";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHome } from "@fortawesome/free-solid-svg-icons";
+import { userLogout } from "../actions/authAction";
 
 const HeaderComponent = () => {
   const { cart } = useSelector((state) => state.cart);
@@ -51,6 +52,7 @@ const HeaderComponent = () => {
                   <a
                     onClick={() => {
                       dispatch(logout());
+                      dispatch(userLogout());
                       dispatch(clearCart());
                     }}
                   >
