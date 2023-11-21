@@ -28,3 +28,17 @@ export const getProducts = createAsyncThunk("products", async () => {
     return error;
   }
 });
+
+export const addProduct = createAsyncThunk("products/add", async ({}) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    let { data } = await axiosPublicInstance.get(`api/book`, config);
+    return data;
+  } catch (error) {
+    return error;
+  }
+});
