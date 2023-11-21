@@ -12,7 +12,8 @@ const router = express.Router();
 router.post('/', isVerified, async (req, res) => {
   const user = req.user;
   const fromCart = req.query.fromCart ? true : false;
-  const { voucher, items, shipping_info, shipping_method, payment_method } = req.body;
+  const { voucher, items, shipping_info, shipping_method, payment_method } =
+    req.body;
   if (!shipping_info || typeof shipping_info !== 'string')
     return res.status(400).send('Invalid address ID!');
   if (!shipping_method || typeof shipping_method !== 'string')
@@ -22,19 +23,29 @@ router.post('/', isVerified, async (req, res) => {
   if (!items || !Array.isArray(items))
     return res.status(400).send('Invalid items!');
   try {
-    if(!(await Address.exists({ _id: shipping_info }))) throw new Error('Invalid address ID!');
+    if (!(await Address.exists({ _id: shipping_info })))
+      throw new Error('Invalid address ID!');
     let cart;
     if (fromCart) {
       cart = await Cart.findOne({ owner: user.id }).exec();
       if (!cart) throw new Error('Cart does not exist!');
     }
-    const orders = {}
+    const orders = {};
 
-    for(const item of items) {
-      if (!item.product || typeof item.product !== 'string' || !item.quantity || typeof item.quantity !== 'number' || item.quantity < 1) throw new Error('Invalid products!');
-      const product = await Book.findById(item.product).select("seller price").exec();
-      if (!product) throw new Error('Invalid products!'); 
-      
+    for (const item of items) {
+      if (
+        !item.product ||
+        typeof item.product !== 'string' ||
+        !item.quantity ||
+        typeof item.quantity !== 'number' ||
+        item.quantity < 1
+      )
+        throw new Error('Invalid products!');
+      const product = await Book.findById(item.product)
+        .select('seller price')
+        .exec();
+      if (!product) throw new Error('Invalid products!');
+
       if (!(product.seller in orders)) {
         orders[product.seller] = new Order({
           owner: user.id,
@@ -51,7 +62,7 @@ router.post('/', isVerified, async (req, res) => {
         product: product._id,
         quantity: item.quantity
       });
-      
+
       orders[product.seller].sub_total += product.price * item.quantity;
 
       if (fromCart) {
@@ -70,7 +81,7 @@ router.post('/', isVerified, async (req, res) => {
     // for(const item of items) {
     //   if (!item.product || typeof item.product !== 'string' || !item.quantity || typeof item.quantity !== 'number' || item.quantity < 1) throw new Error('Invalid products!');
     //   const product = await Book.findById(item.product).select("price").exec();
-    //   if (!product) throw new Error('Invalid products!'); 
+    //   if (!product) throw new Error('Invalid products!');
     //   item.quantity = parseInt(item.quantity);
     //   sub_total += product.price * item.quantity;
     // }
@@ -78,11 +89,15 @@ router.post('/', isVerified, async (req, res) => {
     let discount = 0;
     if (voucher) {
       if (typeof voucher !== 'string') throw new Error('Invalid voucher');
-      const voucherItem = await Voucher.findById(voucher).select("quantity").exec();
+      const voucherItem = await Voucher.findById(voucher)
+        .select('quantity')
+        .exec();
       if (!voucherItem) throw new Error('Invalid voucher!');
       if (voucherItem.quantity < 1) throw new Error('Invalid voucher!');
       discount = voucherItem.discount;
-      await Voucher.findByIdAndUpdate(voucher, {$inc: { quantity: -1 }}).exec();
+      await Voucher.findByIdAndUpdate(voucher, {
+        $inc: { quantity: -1 }
+      }).exec();
     }
     for (const id in orders) {
       orders[id].voucher = voucher;
@@ -93,9 +108,9 @@ router.post('/', isVerified, async (req, res) => {
   } catch (err) {
     return res.status(400).send(err.message);
   }
-})
+});
 
-router.get('/', isVerified, hasRoles("admin"), async (req, res) => {
+router.get('/', isVerified, hasRoles('admin'), async (req, res) => {
   try {
     const orders = await Order.find({})
       .populate('items.product shipping_info voucher')
@@ -104,55 +119,73 @@ router.get('/', isVerified, hasRoles("admin"), async (req, res) => {
   } catch (err) {
     return res.status(500).send(err.message);
   }
-})
+});
 
 router.get('/user', isVerified, async (req, res) => {
   const user = req.user;
   try {
-    const orders = await Order.find({ owner: user.id })
-      .populate([{path: "items.product", select: "name price image seller"}, "shipping_info"])
-      .exec();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const orders = await Order.paginate(
+      { owner: user.id },
+      {
+        page,
+        limit,
+        populate: [
+          { path: 'items.product', select: 'name price image seller' },
+          'shipping_info'
+        ]
+      }
+    );
     return res.json(orders);
   } catch (err) {
     return res.status(500).send(err.message);
   }
-})
+});
 
-router.get('/shop', isVerified, hasRoles("seller", "admin"), async (req, res) => {
-  const user = req.user;
-  try {
-    const shop = await Shop.findOne({ owner: user.id }).exec();
-    if (!shop) throw new Error("No shop associated with seller!");
-    const orders = await Order.find({ seller: shop.id })
-      .populate([
-        { path: 'items.product', select: 'name price image seller' },
-        'shipping_info'
-      ])
-      .exec();
-    // const orders = await Order.find({})
-    //   .populate([
-    //     {
-    //       path: 'items.product',
-    //       select: 'name price image seller',
-    //       match: { seller: { $eq: shop.id } }
-    //     },
-    //     'shipping_info'
-    //   ])
-    //   .exec();
-    
-    // const result = orders.filter((order) => {
-    //   order.items = order.items.filter((item) => {
-    //     return item.product;
-    //   })
-    //   return order.items.length;
-    // });
-    return res.json(orders);
-  } catch (err) {
-    return res.status(500).send(err.message);
+router.get('/shop', isVerified, hasRoles('seller', 'admin'), async (req, res) => {
+    const user = req.user;
+    try {
+      const shop = await Shop.findOne({ owner: user.id }).exec();
+      if (!shop) throw new Error('No shop associated with seller!');
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const orders = await Order.paginate(
+        { seller: shop.id },
+        {
+          page,
+          limit,
+          populate: [
+            { path: 'items.product', select: 'name price image seller rating' },
+            'shipping_info'
+          ]
+        }
+      );
+      // const orders = await Order.find({})
+      //   .populate([
+      //     {
+      //       path: 'items.product',
+      //       select: 'name price image seller',
+      //       match: { seller: { $eq: shop.id } }
+      //     },
+      //     'shipping_info'
+      //   ])
+      //   .exec();
+
+      // const result = orders.filter((order) => {
+      //   order.items = order.items.filter((item) => {
+      //     return item.product;
+      //   })
+      //   return order.items.length;
+      // });
+      return res.json(orders);
+    } catch (err) {
+      return res.status(500).send(err.message);
+    }
   }
-})
+);
 
-router.get("/detail/:order_id", isVerified, async (req, res) => {
+router.get('/detail/:order_id', isVerified, async (req, res) => {
   const user = req.user;
   try {
     const shop = await Shop.findOne({ owner: user.id }).exec();
@@ -169,10 +202,10 @@ router.get("/detail/:order_id", isVerified, async (req, res) => {
         'shipping_info '
       ])
       .exec();
-    return res.json(order)
+    return res.json(order);
   } catch (err) {
     return res.status(500).send(err.message);
   }
-})
+});
 
 module.exports = router;
