@@ -1,9 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProductsForSeller } from "../actions/sellerAction";
+import {
+  getOrdersForSeller,
+  getProductsForSeller,
+} from "../actions/sellerAction";
 
 const initialState = {
   loading: false,
   infos: {},
+  orders: {},
   error: null,
 };
 
@@ -23,6 +27,18 @@ const sellerSlice = createSlice({
     builder.addCase(getProductsForSeller.rejected, (state) => {
       state.loading = false;
       state.infos = {};
+    });
+    builder.addCase(getOrdersForSeller.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getOrdersForSeller.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.orders = payload;
+    });
+    builder.addCase(getOrdersForSeller.rejected, (state) => {
+      state.loading = false;
+      state.orders = {};
     });
   },
 });

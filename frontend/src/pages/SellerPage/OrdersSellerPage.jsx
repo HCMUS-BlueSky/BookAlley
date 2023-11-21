@@ -8,7 +8,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import HeaderComponent from "../../components/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent";
-import { getProductsForSeller } from "../../actions/sellerAction";
+import {
+  getOrdersForSeller,
+  getProductsForSeller,
+} from "../../actions/sellerAction";
 import { useDispatch, useSelector } from "react-redux";
 import PendingTabComponent from "../../components/SellerTabs/PendingTabComponent";
 import DeliveringTabComponent from "../../components/SellerTabs/DeliveringTabComponent";
@@ -38,6 +41,7 @@ const OrdersSellerPage = () => {
 
   useEffect(() => {
     dispatch(getProductsForSeller());
+    dispatch(getOrdersForSeller());
   }, []);
   return (
     <>

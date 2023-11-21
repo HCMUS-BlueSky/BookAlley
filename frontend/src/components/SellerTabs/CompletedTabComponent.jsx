@@ -1,7 +1,7 @@
 import React from "react";
 
 const CompletedTabComponent = () => {
-  return <div>CompletedTabComponent</div>;
+  return <></>;
 };
 
 export default CompletedTabComponent;

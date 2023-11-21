@@ -1,7 +1,7 @@
 import React from "react";
 
 const DeliveringTabComponent = () => {
-  return <div>DeliveringTabComponent</div>;
+  return <></>;
 };
 
 export default DeliveringTabComponent;
