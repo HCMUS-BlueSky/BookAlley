@@ -10,30 +10,53 @@
       background-color: $white;
       border-radius: 10px;
       padding: 15px;
-      text-transform: uppercase;
-      p {
-        margin-bottom: 20px;
-        margin-left: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 20px;
+      .seller-btn {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 12px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        a {
+          color: #000;
+        }
+      }
+      .seller-btn:hover {
+        color: #fff;
+        background-color: #4e6975;
+        a {
+          color: #fff;
+        }
+      }
+      .active {
+        color: #fff;
+        background-color: #4e6975;
+        a {
+          color: #fff;
+        }
       }
     }
     .right {
       width: 80%;
+      background-color: $white;
+      padding: 20px 40px;
+      border-radius: 15px;
       display: flex;
-      flex-direction: column;
-      gap: 12px;
-      .info {
-        background-color: $white;
-        padding: 20px;
-        border-radius: 15px;
+      gap: 40px;
+      align-items: center;
+      img {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
       }
-      .analytic {
-        background-color: $white;
-        padding: 20px;
-        border-radius: 15px;
-        h2,
-        h3 {
-          margin-bottom: 10px;
-        }
+      .info-text {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
       }
     }
   }
@@ -43,19 +66,6 @@
     border-radius: 15px;
     h2 {
       margin-bottom: 10px;
-    }
-    button {
-      width: 200px;
-      height: 50px;
-      border-radius: 15px;
-      background: $white;
-      font-size: 24px;
-      font-weight: 600;
-      color: #4e6975;
-      border: none;
-      cursor: pointer;
-      border: 2px solid #4e6975;
-      margin-bottom: 20px;
     }
     .product-cards {
       display: flex;

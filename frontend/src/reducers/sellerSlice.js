@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProductsForSeller } from "../actions/shopAction";
+import { getProductsForSeller } from "../actions/sellerAction";
 
 const initialState = {
   loading: false,
@@ -7,8 +7,8 @@ const initialState = {
   error: null,
 };
 
-const shopSlice = createSlice({
-  name: "shop",
+const sellerSlice = createSlice({
+  name: "seller",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -27,4 +27,4 @@ const shopSlice = createSlice({
   },
 });
 
-export default shopSlice.reducer;
+export default sellerSlice.reducer;

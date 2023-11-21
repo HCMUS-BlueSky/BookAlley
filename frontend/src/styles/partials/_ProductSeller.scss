@@ -1,0 +1,54 @@
+.seller-products-detail {
+  width: 80%;
+  background-color: $white;
+  padding: 20px 40px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  .utils-seller {
+    display: flex;
+    justify-content: space-between;
+    .search-seller {
+      position: relative;
+      width: 40%;
+      input {
+        width: 90%;
+        padding: 4px 10px;
+        border-radius: 5px;
+        border: 2px solid #595959;
+        font-size: 30px;
+        font-size: inherit;
+      }
+      button {
+        position: absolute;
+        right: 0px;
+        padding: 4px;
+        background-color: #a0c3d2;
+        font-size: inherit;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+      }
+    }
+    button {
+      padding: 4px;
+      background-color: #a0c3d2;
+      font-size: inherit;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+  table {
+    border-collapse: collapse;
+    border-radius: 10px;
+  }
+  th {
+    border: 2px solid black;
+    padding: 10px;
+    text-align: left;
+  }
+  td {
+    border: 2px solid black;
+    padding: 10px;
+  }
+}
