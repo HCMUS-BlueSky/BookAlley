@@ -42,10 +42,10 @@ router.post('/', isVerified, async (req, res) => {
       )
         throw new Error('Invalid products!');
       const product = await Book.findById(item.product)
-        .select('seller price')
+        .select('seller price instock')
         .exec();
       if (!product) throw new Error('Invalid products!');
-
+      
       if (!(product.seller in orders)) {
         orders[product.seller] = new Order({
           owner: user.id,
@@ -58,12 +58,18 @@ router.post('/', isVerified, async (req, res) => {
 
       item.quantity = parseInt(item.quantity);
 
+      if (item.quantity > product.instock) throw new Error("Not enough book in stock!")
+
       orders[product.seller].items.push({
         product: product._id,
         quantity: item.quantity
       });
 
       orders[product.seller].sub_total += product.price * item.quantity;
+
+      await Book.findByIdAndUpdate(item.product, {
+        $inc: { instock: -item.quantity }
+      }).exec();
 
       if (fromCart) {
         const productIndex = cart.items.findIndex(
@@ -203,6 +209,49 @@ router.get('/detail/:order_id', isVerified, async (req, res) => {
       ])
       .exec();
     return res.json(order);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+});
+
+router.patch('/:order_id', isVerified, hasRoles('seller', 'admin'), async (req, res) => {
+  const user = req.user;
+  try {
+    const shop = await Shop.findOne({ owner: user.id }).exec();
+    const order_id = req.params.order_id;
+    const order = await Order.findOne({
+      _id: order_id,
+      seller: shop.id
+    }).exec();
+
+    if (req.body.status && typeof req.body.status === 'string') {
+      const new_status = req.body.status;
+      
+      if (order.status === 'completed' || order.status === 'canceled') throw new Error("Failed to update order!");
+      if (order.status === 'delivering') {
+        if (new_status !== 'completed') throw new Error('Failed to update order!');
+        order.status = new_status;
+        for (const item of order.items) {
+          await Book.findByIdAndUpdate(item.product, {
+            $inc: { sold: item.quantity }
+          });
+        }
+      }
+      else if (order.status === 'pending') {
+        if (new_status !== 'delivering' && new_status !== 'canceled') throw new Error('Failed to update order!');
+        order.status = new_status;
+        
+        if (new_status === 'canceled') {
+          for (const item of order.items) {
+            await Book.findByIdAndUpdate(item.product, {
+              $inc: { instock: item.quantity }
+            });
+          }
+        }
+      }
+    }
+    await order.save()
+    return res.sendStatus(204);
   } catch (err) {
     return res.status(500).send(err.message);
   }
