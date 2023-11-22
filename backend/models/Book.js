@@ -19,7 +19,8 @@ const bookSchema = new mongoose.Schema(
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Shop'
+      ref: 'Shop',
+      required: true
     },
     year_published: {
       type: Number,
@@ -42,6 +43,7 @@ const bookSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
+      min: 1,
       required: true
     },
     image: {
@@ -50,7 +52,8 @@ const bookSchema = new mongoose.Schema(
         'https://firebasestorage.googleapis.com/v0/b/bookalley-b6495.appspot.com/o/assets%2Fdefault%2Fno-image.png?alt=media&token=72bf0771-8a7a-4c54-87cc-614088a80769'
     },
     description: {
-      type: String
+      type: String,
+      require: true
     },
     tags: [
       {

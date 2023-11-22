@@ -10,16 +10,69 @@ router.get('/', async (req, res) => {
   return res.sendStatus(204);
 });
 
-router.post('/', isVerified, hasRoles("seller"), upload.single('image'), async (req, res) => {
+router.post('/', isVerified, hasRoles("seller", "admin"), upload.single('image'), async (req, res) => {
   if (req?.fileValidationError) return res.status(400).send(req?.fileValidationError.message);
   try {
-    if (!req.file) {
-      throw new Error('No files were uploaded');
+    const {
+      name,
+      author,
+      seller,
+      description,
+      price,
+      translator,
+      publisher,
+      year_published,
+      weight,
+      size,
+      pages,
+      binding_method,
+      instock,
+      language,
+      tags
+    } = req.body;
+    if (!name || typeof name !== 'string') throw new Error('Invalid name!');
+    if (!author || typeof author !== 'string') throw new Error('Invalid author!');
+    if (!seller || typeof seller !== 'string') throw new Error('Invalid seller!');
+    if (!description || typeof description !== 'string') throw new Error('Invalid description!');
+    if (!price || isNaN(price) || price <= 0) throw new Error('Invalid price!');
+    const data = { name, author, seller, description, price };
+    if (translator && typeof translator === 'string') {
+      data.translator = translator;
     }
-    const book = new Book(req.body);
+    if (publisher && typeof publisher === 'string') {
+      data.publisher = publisher;
+    }
+    if (year_published && !isNaN(year_published)) {
+      data.year_published = year_published;
+    }
+    if (weight && typeof !isNaN(weight)) {
+      data.weight = weight;
+    }
+    if (size && typeof size === 'string') {
+      data.size = size;
+    }
+    if (pages && !isNaN(pages)) {
+      data.pages = pages;
+    }
+    if (binding_method && typeof binding_method === 'string') {
+      data.binding_method = binding_method;
+    }
+    if (instock && !isNaN(instock)) {
+      data.instock = instock;
+    }
+    if (language && typeof language === 'string') {
+      data.language = language;
+    }
+    if (tags && Array.isArray(tags)) {
+      data.tags = tags;
+    }
+    const book = new Book(data);
     await book.validate();
-    const imageURL = await uploadFile('assets/products', req.file);
-    book.image = imageURL;
+
+    if (req.file) {
+      const imageURL = await uploadFile('assets/products', req.file);
+      book.image = imageURL;
+    }
     await book.save();
     return res.send("Product created!")
   } catch (err) {
