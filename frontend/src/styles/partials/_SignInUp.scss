@@ -50,6 +50,11 @@
         text-align: right;
         font-weight: 600;
       }
+      a {
+        display: flex;
+        justify-content: flex-end;
+        color: #000;
+      }
       button {
         background-color: $paynes-gray;
         color: $white;

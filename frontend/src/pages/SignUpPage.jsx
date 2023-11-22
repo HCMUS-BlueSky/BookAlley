@@ -32,7 +32,7 @@ const SignUpPage = () => {
     <div className="auth">
       <div className="container">
         <h1>Register</h1>
-        <form action="" onClick={handleSubmit}>
+        <form action="" onSubmit={handleSubmit}>
           <label htmlFor="username">Username</label>
           <input
             type="text"
@@ -57,7 +57,7 @@ const SignUpPage = () => {
             onChange={handlePassword}
             required
           />
-          <p className="noti-info">{error}</p>
+          {/* <p className="noti-info">{error}</p> */}
           <button type="submit">{loading ? "Loading..." : "Register"}</button>
         </form>
         <p>
