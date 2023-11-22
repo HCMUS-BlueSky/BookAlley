@@ -1,120 +1,120 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require('mongoose-paginate-v2');
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 const bookSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     author: {
       type: String,
-      required: true
+      required: true,
     },
     translator: {
-      type: String
+      type: String,
     },
     publisher: {
-      type: String
+      type: String,
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Shop',
-      required: true
+      ref: "Shop",
+      required: true,
     },
     year_published: {
       type: Number,
-      min: 0
+      min: 0,
     },
     weight: {
       type: Number,
       min: 0,
-      default: 0
+      default: 0,
     },
     size: {
-      type: String
+      type: String,
     },
     pages: {
       type: Number,
-      min: 0
+      min: 0,
     },
     binding_method: {
-      type: String
+      type: String,
     },
     price: {
       type: Number,
       min: 1,
-      required: true
+      required: true,
     },
     image: {
       type: String,
       default:
-        'https://firebasestorage.googleapis.com/v0/b/bookalley-b6495.appspot.com/o/assets%2Fdefault%2Fno-image.png?alt=media&token=72bf0771-8a7a-4c54-87cc-614088a80769'
+        "https://firebasestorage.googleapis.com/v0/b/bookalley-b6495.appspot.com/o/assets%2Fdefault%2Fno-image.png?alt=media&token=72bf0771-8a7a-4c54-87cc-614088a80769",
     },
     description: {
       type: String,
-      require: true
+      require: true,
     },
     tags: [
       {
         type: String,
         enum: {
           values: [
-            'science',
-            'action',
-            'cookbooks',
-            'horror',
-            'romance',
-            'literature',
-            'economics',
-            'psychology',
-            'manga',
-            'comic',
-            'novel',
-            'history',
-            'geography',
-            'religion'
+            "science",
+            "action",
+            "cookbooks",
+            "horror",
+            "romance",
+            "literature",
+            "economics",
+            "psychology",
+            "manga",
+            "comic",
+            "novel",
+            "history",
+            "geography",
+            "religion",
           ],
-          message: '{VALUE} is not a valid tag'
-        }
-      }
+          message: "{VALUE} is not a valid tag",
+        },
+      },
     ],
     instock: {
       type: Number,
-      default: 0
+      default: 0,
     },
     sold: {
       type: Number,
-      default: 0
+      default: 0,
     },
     rating: {
       type: Number,
       min: 0,
       max: 5,
-      default: 0
+      default: 0,
     },
     language: {
-      type: String
-    }
+      type: String,
+    },
   },
   {
-    collection: 'books',
+    collection: "books",
     virtuals: {
       id: {
         get() {
           return this._id;
-        }
-      }
+        },
+      },
     },
     statics: {
       getTagList() {
-        return this.schema.path('tags.0').enumValues;
-      }
+        return this.schema.path("tags.0").enumValues;
+      },
     },
     timestamps: {
-      createdAt: 'created_at',
-      updatedAt: 'updated_at'
-    }
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+    },
   }
 );
 
@@ -143,6 +143,5 @@ bookSchema.index({ name: 1, author: 1 }, { unique: true });
 // };
 
 bookSchema.plugin(mongoosePaginate);
-
 
 module.exports = mongoose.model("Book", bookSchema);

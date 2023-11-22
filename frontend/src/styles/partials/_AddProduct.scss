@@ -24,7 +24,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      form {
+      .text-field {
         label {
           display: block;
           font-weight: 600;
@@ -48,7 +48,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      form {
+      .text-field {
         label {
           display: block;
           font-weight: 600;
