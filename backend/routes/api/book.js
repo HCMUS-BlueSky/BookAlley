@@ -1,5 +1,6 @@
 const express = require('express');
 const Book = require('../../models/Book');
+const Shop = require('../../models/Shop');
 const uploadFile = require('../../utils/fileUpload');
 const upload = require('../../middleware/multer');
 const isVerified = require('../../middleware/isVerified');
@@ -13,10 +14,10 @@ router.get('/', async (req, res) => {
 router.post('/', isVerified, hasRoles("seller", "admin"), upload.single('image'), async (req, res) => {
   if (req?.fileValidationError) return res.status(400).send(req?.fileValidationError.message);
   try {
+    const user = req.user;
     const {
       name,
       author,
-      seller,
       description,
       price,
       translator,
@@ -32,10 +33,11 @@ router.post('/', isVerified, hasRoles("seller", "admin"), upload.single('image')
     } = req.body;
     if (!name || typeof name !== 'string') throw new Error('Invalid name!');
     if (!author || typeof author !== 'string') throw new Error('Invalid author!');
-    if (!seller || typeof seller !== 'string') throw new Error('Invalid seller!');
     if (!description || typeof description !== 'string') throw new Error('Invalid description!');
     if (!price || isNaN(price) || price <= 0) throw new Error('Invalid price!');
-    const data = { name, author, seller, description, price };
+    const shop = await Shop.exists({owner: user.id}).exec();
+    if (!shop) throw new Error("No shop associated with seller!");
+    const data = { name, author, description, price, seller: shop._id };
     if (translator && typeof translator === 'string') {
       data.translator = translator;
     }
@@ -74,6 +76,7 @@ router.post('/', isVerified, hasRoles("seller", "admin"), upload.single('image')
       book.image = imageURL;
     }
     await book.save();
+    await Shop.findByIdAndUpdate(shop._id, { $push: { listings: book._id } }).exec();
     return res.send("Product created!")
   } catch (err) {
     return res.status(400).send(err.message);
