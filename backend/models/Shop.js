@@ -27,12 +27,6 @@ const shopSchema = new mongoose.Schema(
     description: {
       type: String
     },
-    followers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-      }
-    ],
     follow_count: {
       type: Number,
       min: 0,
@@ -68,11 +62,11 @@ const shopSchema = new mongoose.Schema(
 
 shopSchema.plugin(mongoosePaginate);
 
-shopSchema.pre('save', function (next) {
-  if (this.followers) {
-    this.follow_count = this.followers.length;
-  }
-  next();
-});
+// shopSchema.pre('save', function (next) {
+//   if (this.followers) {
+//     this.follow_count = this.followers.length;
+//   }
+//   next();
+// });
 
 module.exports = mongoose.model('Shop', shopSchema);
