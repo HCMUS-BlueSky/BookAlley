@@ -34,7 +34,7 @@ router.post("/register", async (req, res) => {
         expiresIn: '1d'
       }
     );
-    const verifyLink = `http://${process.env.FE_HOST}/verify?token=${verifyToken}`;
+    const verifyLink = `${process.env.FE_HOST}/verify?token=${verifyToken}`;
     await sendEmail(email, 'Please verify your email address', genEmailConfirmTemplate(verifyLink));
     return res.send(
       'User registered! A verification link has been sent to your email account!'
@@ -159,7 +159,7 @@ router.post("/forgot-password", async (req, res) => {
         expiresIn: "900s",
       }
     );
-    const resetLink = `http://${process.env.FE_HOST}/reset-password?id=${user.id}&token=${resetToken}`;
+    const resetLink = `${process.env.FE_HOST}/reset-password?id=${user.id}&token=${resetToken}`;
     await sendEmail(
       user.email,
       'Password Reset Requested From BookAlley',
