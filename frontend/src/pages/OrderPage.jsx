@@ -31,26 +31,27 @@ const OrderPage = () => {
       >
         <div className="container orders">
           <h2>My order</h2>
-          {orders.map((order) => {
-            return (
-              <div
-                className="order-card"
-                key={order._id}
-                onClick={() => handleClickOrderDetail(order._id)}
-              >
-                <div className="order-info">
-                  <img src={order.items[0].product.image}></img>
-                  <div>
-                    <h3>{order.items[0].product.name}</h3>
-                    <p>Status: {order.status}</p>
+          {orders.docs &&
+            orders.docs.map((order) => {
+              return (
+                <div
+                  className="order-card"
+                  key={order._id}
+                  onClick={() => handleClickOrderDetail(order._id)}
+                >
+                  <div className="order-info">
+                    <img src={order.items[0].product.image}></img>
+                    <div>
+                      <h3>{order.items[0].product.name}</h3>
+                      <p>Status: {order.status}</p>
+                    </div>
+                  </div>
+                  <div className="order-total">
+                    <p>{order.total}đ</p>
                   </div>
                 </div>
-                <div className="order-total">
-                  <p>{order.total}đ</p>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
       <FooterComponent />

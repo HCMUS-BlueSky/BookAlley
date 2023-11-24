@@ -1,4 +1,4 @@
-import { axiosPublicInstance } from "../utils/axios";
+import { axiosInstance, axiosPublicInstance } from "../utils/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getCategories = createAsyncThunk("categories", async () => {
@@ -28,3 +28,59 @@ export const getProducts = createAsyncThunk("products", async () => {
     return error;
   }
 });
+
+export const addProduct = createAsyncThunk(
+  "products/add",
+  async (
+    {
+      name,
+      author,
+      description,
+      price,
+      translator,
+      publisher,
+      year_published,
+      weight,
+      size,
+      pages,
+      binding_method,
+      instock,
+      language,
+      tags,
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      let { data } = await axiosInstance.post(
+        `api/book`,
+        {
+          name,
+          author,
+          description,
+          price,
+          translator,
+          publisher,
+          year_published,
+          weight,
+          size,
+          pages,
+          binding_method,
+          instock,
+          language,
+          tags,
+        },
+        config
+      );
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+      rejectWithValue(error.response.data);
+    }
+  }
+);

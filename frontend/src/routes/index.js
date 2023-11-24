@@ -13,6 +13,8 @@ import OrderPage from "../pages/OrderPage";
 import OrderDetailPage from "../pages/OrderDetailPage";
 import AddressPage from "../pages/AddressPage";
 import ShopPage from "../pages/ShopPage";
+import OrdersSellerPage from "../pages/SellerPage/OrdersSellerPage";
+import ProductsSellerPage from "../pages/SellerPage/ProductsSellerPage";
 
 export const routes = [
   {
@@ -68,11 +70,19 @@ export const routes = [
     page: ShopPage,
   },
   {
-    path: "/seller/:shop_id",
+    path: "/seller",
     page: SellerPage,
   },
   {
-    path: "/seller/:shop_id/add",
+    path: "/seller/orders",
+    page: OrdersSellerPage,
+  },
+  {
+    path: "/seller/products",
+    page: ProductsSellerPage,
+  },
+  {
+    path: "/seller/products/add",
     page: AddProductPage,
   },
 ];

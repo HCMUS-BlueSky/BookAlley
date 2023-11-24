@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../reducers/authSlice";
 import { clearCart } from "../reducers/cart/cartSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faHome } from "@fortawesome/free-solid-svg-icons";
+import { userLogout } from "../actions/authAction";
 import { getCart } from "../actions/cartAction";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HeaderComponent = () => {
   const { cart } = useSelector((state) => state.cart);
   const { access_token } = useSelector((state) => state.auth);
+  const { infos } = useSelector((state) => state.user);
   const [openAccount, setOpenAccount] = useState(false);
   const dispatch = useDispatch();
+  const notify = () => toast("You need to verify first");
 
   useEffect(() => {
     dispatch(getCart());
@@ -28,34 +35,20 @@ const HeaderComponent = () => {
           </div>
         </div>
         <div className="header-right">
-          <a href="">
-            <img src="/images/vietnam.png" alt="" />
-          </a>
-          <a href="">
-            <img src="/images/Bell.png" alt="" />
-          </a>
-          <a href="">
-            <img src="/images/Chat.png" alt="" />
-          </a>
-          <Link to="/checkout/cart">
-            <div className="icon-wrapper">
-              <div className="bubble">
-                {cart.items
-                  ? cart.items.reduce((total, item) => {
-                      return total + item.quantity;
-                    }, 0)
-                  : 0}
-              </div>
-              <img src="/images/Cart.png" alt="" />
-            </div>
-          </Link>
+          <div className="seller-btn">
+            <FontAwesomeIcon icon={faHome} />
+            <Link to="/">Home</Link>
+          </div>
           {access_token ? (
             <div
               className="account"
               onMouseEnter={() => setOpenAccount(true)}
               onMouseLeave={() => setOpenAccount(false)}
             >
-              <img src="/images/Account.png" alt="" />
+              <div className="seller-btn">
+                <FontAwesomeIcon icon={faUser} />
+                Account
+              </div>
               {openAccount && (
                 <div className="account-content">
                   <a href="#">Profile</a>
@@ -63,6 +56,7 @@ const HeaderComponent = () => {
                   <a
                     onClick={() => {
                       dispatch(logout());
+                      dispatch(userLogout());
                       dispatch(clearCart());
                     }}
                   >
@@ -72,9 +66,31 @@ const HeaderComponent = () => {
               )}
             </div>
           ) : (
-            <Link to="/signin">
-              <img src="/images/Account.png" alt="" />
+            <div className="seller-btn">
+              <FontAwesomeIcon icon={faUser} />
+              <Link to="/signin">Account</Link>
+            </div>
+          )}
+          {cart ? (
+            <Link to="/checkout/cart">
+              <div className="icon-wrapper">
+                <div className="bubble">
+                  {cart.items &&
+                    cart.items.reduce((total, item) => {
+                      return total + item.quantity;
+                    }, 0)}
+                </div>
+                <img src="/images/Cart.png" alt="" />
+              </div>
             </Link>
+          ) : (
+            <>
+              <div className="icon-wrapper" onClick={notify}>
+                <div className="bubble">0</div>
+                <img src="/images/Cart.png" alt="" />
+              </div>
+              <ToastContainer />
+            </>
           )}
         </div>
       </div>

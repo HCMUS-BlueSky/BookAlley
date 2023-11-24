@@ -24,7 +24,7 @@ const ForgotPasswordPage = () => {
         <form action="">
           <label htmlFor="email">Email</label>
           <input type="email" name="email" onChange={handleEmail} required />
-          <p className="noti-info">{error}</p>
+          {/* <p className="noti-info">{error}</p> */}
           <button type="button" onClick={handleForgotPassword}>
             {loading ? "Loading..." : "Submit"}
           </button>

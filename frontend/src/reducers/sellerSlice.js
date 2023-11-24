@@ -1,14 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProductsForSeller } from "../actions/shopAction";
+import {
+  getOrdersForSeller,
+  getProductsForSeller,
+} from "../actions/sellerAction";
 
 const initialState = {
   loading: false,
   infos: {},
+  orders: {},
   error: null,
 };
 
-const shopSlice = createSlice({
-  name: "shop",
+const sellerSlice = createSlice({
+  name: "seller",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -24,7 +28,19 @@ const shopSlice = createSlice({
       state.loading = false;
       state.infos = {};
     });
+    builder.addCase(getOrdersForSeller.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getOrdersForSeller.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.orders = payload;
+    });
+    builder.addCase(getOrdersForSeller.rejected, (state) => {
+      state.loading = false;
+      state.orders = {};
+    });
   },
 });
 
-export default shopSlice.reducer;
+export default sellerSlice.reducer;

@@ -52,7 +52,8 @@ const SignInPage = () => {
             onChange={handlePassword}
             required
           />
-          <p className="noti-info">{error}</p>
+          {/* < className="noti-info">{error}</  p> */}
+          <Link to={"/forgot-password"}>Forgot password?</Link>
           <button type="submit">{loading ? "Loading..." : "Log In"}</button>
         </form>
         <p>

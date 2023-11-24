@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAddress } from "../actions/userActions";
+import { getAddress, getUser } from "../actions/userActions";
 
 const initialState = {
   loading: false,
@@ -12,6 +12,7 @@ const initialState = {
   addressId: "",
   avatar: "",
   isAdmin: false,
+  infos: {},
 };
 
 const userSlice = createSlice({
@@ -38,6 +39,18 @@ const userSlice = createSlice({
       state.addressId = payload[0]._id;
     });
     builder.addCase(getAddress.rejected, (state) => {
+      state.loading = false;
+      state.infos = {};
+    });
+    builder.addCase(getUser.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getUser.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.infos = payload;
+    });
+    builder.addCase(getUser.rejected, (state) => {
       state.loading = false;
       state.infos = {};
     });

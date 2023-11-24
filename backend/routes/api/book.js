@@ -1,5 +1,6 @@
 const express = require('express');
 const Book = require('../../models/Book');
+const Shop = require('../../models/Shop');
 const uploadFile = require('../../utils/fileUpload');
 const upload = require('../../middleware/multer');
 const isVerified = require('../../middleware/isVerified');
@@ -10,17 +11,72 @@ router.get('/', async (req, res) => {
   return res.sendStatus(204);
 });
 
-router.post('/', isVerified, hasRoles("seller"), upload.single('image'), async (req, res) => {
+router.post('/', isVerified, hasRoles("seller", "admin"), upload.single('image'), async (req, res) => {
   if (req?.fileValidationError) return res.status(400).send(req?.fileValidationError.message);
   try {
-    if (!req.file) {
-      throw new Error('No files were uploaded');
+    const user = req.user;
+    const {
+      name,
+      author,
+      description,
+      price,
+      translator,
+      publisher,
+      year_published,
+      weight,
+      size,
+      pages,
+      binding_method,
+      instock,
+      language,
+      tags
+    } = req.body;
+    if (!name || typeof name !== 'string') throw new Error('Invalid name!');
+    if (!author || typeof author !== 'string') throw new Error('Invalid author!');
+    if (!description || typeof description !== 'string') throw new Error('Invalid description!');
+    if (!price || isNaN(price) || price <= 0) throw new Error('Invalid price!');
+    const shop = await Shop.exists({owner: user.id}).exec();
+    if (!shop) throw new Error("No shop associated with seller!");
+    const data = { name, author, description, price, seller: shop._id };
+    if (translator && typeof translator === 'string') {
+      data.translator = translator;
     }
-    const book = new Book(req.body);
+    if (publisher && typeof publisher === 'string') {
+      data.publisher = publisher;
+    }
+    if (year_published && !isNaN(year_published)) {
+      data.year_published = year_published;
+    }
+    if (weight && typeof !isNaN(weight)) {
+      data.weight = weight;
+    }
+    if (size && typeof size === 'string') {
+      data.size = size;
+    }
+    if (pages && !isNaN(pages)) {
+      data.pages = pages;
+    }
+    if (binding_method && typeof binding_method === 'string') {
+      data.binding_method = binding_method;
+    }
+    if (instock && !isNaN(instock)) {
+      data.instock = instock;
+    }
+    if (language && typeof language === 'string') {
+      data.language = language;
+    }
+    if (tags && Array.isArray(tags)) {
+      data.tags = tags;
+    }
+    const book = new Book(data);
     await book.validate();
-    const imageURL = await uploadFile('assets/products', req.file);
-    book.image = imageURL;
+
+    if (req.file) {
+      const imageURL = await uploadFile('assets/products', req.file);
+      book.image = imageURL;
+    }
     await book.save();
+    await Shop.findByIdAndUpdate(shop._id, { $push: { listings: book._id } }).exec();
     return res.send("Product created!")
   } catch (err) {
     return res.status(400).send(err.message);
