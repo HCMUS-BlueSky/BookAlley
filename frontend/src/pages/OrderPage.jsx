@@ -47,7 +47,7 @@ const OrderPage = () => {
                     </div>
                   </div>
                   <div className="order-total">
-                    <p>{order.total}đ</p>
+                    <p>{order.total && order.total.toLocaleString("en-US")}đ</p>
                   </div>
                 </div>
               );

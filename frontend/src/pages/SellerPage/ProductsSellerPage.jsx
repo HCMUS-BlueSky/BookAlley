@@ -86,7 +86,9 @@ const ProductsSellerPage = () => {
                       <tr key={book._id}>
                         <td>{index + 1}</td>
                         <td style={{ width: "70%" }}>{book.name}</td>
-                        <td>{book.price}</td>
+                        <td>
+                          {book.price && book.price.toLocaleString("en-US")}đ
+                        </td>
                         <td>0</td>
                         <td>0</td>
                       </tr>

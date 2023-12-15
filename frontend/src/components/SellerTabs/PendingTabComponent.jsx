@@ -23,7 +23,7 @@ const PendingTabComponent = () => {
                   <td>{order._id}</td>
                   <td>{order.shipping_method}</td>
                   <td>{order.payment_method}</td>
-                  <td>{order.total}</td>
+                  <td>{order.total && order.total.toLocaleString("en-US")}đ</td>
                   <td>{order.status}</td>
                 </tr>
               );

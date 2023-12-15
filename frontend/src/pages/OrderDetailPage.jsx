@@ -67,7 +67,9 @@ const OrderDetailPage = () => {
             <div className="payment-info">
               {/* <p>Provisonal: 276.000đ</p>
               <p>Shipping: 50.000đ</p> */}
-              <p>Total: {order.total}</p>
+              <p>
+                Total: {order.total && order.total.toLocaleString("en-US")}đ
+              </p>
             </div>
           </div>
           <div className="orders">
@@ -90,7 +92,11 @@ const OrderDetailPage = () => {
                       </div>
                     </div>
                     <div className="order-total">
-                      <p>{item.product.price}đ</p>
+                      <p>
+                        {item.product.price &&
+                          item.product.price.toLocaleString("en-US")}
+                        đ
+                      </p>
                     </div>
                   </div>
                 );
