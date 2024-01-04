@@ -31,3 +31,27 @@ ul.nav li.active {
 .data-tab {
   width: 100%;
 }
+
+.process-btn {
+  background-color: #65b741;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 12px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.cancel-order-btn {
+  background-color: #ef4040;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 12px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
