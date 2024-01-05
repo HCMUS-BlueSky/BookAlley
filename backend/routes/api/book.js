@@ -146,4 +146,23 @@ router.get('/get-detail/:id', async (req, res) => {
   }
 })
 
+router.get("/search", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const searchTerm = req.query.searchTerm;
+    const list = await Book.paginate(
+      {
+        $text: {
+          $search: `\"${searchTerm}\"`
+        }
+      },
+      { select: 'name image rating price', page, limit }
+    );
+    return res.send(list);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+})
+
 module.exports = router;

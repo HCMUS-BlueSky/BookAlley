@@ -120,6 +120,14 @@ const bookSchema = new mongoose.Schema(
 
 bookSchema.index({ name: 1, author: 1 }, { unique: true });
 
+bookSchema.index({
+  name: 'text',
+  author: 'text',
+  publisher: 'text',
+  translator: 'text',
+  tags: 'text'
+});
+
 // const PaginatePlugin = (schema, options) => {
 //   options = options || {};
 //   schema.query.paginate = async function (params) {
