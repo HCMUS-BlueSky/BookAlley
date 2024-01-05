@@ -76,7 +76,6 @@ export const addProduct = createAsyncThunk(
         },
         config
       );
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
