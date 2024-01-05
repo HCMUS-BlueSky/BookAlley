@@ -120,9 +120,16 @@ const CartPage = () => {
                       />
                       <span className="checkmark checkmark-center"></span>
                     </label>
-                    <span>{cartItem.product.price}</span>
+                    <span>
+                      {cartItem.product.price.toLocaleString("en-US")}đ
+                    </span>
                     <span>{cartItem.quantity}</span>
-                    <span>{cartItem.product.price * cartItem.quantity}</span>
+                    <span>
+                      {(
+                        cartItem.product.price * cartItem.quantity
+                      ).toLocaleString("en-US")}
+                      đ
+                    </span>
                     <FontAwesomeIcon
                       icon={faTrashCan}
                       onClick={() => {
@@ -154,13 +161,17 @@ const CartPage = () => {
             <div className="total">
               <div className="total-provisional">
                 <p>Provisional</p>
-                <span>{cart.items && calculateTotalPrice()}đ</span>
+                <span>
+                  {cart.items && calculateTotalPrice().toLocaleString("en-US")}đ
+                </span>
               </div>
 
               <hr />
               <div className="total-count">
                 <p>Total</p>
-                <span>{cart.items && calculateTotalPrice()}đ</span>
+                <span>
+                  {cart.items && calculateTotalPrice().toLocaleString("en-US")}đ
+                </span>
               </div>
               <Link
                 to="/checkout/payment"

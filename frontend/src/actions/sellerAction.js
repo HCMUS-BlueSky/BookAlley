@@ -34,3 +34,25 @@ export const getOrdersForSeller = createAsyncThunk(
     }
   }
 );
+
+export const processOrderSeller = createAsyncThunk(
+  "seller/order/process",
+  async ({ order_id, status }, { rejectWithValue }) => {
+    console.log(order_id);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      let { data } = await axiosInstance.patch(
+        `/api/order/${order_id}`,
+        { status },
+        config
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

@@ -18,7 +18,10 @@ const ProductsCardComponent = ({ product }) => {
         ) : (
           <h3>{product.name}</h3>
         )}
-        <p>{product.price}</p>
+        <p>
+          {product.price && product.price.toLocaleString("en-US")}
+          <span>đ</span>
+        </p>
       </div>
     </div>
   );

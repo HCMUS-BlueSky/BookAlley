@@ -141,9 +141,19 @@ const CheckoutPage = () => {
                         <img src={item.product.image} alt="" />
                         <p>{item.product.name}</p>
                       </div>
-                      <span>{item.product.price}</span>
+                      <span>
+                        {item.product.price &&
+                          item.product.price.toLocaleString("en-US")}
+                        đ
+                      </span>
                       <span>{item.quantity}</span>
-                      <span>{item.product.price * item.quantity}</span>
+                      <span>
+                        {item.product.price * item.quantity &&
+                          (item.product.price * item.quantity).toLocaleString(
+                            "en-US"
+                          )}
+                        đ
+                      </span>
                     </div>
                   );
                 })}
@@ -164,13 +174,13 @@ const CheckoutPage = () => {
             <div className="total">
               <div className="total-provisional">
                 <p>Provisional</p>
-                <span>{totalPrice}đ</span>
+                <span>{totalPrice && totalPrice.toLocaleString("en-US")}đ</span>
               </div>
 
               <hr />
               <div className="total-count">
                 <p>Total</p>
-                <span>{totalPrice}đ</span>
+                <span>{totalPrice && totalPrice.toLocaleString("en-US")}đ</span>
               </div>
 
               <button className="checkout-btn" onClick={handleCheckout}>

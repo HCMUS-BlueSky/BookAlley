@@ -123,6 +123,7 @@ router.get('/list', async (req, res) => {
     //     }
     //   ]).sample(amount);
     // }
+    await Book.createIndexes();
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const list = await Book.paginate(
@@ -143,6 +144,25 @@ router.get('/get-detail/:id', async (req, res) => {
     return res.json(book);
   } catch(err) {
     return res.status(400).send(err.message);
+  }
+})
+
+router.get("/search", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const searchTerm = req.query.searchTerm;
+    const list = await Book.paginate(
+      {
+        $text: {
+          $search: `\"${searchTerm}\"`
+        }
+      },
+      { select: 'name image rating price', page, limit }
+    );
+    return res.send(list);
+  } catch (err) {
+    return res.status(500).send(err.message);
   }
 })
 
