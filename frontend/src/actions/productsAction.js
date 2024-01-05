@@ -76,6 +76,27 @@ export const addProduct = createAsyncThunk(
         },
         config
       );
+      return data;
+    } catch (error) {
+      console.log(error);
+      rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const searchProduct = createAsyncThunk(
+  "products/search",
+  async ({ searchTerm }, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      let { data } = await axiosPublicInstance.get(
+        `api/book/search?searchTerm=${searchTerm}`,
+        config
+      );
       console.log(data);
       return data;
     } catch (error) {
