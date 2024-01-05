@@ -15,6 +15,7 @@ import AddressPage from "../pages/AddressPage";
 import ShopPage from "../pages/ShopPage";
 import OrdersSellerPage from "../pages/SellerPage/OrdersSellerPage";
 import ProductsSellerPage from "../pages/SellerPage/ProductsSellerPage";
+import SearchPage from "../pages/SearchPage";
 
 export const routes = [
   {
@@ -44,6 +45,10 @@ export const routes = [
   {
     path: "/products/:id",
     page: ProductDetailPage,
+  },
+  {
+    path: "/search",
+    page: SearchPage,
   },
   {
     path: "/checkout/cart",

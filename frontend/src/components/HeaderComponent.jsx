@@ -15,8 +15,14 @@ const HeaderComponent = () => {
   const { access_token } = useSelector((state) => state.auth);
   const { infos } = useSelector((state) => state.user);
   const [openAccount, setOpenAccount] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const notify = () => toast("You need to verify first");
+
+  const handleSearch = (query) => {
+    navigate(`/search?${query}`);
+  };
 
   useEffect(() => {
     dispatch(getCart());
@@ -30,8 +36,14 @@ const HeaderComponent = () => {
             <img src="/images/Logo.png" alt="" />
           </Link>
           <div className="search">
-            <input type="text" />
-            <button type="submit">Search</button>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button type="submit" onClick={() => handleSearch(searchQuery)}>
+              Search
+            </button>
           </div>
         </div>
         <div className="header-right">
