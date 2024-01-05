@@ -120,13 +120,16 @@ const bookSchema = new mongoose.Schema(
 
 bookSchema.index({ name: 1, author: 1 }, { unique: true });
 
-bookSchema.index({
-  name: 'text',
-  author: 'text',
-  publisher: 'text',
-  translator: 'text',
-  tags: 'text'
-});
+bookSchema.index(
+  {
+    name: 'text',
+    author: 'text',
+    publisher: 'text',
+    translator: 'text',
+    tags: 'text'
+  },
+  { default_language: 'none', language_override: 'none' }
+);
 
 // const PaginatePlugin = (schema, options) => {
 //   options = options || {};

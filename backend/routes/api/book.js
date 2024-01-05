@@ -123,6 +123,7 @@ router.get('/list', async (req, res) => {
     //     }
     //   ]).sample(amount);
     // }
+    await Book.createIndexes();
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const list = await Book.paginate(
