@@ -21,7 +21,7 @@ const HeaderComponent = () => {
   const notify = () => toast("You need to verify first");
 
   const handleSearch = (query) => {
-    navigate(`/search?${query}`);
+    navigate(`/search?q=${query}`);
   };
 
   useEffect(() => {
