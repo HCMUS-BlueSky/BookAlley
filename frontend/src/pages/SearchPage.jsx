@@ -15,14 +15,17 @@ const SearchPage = () => {
           "Content-Type": "application/json",
         },
       };
-      let { data } = await axiosPublicInstance.get(
-        `api/book/search?searchTerm=${searchParams.get("q")}`,
-        config
-      );
-      setProducts(data.docs);
+      const searchTerm = searchParams.get("q");
+      if (searchTerm) {
+        const { data } = await axiosPublicInstance.get(
+          `api/book/search?searchTerm=${searchTerm}`,
+          config
+        );
+        setProducts(data.docs);
+      }
     }
     fetchData();
-  }, []);
+  }, [searchParams]);
 
   return (
     <>

@@ -20,8 +20,9 @@ const HeaderComponent = () => {
   const navigate = useNavigate();
   const notify = () => toast("You need to verify first");
 
-  const handleSearch = (query) => {
-    navigate(`/search?q=${query}`);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`/search?q=${searchQuery}`);
   };
 
   useEffect(() => {
@@ -36,14 +37,14 @@ const HeaderComponent = () => {
             <img src="/images/Logo.png" alt="" />
           </Link>
           <div className="search">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button type="submit" onClick={() => handleSearch(searchQuery)}>
-              Search
-            </button>
+            <form action="" onSubmit={handleSearch}>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button type="submit">Search</button>
+            </form>
           </div>
         </div>
         <div className="header-right">
