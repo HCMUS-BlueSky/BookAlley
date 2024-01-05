@@ -35,36 +35,64 @@ const HeaderComponent = () => {
           </div>
         </div>
         <div className="header-right">
-          <div className="seller-btn">
-            <FontAwesomeIcon icon={faHome} />
-            <Link to="/">Home</Link>
-          </div>
-          {access_token ? (
-            <div
-              className="account"
-              onMouseEnter={() => setOpenAccount(true)}
-              onMouseLeave={() => setOpenAccount(false)}
-            >
-              <div className="seller-btn">
-                <FontAwesomeIcon icon={faUser} />
-                Account
-              </div>
-              {openAccount && (
-                <div className="account-content">
-                  <a href="#">Profile</a>
-                  <Link to="/order/history">My orders</Link>
-                  <a
-                    onClick={() => {
-                      dispatch(logout());
-                      dispatch(userLogout());
-                      dispatch(clearCart());
-                    }}
-                  >
-                    Log out
-                  </a>
-                </div>
-              )}
+          <Link to="/">
+            <div className="seller-btn">
+              <FontAwesomeIcon icon={faHome} />
+              <p>Home</p>
             </div>
+          </Link>
+          {access_token ? (
+            infos.role == "seller" ? (
+              <div
+                className="account"
+                onMouseEnter={() => setOpenAccount(true)}
+                onMouseLeave={() => setOpenAccount(false)}
+              >
+                <div className="seller-btn">
+                  <FontAwesomeIcon icon={faUser} />
+                  Account
+                </div>
+                {openAccount && (
+                  <div className="account-content">
+                    <Link to="/seller">My Shop</Link>
+                    <a
+                      onClick={() => {
+                        dispatch(logout());
+                        dispatch(userLogout());
+                        dispatch(clearCart());
+                      }}
+                    >
+                      Log out
+                    </a>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div
+                className="account"
+                onMouseEnter={() => setOpenAccount(true)}
+                onMouseLeave={() => setOpenAccount(false)}
+              >
+                <div className="seller-btn">
+                  <FontAwesomeIcon icon={faUser} />
+                  Account
+                </div>
+                {openAccount && (
+                  <div className="account-content">
+                    <Link to="/order/history">My orders</Link>
+                    <a
+                      onClick={() => {
+                        dispatch(logout());
+                        dispatch(userLogout());
+                        dispatch(clearCart());
+                      }}
+                    >
+                      Log out
+                    </a>
+                  </div>
+                )}
+              </div>
+            )
           ) : (
             <div className="seller-btn">
               <FontAwesomeIcon icon={faUser} />
