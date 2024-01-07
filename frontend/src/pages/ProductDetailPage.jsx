@@ -99,7 +99,15 @@ const ProductDetailPage = () => {
                     </div>
                   </div>
                   <div className="cart-btn">
-                    <button className="buy-btn">Buy</button>
+                    <Link
+                      to="/checkout/payment"
+                      state={{
+                        selectedItems: [{ product: product, quantity: count }],
+                        totalPrice: product.price * count,
+                      }}
+                    >
+                      <button className="buy-btn">Buy</button>
+                    </Link>
                     <button className="add-btn" onClick={handleAddToCart}>
                       Add to cart
                     </button>
@@ -119,9 +127,6 @@ const ProductDetailPage = () => {
                       >
                         <h3>{product.seller && product.seller.name}</h3>
                       </Link>
-                      <div className="shop-btn">
-                        <button type="button">Follow</button>
-                      </div>
                     </div>
                   </div>
                   <div className="detail-card">
