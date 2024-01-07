@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../actions/authAction";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const SignInPage = () => {
   const dispatch = useDispatch();
@@ -26,9 +27,19 @@ const SignInPage = () => {
 
   useEffect(() => {
     if (access_token !== null) {
-      navigate("/");
+      toast.success("User signed in successfully", {
+        position: "bottom-right",
+      });
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
-  }, [access_token, navigate]);
+    if (error !== null && error !== "Forbidden") {
+      toast.error(error, {
+        position: "bottom-right",
+      });
+    }
+  }, [error, access_token, navigate]);
 
   return (
     <div className="auth">
@@ -52,7 +63,6 @@ const SignInPage = () => {
             onChange={handlePassword}
             required
           />
-          {/* < className="noti-info">{error}</  p> */}
           <Link to={"/forgot-password"}>Forgot password?</Link>
           <button type="submit">{loading ? "Loading..." : "Log In"}</button>
         </form>
@@ -60,6 +70,7 @@ const SignInPage = () => {
           Don't have an account? Register <Link to="/signup">now</Link>
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 };

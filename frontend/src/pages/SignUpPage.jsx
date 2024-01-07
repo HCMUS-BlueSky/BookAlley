@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { registerUser } from "../actions/authAction";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const SignUpPage = () => {
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, success, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -27,6 +30,22 @@ const SignUpPage = () => {
     e.preventDefault();
     dispatch(registerUser({ username, email, password }));
   };
+
+  useEffect(() => {
+    if (success) {
+      toast.success("User signed in successfully", {
+        position: "bottom-right",
+      });
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    }
+    if (error !== null && error !== "Forbidden") {
+      toast.error(error, {
+        position: "bottom-right",
+      });
+    }
+  }, [success, error, navigate]);
 
   return (
     <div className="auth">
@@ -57,13 +76,13 @@ const SignUpPage = () => {
             onChange={handlePassword}
             required
           />
-          {/* <p className="noti-info">{error}</p> */}
           <button type="submit">{loading ? "Loading..." : "Register"}</button>
         </form>
         <p>
           Already have an account? <Link to="/signin">Sign in</Link>
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 };
