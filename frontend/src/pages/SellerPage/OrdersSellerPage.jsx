@@ -86,12 +86,6 @@ const OrdersSellerPage = () => {
           </div>
           <div className="seller-products-detail">
             <h2>Orders</h2>
-            <div className="utils-seller">
-              <div className="search-seller">
-                <input type="text" placeholder="Find product" />
-                <button type="submit">Search</button>
-              </div>
-            </div>
             <div className="tabs">
               <ul className="nav">
                 <li

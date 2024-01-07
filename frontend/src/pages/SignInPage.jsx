@@ -63,11 +63,16 @@ const SignInPage = () => {
             onChange={handlePassword}
             required
           />
-          <Link to={"/forgot-password"}>Forgot password?</Link>
+          <Link to={"/forgot-password"} style={{ textDecoration: "underline" }}>
+            Forgot password?
+          </Link>
           <button type="submit">{loading ? "Loading..." : "Log In"}</button>
         </form>
         <p>
-          Don't have an account? Register <Link to="/signup">now</Link>
+          Don't have an account? Register{" "}
+          <Link to="/signup" style={{ textDecoration: "underline" }}>
+            now
+          </Link>
         </p>
       </div>
       <ToastContainer />

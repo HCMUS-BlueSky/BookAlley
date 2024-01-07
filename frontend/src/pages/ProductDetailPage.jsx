@@ -154,7 +154,7 @@ const ProductDetailPage = () => {
                     <h2>DESCRIPTION</h2>
                     <p className="description">
                       {product.description && product.description.length > 100
-                        ? product.description.slice(0, 500) + "..."
+                        ? product.description.slice(0, 800) + "..."
                         : product.description}
                     </p>
                   </div>

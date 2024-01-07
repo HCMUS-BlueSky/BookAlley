@@ -3,6 +3,7 @@ import HeaderComponent from "../../components/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../actions/productsAction";
+import { Link } from "react-router-dom";
 
 const AddProductPage = () => {
   const [formData, setFormData] = useState({
@@ -195,7 +196,7 @@ const AddProductPage = () => {
           </div>
           <div className="nav-btn">
             <button type="button" className="btn-cancel">
-              Cancel
+              <Link to={"/seller/products"}>Cancel</Link>
             </button>
             <button type="submit" className="btn-submit">
               Submit

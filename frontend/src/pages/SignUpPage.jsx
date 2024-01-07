@@ -79,7 +79,10 @@ const SignUpPage = () => {
           <button type="submit">{loading ? "Loading..." : "Register"}</button>
         </form>
         <p>
-          Already have an account? <Link to="/signin">Sign in</Link>
+          Already have an account?{" "}
+          <Link to="/signin" style={{ textDecoration: "underline" }}>
+            Sign in
+          </Link>
         </p>
       </div>
       <ToastContainer />

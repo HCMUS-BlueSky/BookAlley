@@ -61,12 +61,8 @@ const ProductsSellerPage = () => {
           <div className="seller-products-detail">
             <h2>Products</h2>
             <div className="utils-seller">
-              <div className="search-seller">
-                <input type="text" placeholder="Find product" />
-                <button type="submit">Search</button>
-              </div>
               <Link to={"/seller/products/add"}>
-                <button type="submit">+ Create</button>
+                <button type="submit">Create New Book</button>
               </Link>
             </div>
             <table>

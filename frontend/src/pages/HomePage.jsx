@@ -28,12 +28,12 @@ const HomePage = () => {
         <div className="container home">
           <SliderComponent />
           <ProductScrollComponents
-            headerContent="For you"
-            products={products.docs}
+            headerContent="Best Sellers"
+            products={products.docs && products.docs.slice(0, 10)}
           />
           <ProductScrollComponents
-            headerContent="Flash sales"
-            products={products.docs}
+            headerContent="Just For You"
+            products={products.docs && products.docs.slice(10, 30)}
           />
         </div>
       </div>

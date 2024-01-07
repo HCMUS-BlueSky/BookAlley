@@ -57,7 +57,7 @@ const AddressPage = () => {
             <div className="row">
               <label htmlFor="phone">Phone</label>
               <input
-                type="number"
+                type="text"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
@@ -75,7 +75,7 @@ const AddressPage = () => {
             <div className="row">
               <label htmlFor="district">District</label>
               <input
-                type="number"
+                type="text"
                 name="district"
                 value={formData.district}
                 onChange={handleChange}
@@ -84,7 +84,7 @@ const AddressPage = () => {
             <div className="row">
               <label htmlFor="ward">Ward</label>
               <input
-                type="number"
+                type="text"
                 name="ward"
                 value={formData.ward}
                 onChange={handleChange}
@@ -137,7 +137,9 @@ const AddressPage = () => {
             </div>
             <div className="btn-row">
               <button type="button" className="cancel-btn">
-                Cancel
+                <Link to={"/checkout/cart"} style={{ color: "#4e6975" }}>
+                  Cancel
+                </Link>
               </button>
               <button type="submit" className="update-btn">
                 Update

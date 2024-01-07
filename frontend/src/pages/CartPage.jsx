@@ -102,7 +102,10 @@ const CartPage = () => {
               <span>Price</span>
               <span>Quantity</span>
               <span>Total</span>
-              <FontAwesomeIcon icon={faTrashCan} />
+              <FontAwesomeIcon
+                icon={faTrashCan}
+                style={{ cursor: "pointer" }}
+              />
             </div>
             {cart.items &&
               cart.items.map((cartItem) => {
@@ -138,6 +141,7 @@ const CartPage = () => {
                           cartItem.quantity
                         );
                       }}
+                      style={{ cursor: "pointer" }}
                     />
                   </div>
                 );

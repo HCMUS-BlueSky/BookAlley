@@ -22,7 +22,10 @@ export const getProducts = createAsyncThunk("products", async () => {
         "Content-Type": "application/json",
       },
     };
-    let { data } = await axiosPublicInstance.get(`api/book/list`, config);
+    let { data } = await axiosPublicInstance.get(
+      `api/book/list?limit=30`,
+      config
+    );
     return data;
   } catch (error) {
     return error;
