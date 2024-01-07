@@ -3,7 +3,8 @@ import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { addOrder } from "../actions/orderAction";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAddress } from "../actions/userActions";
 
 const CheckoutPage = () => {
   const location = useLocation();
@@ -13,6 +14,7 @@ const CheckoutPage = () => {
   const { name, phone, address, addressId } = useSelector(
     (state) => state.user
   );
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,6 +37,10 @@ const CheckoutPage = () => {
       }
     });
   };
+
+  useEffect(() => {
+    dispatch(getAddress());
+  }, []);
 
   return (
     <>
@@ -128,9 +134,9 @@ const CheckoutPage = () => {
                 <span>Total</span>
               </div>
               {selectedItems &&
-                selectedItems.map((item) => {
+                selectedItems.map((item, index) => {
                   return (
-                    <div className="product-item" key={item._id}>
+                    <div className="product-item" key={index}>
                       <div
                         style={{
                           width: "390px",

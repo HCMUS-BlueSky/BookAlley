@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { getCart, removeItems } from "../actions/cartAction";
 import { Link } from "react-router-dom";
-import { getAddress } from "../actions/userActions";
 
 const CartPage = () => {
   const { loading, cart } = useSelector((state) => state.cart);
@@ -17,7 +16,6 @@ const CartPage = () => {
 
   useEffect(() => {
     dispatch(getCart());
-    dispatch(getAddress());
   }, []);
 
   const handleAllCheckboxChange = () => {
@@ -102,7 +100,10 @@ const CartPage = () => {
               <span>Price</span>
               <span>Quantity</span>
               <span>Total</span>
-              <FontAwesomeIcon icon={faTrashCan} />
+              <FontAwesomeIcon
+                icon={faTrashCan}
+                style={{ cursor: "pointer" }}
+              />
             </div>
             {cart.items &&
               cart.items.map((cartItem) => {
@@ -138,6 +139,7 @@ const CartPage = () => {
                           cartItem.quantity
                         );
                       }}
+                      style={{ cursor: "pointer" }}
                     />
                   </div>
                 );

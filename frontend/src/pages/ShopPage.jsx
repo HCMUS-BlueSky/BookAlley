@@ -39,9 +39,7 @@ const ShopPage = () => {
             <img src={shop.logo} alt="" />
             <div className="shop-text">
               <h3>{shop.name}</h3>
-              <p>{shop.followers} followers</p>
             </div>
-            <button type="button">+ Follow</button>
           </div>
           <ProductScrollComponents
             headerContent="Products"
