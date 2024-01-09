@@ -1,24 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { axiosPublicInstance } from "../utils/axios";
 
 const VerifyPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [errorMsg, setErrorMsg] = useState("");
   useEffect(() => {
     async function verifyToken() {
       try {
-        let data = await axiosInstance.get(`/api/user/verify`, {
-          token: searchParams,
+        let { data } = await axiosPublicInstance.post(`/api/user/verify`, {
+          token: searchParams.get("token"),
         });
         console.log(data);
       } catch (error) {
-        console.log(error);
+        console.log(error.response.data);
+        setErrorMsg(error.response.data);
       }
     }
     verifyToken();
   }, []);
   return (
     <>
-      <p>Email successfully verified!</p>
+      <p>{errorMsg}</p>
     </>
   );
 };

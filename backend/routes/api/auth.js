@@ -2,7 +2,11 @@ const express = require("express");
 const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { sendEmail, genPasswordResetTemplate, genEmailConfirmTemplate} = require("../../utils/sendEmail");
+const {
+  sendEmail,
+  genPasswordResetTemplate,
+  genEmailConfirmTemplate,
+} = require("../../utils/sendEmail");
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
@@ -24,20 +28,25 @@ router.post("/register", async (req, res) => {
     const newUser = new User({ username, email, password: hashedPassword });
     const user = await newUser.save();
     if (!user) throw new Error("Something went wrong!");
-
+    console.log(user.id);
     const verifyToken = jwt.sign(
       {
-        id: req.user.id
+        id: user.id,
       },
       process.env.VERIFY_TOKEN_SECRET,
       {
-        expiresIn: '1d'
+        expiresIn: "1d",
       }
     );
+    console.log(verifyToken);
     const verifyLink = `${process.env.FE_HOST}/verify?token=${verifyToken}`;
-    await sendEmail(email, 'Please verify your email address', genEmailConfirmTemplate(verifyLink));
+    await sendEmail(
+      email,
+      "Please verify your email address",
+      genEmailConfirmTemplate(verifyLink)
+    );
     return res.send(
-      'User registered! A verification link has been sent to your email account!'
+      "User registered! A verification link has been sent to your email account!"
     );
   } catch (err) {
     return res.status(400).send(err.message);
@@ -162,7 +171,7 @@ router.post("/forgot-password", async (req, res) => {
     const resetLink = `${process.env.FE_HOST}/reset-password?id=${user.id}&token=${resetToken}`;
     await sendEmail(
       user.email,
-      'Password Reset Requested From BookAlley',
+      "Password Reset Requested From BookAlley",
       genPasswordResetTemplate(resetLink)
     );
     return res.send("Password reset link sent to your email account!");
