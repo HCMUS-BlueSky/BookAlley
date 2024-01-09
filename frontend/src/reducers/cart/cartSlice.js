@@ -46,6 +46,11 @@ const cartSlice = createSlice({
       })
       .addCase(removeItems.rejected, (state, { payload }) => {
         (state.loading = false), (state.error = payload);
+      })
+      .addCase(clearCart, (state) => {
+        state.loading = false;
+        state.cart = [];
+        state.error = null;
       });
   },
 });

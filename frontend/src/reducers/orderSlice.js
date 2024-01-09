@@ -34,6 +34,10 @@ const orderSlice = createSlice({
       })
       .addCase(addOrder.rejected, (state, { payload }) => {
         (state.loading = false), (state.error = payload);
+      })
+      .addCase(getOrders.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       });
   },
 });

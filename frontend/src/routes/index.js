@@ -35,6 +35,10 @@ export const routes = [
     page: NotFoundPage,
   },
   {
+    path: "/404",
+    page: NotFoundPage,
+  },
+  {
     path: "/forgot-password",
     page: ForgotPasswordPage,
   },
