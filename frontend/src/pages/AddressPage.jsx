@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateAddress } from "../actions/userActions";
 
+
 const AddressPage = () => {
   const [formData, setFormData] = useState({
     fullname: "",
@@ -17,7 +18,23 @@ const AddressPage = () => {
     type: "Home/Apartment",
   });
   const dispatch = useDispatch();
-
+  //fetch data of user's current address to display on the form
+  /*const userAddress = useSelector((state) => state.userAddress);
+  const { loading, error, address } = userAddress;
+  useEffect(() => {
+    if (address) {
+      setFormData({
+        fullname: address.fullname,
+        phone: address.phone,
+        city: address.city,
+        district: address.district,
+        ward: address.ward,
+        address: address.address,
+        alias: address.alias,
+        type: address.type,
+      });
+    }
+  }, [address]);*/
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({
