@@ -5,6 +5,7 @@ import { axiosPublicInstance } from "../utils/axios";
 const VerifyPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSucessMsg] = useState("");
   useEffect(() => {
     async function verifyToken() {
       try {
@@ -12,6 +13,7 @@ const VerifyPage = () => {
           token: searchParams.get("token"),
         });
         console.log(data);
+        setSucessMsg(data);
       } catch (error) {
         console.log(error.response.data);
         setErrorMsg(error.response.data);
@@ -22,6 +24,7 @@ const VerifyPage = () => {
   return (
     <>
       <p>{errorMsg}</p>
+      <p>{successMsg}</p>
     </>
   );
 };
