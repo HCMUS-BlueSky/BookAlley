@@ -53,6 +53,13 @@ const HeaderComponent = () => {
               <p>Home</p>
             </div>
           </Link>
+          {/* Link to About Us 
+          <Link to="/about">
+            <div className="seller-btn">
+              <FontAwesomeIcon icon={faHome} />
+              <p>About Us</p>
+            </div>
+          </Link>*/}
           {access_token ? (
             infos.role == "seller" ? (
               <div
