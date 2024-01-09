@@ -57,7 +57,8 @@ const SignInPage = () => {
           <button type="submit">{loading ? "Loading..." : "Log In"}</button>
         </form>
         <p>
-          Don't have an account? Register <Link to="/signup">now</Link>
+          Don't have an account?  
+          <Link to="/signup">Register here</Link>
         </p>
       </div>
     </div>
