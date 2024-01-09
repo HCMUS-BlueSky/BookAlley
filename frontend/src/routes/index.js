@@ -16,6 +16,7 @@ import ShopPage from "../pages/ShopPage";
 import OrdersSellerPage from "../pages/SellerPage/OrdersSellerPage";
 import ProductsSellerPage from "../pages/SellerPage/ProductsSellerPage";
 import SearchPage from "../pages/SearchPage";
+import VerifyPage from "../pages/VerifyPage";
 
 export const routes = [
   {
@@ -89,6 +90,10 @@ export const routes = [
   {
     path: "/seller/products/add",
     page: AddProductPage,
+  },
+  {
+    path: "/verify",
+    page: VerifyPage,
   },
 ];
 
