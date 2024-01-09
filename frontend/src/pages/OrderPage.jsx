@@ -9,7 +9,6 @@ const OrderPage = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
   const navigate = useNavigate();
-
   const handleClickOrderDetail = (orderId) => {
     navigate(`/order/view/${orderId}`);
   };
@@ -30,7 +29,7 @@ const OrderPage = () => {
         }}
       >
         <div className="container orders">
-          <h2>My order</h2>
+           <h2>My order</h2>
           {orders.docs &&
             orders.docs.map((order) => {
               return (
