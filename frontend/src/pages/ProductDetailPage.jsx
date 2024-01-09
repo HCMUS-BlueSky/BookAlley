@@ -12,7 +12,6 @@ const ProductDetailPage = () => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(1);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {

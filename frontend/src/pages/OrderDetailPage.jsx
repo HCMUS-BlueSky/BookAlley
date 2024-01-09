@@ -3,7 +3,6 @@ import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../utils/axios";
-import { useDispatch, useSelector } from "react-redux";
 import AddReviewComponent from "../components/AddReviewComponent";
 
 const OrderDetailPage = () => {
