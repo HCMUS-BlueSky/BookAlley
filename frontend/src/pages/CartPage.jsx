@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { getCart, removeItems } from "../actions/cartAction";
 import { Link } from "react-router-dom";
+import { getAddress } from "../actions/userActions";
 
 const CartPage = () => {
   const { loading, cart } = useSelector((state) => state.cart);
@@ -16,6 +17,7 @@ const CartPage = () => {
 
   useEffect(() => {
     dispatch(getCart());
+    dispatch(getAddress());
   }, []);
 
   const handleAllCheckboxChange = () => {
