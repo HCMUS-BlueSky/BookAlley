@@ -17,3 +17,19 @@ export const getVoucher = createAsyncThunk(
     }
   }
 );
+
+export const addVoucher = createAsyncThunk(
+  "voucher/add",
+  async ({ code }, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      await axiosInstance.post(`/api/voucher`, { code }, config);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

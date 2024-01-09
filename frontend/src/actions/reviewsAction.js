@@ -48,3 +48,21 @@ export const getProductReview = createAsyncThunk(
     }
   }
 );
+
+export const getReview = createAsyncThunk(
+  "review/getAll",
+  async (_, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      let { data } = await axiosInstance.get(`/api/review`, config);
+      // data.created_at = await Date.parse(date.created_at);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

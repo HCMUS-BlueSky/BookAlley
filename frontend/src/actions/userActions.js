@@ -52,3 +52,14 @@ export const getAddress = createAsyncThunk(
     }
   }
 );
+
+export const deleteAddress = createAsyncThunk(
+  "user/delete-address",
+  async (id, { rejectWithValue }) => {
+    try {
+      await axiosInstance.delete(`/api/user/address/${id}`);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

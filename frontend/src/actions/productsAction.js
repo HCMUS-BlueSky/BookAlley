@@ -83,3 +83,14 @@ export const addProduct = createAsyncThunk(
     }
   }
 );
+
+export const deleteProduct = createAsyncThunk(
+  "products/delete",
+  async (id, { rejectWithValue }) => {
+    try {
+      await axiosInstance.delete(`api/book/${id}`);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
